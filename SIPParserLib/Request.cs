@@ -20,10 +20,17 @@ namespace SIPParserLib
 			private set;
 		}
 
-		public Request(RequestLine RequestLine, RequestHeader[] Headers)
+		public string Body
+		{
+			get;
+			private set;
+		}
+
+		public Request(RequestLine RequestLine, RequestHeader[] Headers,string Body)
 		{
 			this.RequestLine = RequestLine;
 			this.Headers = Headers;
+			this.Body = Body;
 		}
 
 	}
