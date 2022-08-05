@@ -6,27 +6,33 @@ using System.Threading.Tasks;
 
 namespace SIPParserLib
 {
-	public struct URLParameter
+	public abstract class RequestHeader
 	{
-		public string Name
+		public abstract string Name
 		{
 			get;
-			private set;
 		}
-		public string Value
+	}
+	public abstract class RequestHeader<T>:RequestHeader
+	{
+		
+		public T Value
 		{
 			get;
-			private set;
 		}
 
-		public URLParameter(string Name,string Value)
+		public RequestHeader(T Value)
 		{
-			this.Name = Name;this.Value = Value;
+			this.Value = Value;
 		}
+
 		public override string ToString()
 		{
-			return $"{Name}={Value}";
+			return $"{Name}: {Value}";
 		}
 
+
 	}
+
+
 }

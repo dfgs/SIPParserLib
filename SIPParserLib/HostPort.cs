@@ -24,5 +24,13 @@ namespace SIPParserLib
 			this.Host = Host;this.Port = Port;
 		}
 
+		public override string ToString()
+		{
+			if (Port == 0) return $"{Host}";
+			else return $"{Host}:{Port}";
+		}
+
+
+
 	}
 }

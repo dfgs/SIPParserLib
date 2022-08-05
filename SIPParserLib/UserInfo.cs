@@ -24,5 +24,11 @@ namespace SIPParserLib
 			this.User = User;this.Password = Password;
 		}
 
+		public override string ToString()
+		{
+			if (Password == null) return User;
+			else return $"{User}:{Password}";
+		}
+
 	}
 }

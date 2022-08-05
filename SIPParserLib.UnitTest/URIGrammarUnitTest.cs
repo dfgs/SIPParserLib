@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using ParserLib;
 using System;
 
 namespace SIPParserLib.UnitTest
@@ -244,8 +245,21 @@ namespace SIPParserLib.UnitTest
 			Assert.IsNull(uri.UserInfo.Password);
 			Assert.AreEqual("big.com", uri.HostPort.Host);
 		}
+		[TestMethod]
+		public void ShouldParseURI11()
+		{
+			URI uri;
 
-
+			uri = URIGrammar.RequestURI.Parse(Consts.URI11);
+			Assert.AreEqual("j.doe", uri.UserInfo.User);
+			Assert.IsNull(uri.UserInfo.Password);
+			Assert.AreEqual("big.com", uri.HostPort.Host);
+			Assert.AreEqual(2, uri.Headers.Length);
+			Assert.AreEqual("subject", uri.Headers[0].Name);
+			Assert.AreEqual("project", uri.Headers[0].Value);
+			Assert.AreEqual("name", uri.Headers[1].Name);
+			Assert.AreEqual("test", uri.Headers[1].Value);
+		}
 
 	}
 }

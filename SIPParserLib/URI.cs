@@ -37,5 +37,17 @@ namespace SIPParserLib
 			this.UserInfo = UserInfo;this.HostPort = HostPort;this.Parameters = Parameters;this.Headers = Headers;
 		}
 
+		public override string ToString()
+		{
+			string headers, parameters;
+
+			if (Parameters.Length == 0) parameters = "";
+			else parameters = $";{string.Join(';', Parameters)}";
+			if (Headers.Length == 0) headers = "";
+			else headers = $"?{string.Join('&', Headers)}";
+
+			return $"sip:{UserInfo}@{HostPort}{parameters}{headers}";
+		}
+
 	}
 }

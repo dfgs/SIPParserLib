@@ -81,13 +81,12 @@ namespace SIPParserLib
 	
 		public static ISingleParser<Header> Header = from name in CommonGrammar.Alpha.OneOrMoreTimes().ToStringParser()
 											   from _ in Parse.Char('=')
-														 from value in Parse.Any().OneOrMoreTimes().ToStringParser()
+														 from value in CommonGrammar.Alphanum.OneOrMoreTimes().ToStringParser()
 											   select new Header(name, value);
-		public static IMultipleParser<Header> Headers = Parse.ZeroOrOneTime(
-														from _ in Parse.Char('?')
-														from firstHeader in Header
-														from nextHeaders in Parse.ZeroOrMoreTimes(from __ in Parse.Char('&') from header in Header select header)
-														select firstHeader//, nextHeaders
+		public static IMultipleParser<Header> Headers = Parse.ZeroOrOneTime<Header>(
+														(from _ in Parse.Char('?') from header in Header select header).Then(
+														Parse.ZeroOrMoreTimes(from __ in Parse.Char('&') from header in Header select header)
+														)
 													);
 
 		public static ISingleParser<URI> RequestURI =
