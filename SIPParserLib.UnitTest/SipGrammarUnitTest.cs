@@ -138,6 +138,17 @@ namespace SIPParserLib.UnitTest
 			Assert.AreEqual(12, message.Headers.Length);
 			Assert.IsTrue(string.IsNullOrEmpty(message.Body));
 		}
+		[TestMethod]
+		public void ShouldParseResponse2()
+		{
+			Response message;
+
+			message = (Response)SIPGrammar.SIPMessage.Parse(Consts.OK1, ' ');
+			Assert.AreEqual("200", message.StatusLine.StatusCode);
+			Assert.AreEqual("OK", message.StatusLine.Reason);
+			Assert.AreEqual(13, message.Headers.Length);
+			Assert.IsFalse(string.IsNullOrEmpty(message.Body));
+		}
 
 
 
