@@ -8,6 +8,31 @@ namespace SIPParserLib.UnitTest
 	public class URIGrammarUnitTest
 	{
 		[TestMethod]
+		public void ShouldParseURLParameter()
+		{
+			URLParameter parameter;
+
+			parameter = URIGrammar.URLParameter.Parse("transport=UDP");
+			Assert.AreEqual("transport", parameter.Name);
+			Assert.AreEqual("UDP", parameter.Value);
+			parameter = URIGrammar.URLParameter.Parse("user=phone");
+			Assert.AreEqual("user", parameter.Name);
+			Assert.AreEqual("phone", parameter.Value);
+		}
+		[TestMethod]
+		public void ShouldParseURLParameters()
+		{
+			URLParameter[] parameters;
+
+			parameters = URIGrammar.URLParameters.Parse(";transport=UDP;user=phone").ToArray();
+			Assert.AreEqual(2, parameters.Length);
+			Assert.AreEqual("transport", parameters[0].Name);
+			Assert.AreEqual("UDP", parameters[0].Value);
+			Assert.AreEqual("user", parameters[1].Name);
+			Assert.AreEqual("phone", parameters[1].Value);
+		}
+
+		[TestMethod]
 		public void ShouldParseUserInfoWithPassword()
 		{
 			UserInfo userInfo;
@@ -260,6 +285,22 @@ namespace SIPParserLib.UnitTest
 			Assert.AreEqual("name", uri.Headers[1].Name);
 			Assert.AreEqual("test", uri.Headers[1].Value);
 		}
+		[TestMethod]
+		public void ShouldParseURI12()
+		{
+			URI uri;
 
+			//sip:0243444265@100.127.1.1;transport=UDP;user=phone
+
+			uri = URIGrammar.RequestURI.Parse(Consts.URI12);
+			Assert.AreEqual("0243444265", uri.UserInfo.User);
+			Assert.IsNull(uri.UserInfo.Password);
+			Assert.AreEqual("100.127.1.1", uri.HostPort.Host);
+			Assert.AreEqual(2, uri.Parameters.Length);
+			Assert.AreEqual("transport", uri.Parameters[0].Name);
+			Assert.AreEqual("UDP", uri.Parameters[0].Value);
+			Assert.AreEqual("user", uri.Parameters[1].Name);
+			Assert.AreEqual("phone", uri.Parameters[1].Value);
+		}
 	}
 }

@@ -14,7 +14,7 @@ namespace SIPParserLib
 			private set;
 		}
 
-		public RequestHeader[] Headers
+		public MessageHeader[] Headers
 		{
 			get;
 			private set;
@@ -26,7 +26,7 @@ namespace SIPParserLib
 			private set;
 		}
 
-		public Request(RequestLine RequestLine, RequestHeader[] Headers,string Body)
+		public Request(RequestLine RequestLine, MessageHeader[] Headers,string Body)
 		{
 			this.RequestLine = RequestLine;
 			this.Headers = Headers;

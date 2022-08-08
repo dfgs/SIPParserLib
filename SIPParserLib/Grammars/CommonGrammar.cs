@@ -25,5 +25,6 @@ namespace SIPParserLib
 		public static ISingleParser<char> Alphanum = Alpha.Or(Digit);
 
 		public static ISingleParser<char> Unreserved = Alphanum.Or(Mark);
+
 	}
 }

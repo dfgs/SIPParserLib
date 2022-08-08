@@ -67,7 +67,7 @@ namespace SIPParserLib
 													   select new URLParameter(name, value);
 		public static ISingleParser<URLParameter> OtherParam = from name in CommonGrammar.Alpha.OneOrMoreTimes().ToStringParser()
 														 from _ in Parse.Char('=')
-														 from value in Parse.Any().OneOrMoreTimes().ToStringParser()
+														 from value in Parse.Except(';').OneOrMoreTimes().ToStringParser()
 														 select new URLParameter(name, value);
 
 		public static ISingleParser<URLParameter> URLParameter = TransportParam.Or(UserParam).Or(MethodParam).Or(TTLParam).Or(MaddrParam).Or(OtherParam);
