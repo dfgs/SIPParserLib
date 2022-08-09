@@ -28,6 +28,10 @@ namespace SIPParserLib.UnitTest
 			result = (MessageHeader<string>)SIPGrammar.AllowHeader.Parse("Allow: INVITE, ACK, CANCEL, BYE, PRACK, NOTIFY, SUBSCRIBE, OPTIONS, UPDATE, INFO\r\n", ' ');
 			Assert.AreEqual("Allow", result.Name);
 			Assert.AreEqual("INVITE, ACK, CANCEL, BYE, PRACK, NOTIFY, SUBSCRIBE, OPTIONS, UPDATE, INFO", result.Value);
+
+			result = (MessageHeader<string>)SIPGrammar.CustomHeader.Parse("Session-ID: 23711d2948484865b7f1c3008742bb56;remote=00000000000000000000000000000000\r\n", ' ');
+			Assert.AreEqual("Session-ID", result.Name);
+			Assert.AreEqual("23711d2948484865b7f1c3008742bb56;remote=00000000000000000000000000000000", result.Value);
 		}
 
 		[TestMethod]
@@ -86,7 +90,17 @@ namespace SIPParserLib.UnitTest
 			Assert.AreEqual("100.127.1.1", result.RequestURI.HostPort.ToString());
 			Assert.AreEqual("sip:0243444265@100.127.1.1;transport=UDP;user=phone", result.RequestURI.ToString());
 		}
+		[TestMethod]
+		public void ShouldParseRequestLine3()
+		{
+			RequestLine result;
 
+			result = SIPGrammar.RequestLine.Parse(Consts.RequestLine3, ' ');
+			Assert.AreEqual("ACK", result.Method);
+			Assert.AreEqual("SIP/2.0", result.SIPVersion);
+			Assert.AreEqual("185.221.88.177:5060", result.RequestURI.HostPort.ToString());
+			Assert.AreEqual("sip:+33663326291@185.221.88.177:5060;user=phone;sdp_iwf;transport=udp", result.RequestURI.ToString());
+		}
 		[TestMethod]
 		public void ShouldParseStatusLine3()
 		{
@@ -147,6 +161,20 @@ namespace SIPParserLib.UnitTest
 			Assert.AreEqual("200", message.StatusLine.StatusCode);
 			Assert.AreEqual("OK", message.StatusLine.Reason);
 			Assert.AreEqual(13, message.Headers.Length);
+			Assert.IsFalse(string.IsNullOrEmpty(message.Body));
+		}
+
+
+
+		[TestMethod]
+		public void ShouldParseACK1()
+		{
+			Request message;
+
+			message = (Request)SIPGrammar.SIPMessage.Parse(Consts.ACK1, ' ');
+			Assert.AreEqual(10, message.Headers.Length);
+			Assert.AreEqual("ACK", message.RequestLine.Method);
+			Assert.AreEqual("+33663326291", message.RequestLine.RequestURI.UserInfo.User);
 			Assert.IsFalse(string.IsNullOrEmpty(message.Body));
 		}
 

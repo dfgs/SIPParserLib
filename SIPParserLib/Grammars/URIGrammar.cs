@@ -65,10 +65,10 @@ namespace SIPParserLib
 														 from _ in Parse.Char('=')
 													   from value in Host
 													   select new URLParameter(name, value);
-		public static ISingleParser<URLParameter> OtherParam = from name in CommonGrammar.Alpha.OneOrMoreTimes().ToStringParser()
-														 from _ in Parse.Char('=')
-														 from value in Parse.Except(';').OneOrMoreTimes().ToStringParser()
-														 select new URLParameter(name, value);
+		public static ISingleParser<URLParameter> OtherParam = from name in CommonGrammar.Token
+															   from value in Parse.ZeroOrOneTime(from _ in  Parse.Char('=')
+																from value in Parse.Except(';').OneOrMoreTimes().ToStringParser() select value)
+														 select new URLParameter(name, value.FirstOrDefault()??"");
 
 		public static ISingleParser<URLParameter> URLParameter = TransportParam.Or(UserParam).Or(MethodParam).Or(TTLParam).Or(MaddrParam).Or(OtherParam);
 
@@ -79,7 +79,7 @@ namespace SIPParserLib
 			);
 
 	
-		public static ISingleParser<Header> Header = from name in CommonGrammar.Alpha.OneOrMoreTimes().ToStringParser()
+		public static ISingleParser<Header> Header = from name in CommonGrammar.Token
 											   from _ in Parse.Char('=')
 														 from value in CommonGrammar.Alphanum.OneOrMoreTimes().ToStringParser()
 											   select new Header(name, value);

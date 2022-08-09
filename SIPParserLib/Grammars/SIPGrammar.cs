@@ -61,7 +61,7 @@ namespace SIPParserLib
         public static ISingleParser<MessageHeader> WarningHeader = from _ in Parse.String("Warning: ").ReaderIncludes(' ') from value in HeaderValue from eol in EOL select new WarningHeader(value);
         public static ISingleParser<MessageHeader> WWWAuthenticateHeader = from _ in Parse.String("WWW-Authenticate: ").ReaderIncludes(' ') from value in HeaderValue from eol in EOL select new WWWAuthenticateHeader(value);
 
-        public static ISingleParser<MessageHeader> CustomHeader = from name in Parse.Except(':').OneOrMoreTimes().ToStringParser() from __ in Parse.String(": ").ReaderIncludes(' ') from value in HeaderValue from eol in EOL select new CustomHeader(name,value);
+        public static ISingleParser<MessageHeader> CustomHeader = from name in CommonGrammar.Token from __ in Parse.String(": ").ReaderIncludes(' ') from value in HeaderValue from eol in EOL select new CustomHeader(name,value);
 
         public static IMultipleParser<MessageHeader> MessageHeaders = (AcceptHeader.Or(AcceptEncodingHeader).Or(AllowHeader).Or(AcceptLanguageHeader).Or(AuthorizationHeader).Or(CallIDHeader).Or(ContactHeader).Or(ContentEncodingHeader).Or(ContentLengthHeader).Or(ContentTypeHeader).Or(CSeqHeader).Or(DateHeader).Or(EncryptionHeader).Or(ExpiresHeader).Or(FromHeader).Or(HideHeader).Or(MaxForwardsHeader).Or(OrganizationHeader).Or(PriorityHeader).Or(ProxyAuthenticateHeader).Or(ProxyAuthorizationHeader).Or(ProxyRequireHeader).Or(RecordRouteHeader).Or(RequireHeader).Or(ResponseKeyHeader).Or(RetryAfterHeader).Or(RouteHeader).Or(ServerHeader).Or(SubjetHeader).Or(TimestampHeader).Or(ToHeader).Or(UnsupportedHeader).Or(UserAgentHeader).Or(ViaHeader).Or(WarningHeader).Or(WWWAuthenticateHeader).Or(CustomHeader)).ZeroOrMoreTimes();
 

@@ -29,5 +29,9 @@ namespace SIPParserLib
 			this.Method = Method;this.RequestURI = RequestURI; this.SIPVersion= SIPVersion;
 		}
 
+		public override string ToString()
+		{
+			return $"{Method} {RequestURI}";
+		}
 	}
 }

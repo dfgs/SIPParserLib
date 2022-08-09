@@ -25,6 +25,8 @@ namespace SIPParserLib
 		}
 		public override string ToString()
 		{
+			if (Value == null) return Name;
+			if (Value.ToString() == "") return Name;
 			return $"{Name}={Value}";
 		}
 

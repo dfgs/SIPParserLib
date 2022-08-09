@@ -18,6 +18,12 @@ namespace SIPParserLib.UnitTest
 			parameter = URIGrammar.URLParameter.Parse("user=phone");
 			Assert.AreEqual("user", parameter.Name);
 			Assert.AreEqual("phone", parameter.Value);
+			parameter = URIGrammar.URLParameter.Parse("user=phone");
+			Assert.AreEqual("user", parameter.Name);
+			Assert.AreEqual("phone", parameter.Value);
+			parameter = URIGrammar.URLParameter.Parse("sdp_iwf");
+			Assert.AreEqual("sdp_iwf", parameter.Name);
+			Assert.AreEqual("", parameter.Value);
 		}
 		[TestMethod]
 		public void ShouldParseURLParameters()

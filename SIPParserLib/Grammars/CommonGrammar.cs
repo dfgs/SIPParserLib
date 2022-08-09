@@ -26,5 +26,9 @@ namespace SIPParserLib
 
 		public static ISingleParser<char> Unreserved = Alphanum.Or(Mark);
 
+		public static ISingleParser<string> Token = Parse.Except('(', ')', '<', '>', '@', ',', ';', ':', '\\', '<', '>', '/', '[', ']', '?', '=', '{', '}', '\r', '\n').OneOrMoreTimes().ToStringParser();
+
+		public static ISingleParser<char> Separators = Parse.AnyOf('(', ')', '<', '>', '@', ',', ';', ':', '\\' , '<', '>' , '/', '[', ']', '?', '=','{', '}','\r','\n');
+
 	}
 }
