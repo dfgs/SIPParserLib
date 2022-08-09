@@ -33,7 +33,19 @@ namespace SIPParserLib.UnitTest
 			Assert.AreEqual("Session-ID", result.Name);
 			Assert.AreEqual("23711d2948484865b7f1c3008742bb56;remote=00000000000000000000000000000000", result.Value);
 		}
+		[TestMethod]
+		public void ShouldParseFromToHeader()
+		{
+			MessageHeader<Address> result;
 
+			result = (MessageHeader<Address>)SIPGrammar.FromHeader.Parse("From: <sip:+33663326291@185.221.88.177;user=phone>;tag=SDfefdf03-007302670000fdcf\r\n", ' ');
+			Assert.AreEqual("From", result.Name);
+			Assert.AreEqual("SDfefdf03-007302670000fdcf", result.Value.Tag);
+
+			result = (MessageHeader<Address>)SIPGrammar.ToHeader.Parse("To: <sip:+33663326291@185.221.88.177;user=phone>;tag=SDfefdf03-007302670000fdcf\r\n", ' ');
+			Assert.AreEqual("To", result.Name);
+			Assert.AreEqual("SDfefdf03-007302670000fdcf", result.Value.Tag);
+		}
 		[TestMethod]
 		public void ShouldParseHeaderLine1()
 		{

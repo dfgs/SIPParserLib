@@ -23,10 +23,7 @@ namespace SIPParserLib
 													 ) 
 												 select new UserInfo(user,password.FirstOrDefault());
 
-		// hostname        = *(domainlabel "." ) toplabel["."]
-		// domainlabel = alphanum | alphanum *(alphanum | "-") alphanum
-		// toplabel = alpha | alpha *(alphanum | "-") alphanum
-
+		
 		public static ISingleParser<string> DomainLabel = CommonGrammar.Alphanum.OneOrMoreTimes().Then(Parse.Char('-').Then(CommonGrammar.Alphanum.OneOrMoreTimes()).ZeroOrMoreTimes()).ToStringParser();
 		public static ISingleParser<string> TopLabel = CommonGrammar.Alpha.Then(CommonGrammar.Alphanum.ZeroOrMoreTimes()).Then(Parse.Char('-').Then(CommonGrammar.Alphanum.OneOrMoreTimes()).ZeroOrMoreTimes()).ToStringParser();
 		public static ISingleParser<string> Hostname = URIGrammar.DomainLabel.Then(Parse.Char('.').ToStringParser().Then(TopLabel).ZeroOrMoreTimes()).ToStringParser();
@@ -97,6 +94,14 @@ namespace SIPParserLib
 			from headers in Headers
 			select new URI(userInfo.FirstOrDefault(),hostPort,urlParameters.ToArray(),headers.ToArray());
 
+		public static ISingleParser<string> TagParam = from _ in Parse.String(";tag=") from value in CommonGrammar.Token select value;
+		public static ISingleParser<Address> URIAddress = from uri in RequestURI from tag in TagParam.ZeroOrOneTime() select new Address("", uri,tag.FirstOrDefault()??"");
+		public static ISingleParser<Address> NamedAddress = from displayName in CommonGrammar.QuotedString.Or(CommonGrammar.Token).ZeroOrOneTime() 
+															from _ in Parse.Char('<') from uri in RequestURI from __ in Parse.Char('>')
+															from tag in TagParam.ZeroOrOneTime()
+															select new Address(displayName.FirstOrDefault()??"", uri, tag.FirstOrDefault() ?? "");
+
+		public static ISingleParser<Address> Address = URIAddress.Or(NamedAddress);
 
 	}
 }

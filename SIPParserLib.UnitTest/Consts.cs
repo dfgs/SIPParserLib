@@ -50,6 +50,12 @@ namespace SIPParserLib.UnitTest
         public static string URI11 = "sip:j.doe@big.com?subject=project&name=test";
         public static string URI12 = "sip:0243444265@100.127.1.1;transport=UDP;user=phone";
 
+        public static string Address1 = "\"A. G. Bell\" <sip:agb@bell-telephone.com>";
+        public static string Address2 = "sip:+12125551212@server.phone2net.com";
+        public static string Address3 = "Anonymous <sip:c8oqz84zk7z@privacy.org>";
+        public static string Address4 = "<sip:+33663326291@185.221.88.177;user=phone>;tag=SDfefdf03-007302670000fdcf";
+
+
     }
 
 }

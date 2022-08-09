@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace SIPParserLib
 {
-	public class ToHeader:MessageHeader<string>
+	public class ToHeader:MessageHeader<Address>
 	{
 		public override string Name => "To";
-		public ToHeader(string Value):base(Value)
+		public ToHeader(Address Value):base(Value)
 		{
 		}
 

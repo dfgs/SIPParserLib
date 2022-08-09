@@ -15,23 +15,13 @@ namespace SIPParserLib
 			private set;
 		}
 
-		public MessageHeader[] Headers
-		{
-			get;
-			private set;
-		}
+		
 
-		public string Body
-		{
-			get;
-			private set;
-		}
+		
 
-		public Response(StatusLine StatusLine, MessageHeader[] Headers, string Body)
+		public Response(StatusLine StatusLine, MessageHeader[] Headers, string Body) : base(Headers,Body)
 		{
 			this.StatusLine = StatusLine;
-			this.Headers = Headers;
-			this.Body = Body;
 		}
 
 	}

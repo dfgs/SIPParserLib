@@ -14,23 +14,10 @@ namespace SIPParserLib
 			private set;
 		}
 
-		public MessageHeader[] Headers
-		{
-			get;
-			private set;
-		}
 
-		public string Body
-		{
-			get;
-			private set;
-		}
-
-		public Request(RequestLine RequestLine, MessageHeader[] Headers,string Body)
+		public Request(RequestLine RequestLine, MessageHeader[] Headers,string Body):base(Headers,Body)
 		{
 			this.RequestLine = RequestLine;
-			this.Headers = Headers;
-			this.Body = Body;
 		}
 
 	}

@@ -13,10 +13,13 @@ namespace SIPParserLib
 		public static ISingleParser<char> Mark = Parse.AnyOf('-', '_', '.', '!', '~', '*', '\'', '(', ')');
 		public static ISingleParser<char> Hex = Parse.AnyOf('A', 'B', 'C', 'D', 'E', 'F', 'a', 'b', 'c', 'd', 'e', 'f').Or(Digit);
 		public static ISingleParser<char> Escaped = from _ in Parse.Char('%')
-												from a in Hex
-												from b in Hex
-												select (char)((a-48) * 16 + (b-48));
-												
+													from a in Hex
+													from b in Hex
+													select (char)((a - 48) * 16 + (b - 48));
+		public static ISingleParser<char> QuotedPair = from _ in Parse.Char('\\')
+													from value in Parse.Any()
+													select value;
+
 
 
 		public static ISingleParser<char> UpAlpha = Parse.AnyInRange('A', 'Z');
@@ -27,6 +30,10 @@ namespace SIPParserLib
 		public static ISingleParser<char> Unreserved = Alphanum.Or(Mark);
 
 		public static ISingleParser<string> Token = Parse.Except('(', ')', '<', '>', '@', ',', ';', ':', '\\', '<', '>', '/', '[', ']', '?', '=', '{', '}', '\r', '\n').OneOrMoreTimes().ToStringParser();
+		public static ISingleParser<string> QuotedString = from _ in Parse.Char('"')
+														   from value in QuotedPair.Or(Parse.Except('"')).OneOrMoreTimes().ReaderIncludes(' ').ToStringParser()
+														   from __ in Parse.Char('"')
+														   select value;
 
 		public static ISingleParser<char> Separators = Parse.AnyOf('(', ')', '<', '>', '@', ',', ';', ':', '\\' , '<', '>' , '/', '[', ']', '?', '=','{', '}','\r','\n');
 

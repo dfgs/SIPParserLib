@@ -38,7 +38,7 @@ namespace SIPParserLib
         public static ISingleParser<MessageHeader> DateHeader = from _ in Parse.String("Date: ").ReaderIncludes(' ') from value in HeaderValue from eol in EOL select new DateHeader(value);
         public static ISingleParser<MessageHeader> EncryptionHeader = from _ in Parse.String("Encryption: ").ReaderIncludes(' ') from value in HeaderValue from eol in EOL select new EncryptionHeader(value);
         public static ISingleParser<MessageHeader> ExpiresHeader = from _ in Parse.String("Expires: ").ReaderIncludes(' ') from value in HeaderValue from eol in EOL select new ExpiresHeader(value);
-        public static ISingleParser<MessageHeader> FromHeader = from _ in Parse.String("From: ").ReaderIncludes(' ') from value in HeaderValue from eol in EOL select new FromHeader(value);
+        public static ISingleParser<MessageHeader> FromHeader = from _ in Parse.String("From: ").ReaderIncludes(' ') from value in URIGrammar.Address from eol in EOL select new FromHeader(value);
         public static ISingleParser<MessageHeader> HideHeader = from _ in Parse.String("Hide: ").ReaderIncludes(' ') from value in HeaderValue from eol in EOL select new HideHeader(value);
         public static ISingleParser<MessageHeader> MaxForwardsHeader = from _ in Parse.String("Max-Forwards: ").ReaderIncludes(' ') from value in HeaderValue from eol in EOL select new MaxForwardsHeader(value);
         public static ISingleParser<MessageHeader> OrganizationHeader = from _ in Parse.String("Organization: ").ReaderIncludes(' ') from value in HeaderValue from eol in EOL select new OrganizationHeader(value);
@@ -54,7 +54,7 @@ namespace SIPParserLib
         public static ISingleParser<MessageHeader> ServerHeader = from _ in Parse.String("Server: ").ReaderIncludes(' ') from value in HeaderValue from eol in EOL select new ServerHeader(value);
         public static ISingleParser<MessageHeader> SubjetHeader = from _ in Parse.String("Subject: ").ReaderIncludes(' ') from value in HeaderValue from eol in EOL select new SubjetHeader(value);
         public static ISingleParser<MessageHeader> TimestampHeader = from _ in Parse.String("Timestamp: ").ReaderIncludes(' ') from value in HeaderValue from eol in EOL select new TimestampHeader(value);
-        public static ISingleParser<MessageHeader> ToHeader = from _ in Parse.String("To: ").ReaderIncludes(' ') from value in HeaderValue from eol in EOL select new ToHeader(value);
+        public static ISingleParser<MessageHeader> ToHeader = from _ in Parse.String("To: ").ReaderIncludes(' ') from value in URIGrammar.Address from eol in EOL select new ToHeader(value);
         public static ISingleParser<MessageHeader> UnsupportedHeader = from _ in Parse.String("Unsupported: ").ReaderIncludes(' ') from value in HeaderValue from eol in EOL select new UnsupportedHeader(value);
         public static ISingleParser<MessageHeader> UserAgentHeader = from _ in Parse.String("User-Agent: ").ReaderIncludes(' ') from value in Parse.Except('\r').ReaderIncludes(' ').OneOrMoreTimes().ToStringParser() from eol in EOL select new UserAgentHeader(value);
         public static ISingleParser<MessageHeader> ViaHeader = from _ in Parse.String("Via: ").ReaderIncludes(' ') from value in HeaderValue from eol in EOL select new ViaHeader(value);

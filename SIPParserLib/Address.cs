@@ -1,0 +1,39 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace SIPParserLib
+{
+	public struct Address
+	{
+		public string DisplayName
+		{
+			get;
+			private set;
+		}
+		public URI URI
+		{
+			get;
+			private set;
+		}
+
+		public string Tag
+		{
+			get;
+			private set;
+		}
+		public Address(string DisplayName,URI URI,string Tag)
+		{
+			this.DisplayName = DisplayName;this.URI = URI;this.Tag = Tag;
+		}
+
+		public override string ToString()
+		{
+			if (string.IsNullOrEmpty(DisplayName)) return URI.ToString(); 
+			else return $"\"{DisplayName}\" <{URI}>";
+		}
+
+	}
+}
