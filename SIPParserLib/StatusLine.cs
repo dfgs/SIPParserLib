@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SIPParserLib
 {
-	public struct StatusLine
+	public class StatusLine
 	{
 		public string StatusCode
 		{

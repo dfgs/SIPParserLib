@@ -8,7 +8,7 @@ namespace SIPParserLib
 {
 	public struct Address
 	{
-		public string DisplayName
+		public string? DisplayName
 		{
 			get;
 			private set;
@@ -19,19 +19,20 @@ namespace SIPParserLib
 			private set;
 		}
 
-		public string Tag
+		public string? Tag
 		{
 			get;
 			private set;
 		}
 		public Address(string DisplayName,URI URI,string Tag)
 		{
+			if (URI == null) throw new ArgumentNullException(nameof(URI));
 			this.DisplayName = DisplayName;this.URI = URI;this.Tag = Tag;
 		}
 
-		public override string ToString()
+		public override string? ToString()
 		{
-			if (string.IsNullOrEmpty(DisplayName)) return URI.ToString(); 
+			if ((DisplayName==null) || (DisplayName=="")) return URI.ToString(); 
 			else return $"\"{DisplayName}\" <{URI}>";
 		}
 

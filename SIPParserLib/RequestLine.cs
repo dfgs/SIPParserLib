@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SIPParserLib
 {
-	public struct RequestLine
+	public class RequestLine
 	{
 		public string Method
 		{

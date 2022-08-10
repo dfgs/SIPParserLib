@@ -85,19 +85,24 @@ namespace SIPParserLib
 														Parse.ZeroOrMoreTimes(from __ in Parse.Char('&') from header in Header select header)
 														)
 													);
-
-		public static ISingleParser<URI> RequestURI =
-			from _ in Parse.String("sip:")
-			from userInfo in Parse.ZeroOrOneTime( from userInfo in UserInfo from __ in Parse.Char('@') select userInfo) 
-			from hostPort in HostPort 
-			from urlParameters in URLParameters
-			from headers in Headers
-			select new URI(userInfo.FirstOrDefault(),hostPort,urlParameters.ToArray(),headers.ToArray());
+		public static ISingleParser<URI> SIPURI =
+				from _ in Parse.String("sip:")
+				from userInfo in Parse.ZeroOrOneTime(from userInfo in UserInfo from __ in Parse.Char('@') select userInfo)
+				from hostPort in HostPort
+				from urlParameters in URLParameters
+				from headers in Headers
+				select new SIPURL(userInfo.FirstOrDefault(), hostPort, urlParameters.ToArray(), headers.ToArray());
+		public static ISingleParser<URI> TELURI =
+				from _ in Parse.String("tel:")
+				from phoneNumber in CommonGrammar.Token
+			select new TELURL(phoneNumber);
+		
+		public static ISingleParser<URI> URI = SIPURI.Or(TELURI);
 
 		public static ISingleParser<string> TagParam = from _ in Parse.String(";tag=") from value in CommonGrammar.Token select value;
-		public static ISingleParser<Address> URIAddress = from uri in RequestURI from tag in TagParam.ZeroOrOneTime() select new Address("", uri,tag.FirstOrDefault()??"");
+		public static ISingleParser<Address> URIAddress = from uri in URI from tag in TagParam.ZeroOrOneTime() select new Address("", uri,tag.FirstOrDefault()??"");
 		public static ISingleParser<Address> NamedAddress = from displayName in CommonGrammar.QuotedString.Or(CommonGrammar.Token).ZeroOrOneTime() 
-															from _ in Parse.Char('<') from uri in RequestURI from __ in Parse.Char('>')
+															from _ in Parse.Char('<') from uri in URI from __ in Parse.Char('>')
 															from tag in TagParam.ZeroOrOneTime()
 															select new Address(displayName.FirstOrDefault()??"", uri, tag.FirstOrDefault() ?? "");
 

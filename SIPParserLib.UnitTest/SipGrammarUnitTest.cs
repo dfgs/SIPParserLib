@@ -88,7 +88,7 @@ namespace SIPParserLib.UnitTest
 			result = SIPGrammar.RequestLine.Parse(Consts.RequestLine1, ' ');
 			Assert.AreEqual("INVITE", result.Method);
 			Assert.AreEqual("SIP/2.0", result.SIPVersion);
-			Assert.AreEqual("ecb.core.nord:5060", result.RequestURI.HostPort.ToString());
+			Assert.AreEqual("ecb.core.nord:5060", ((SIPURL)result.RequestURI).HostPort.ToString());
 			Assert.AreEqual("sip:+33140143960@ecb.core.nord:5060;user=phone", result.RequestURI.ToString());
 		}
 		[TestMethod]
@@ -99,7 +99,7 @@ namespace SIPParserLib.UnitTest
 			result = SIPGrammar.RequestLine.Parse(Consts.RequestLine2, ' ');
 			Assert.AreEqual("INVITE", result.Method);
 			Assert.AreEqual("SIP/2.0", result.SIPVersion);
-			Assert.AreEqual("100.127.1.1", result.RequestURI.HostPort.ToString());
+			Assert.AreEqual("100.127.1.1", ((SIPURL)result.RequestURI).HostPort.ToString());
 			Assert.AreEqual("sip:0243444265@100.127.1.1;transport=UDP;user=phone", result.RequestURI.ToString());
 		}
 		[TestMethod]
@@ -110,7 +110,7 @@ namespace SIPParserLib.UnitTest
 			result = SIPGrammar.RequestLine.Parse(Consts.RequestLine3, ' ');
 			Assert.AreEqual("ACK", result.Method);
 			Assert.AreEqual("SIP/2.0", result.SIPVersion);
-			Assert.AreEqual("185.221.88.177:5060", result.RequestURI.HostPort.ToString());
+			Assert.AreEqual("185.221.88.177:5060", ((SIPURL)result.RequestURI).HostPort.ToString());
 			Assert.AreEqual("sip:+33663326291@185.221.88.177:5060;user=phone;sdp_iwf;transport=udp", result.RequestURI.ToString());
 		}
 		[TestMethod]
@@ -132,7 +132,7 @@ namespace SIPParserLib.UnitTest
 			message=(Request)SIPGrammar.SIPMessage.Parse(Consts.Invite1,' ');
 			Assert.AreEqual(13, message.Headers.Length);
 			Assert.AreEqual("INVITE", message.RequestLine.Method);
-			Assert.AreEqual("+33140143960", message.RequestLine.RequestURI.UserInfo.User);
+			Assert.AreEqual("+33140143960", ((SIPURL)message.RequestLine.RequestURI).UserInfo.User);
 			Assert.IsFalse(string.IsNullOrEmpty(message.Body));
 		}
 
@@ -148,7 +148,7 @@ namespace SIPParserLib.UnitTest
 			message = (Request)SIPGrammar.SIPMessage.Parse(Consts.Invite2, ' ');
 			Assert.AreEqual(15, message.Headers.Length);
 			Assert.AreEqual("INVITE", message.RequestLine.Method);
-			Assert.AreEqual("0243444265", message.RequestLine.RequestURI.UserInfo.User);
+			Assert.AreEqual("0243444265", ((SIPURL)message.RequestLine.RequestURI).UserInfo.User);
 			Assert.IsFalse(string.IsNullOrEmpty(message.Body));
 		}
 
@@ -186,7 +186,7 @@ namespace SIPParserLib.UnitTest
 			message = (Request)SIPGrammar.SIPMessage.Parse(Consts.ACK1, ' ');
 			Assert.AreEqual(10, message.Headers.Length);
 			Assert.AreEqual("ACK", message.RequestLine.Method);
-			Assert.AreEqual("+33663326291", message.RequestLine.RequestURI.UserInfo.User);
+			Assert.AreEqual("+33663326291", ((SIPURL)message.RequestLine.RequestURI).UserInfo.User);
 			Assert.IsFalse(string.IsNullOrEmpty(message.Body));
 		}
 
