@@ -9,8 +9,22 @@ namespace SIPParserLib
 	public class ViaHeader:MessageHeader<string>
 	{
 		public override string Name => "Via";
-		public ViaHeader(string Value):base(Value)
+
+		public ViaParameter[] Parameters
 		{
+			get;
+			private set;
+		}
+
+		public ViaHeader(string Value, ViaParameter[] Parameters) :base(Value)
+		{
+			this.Parameters = Parameters;
+		}
+
+		public T? GetParameter<T>()
+			where T:ViaParameter
+		{
+			return Parameters.OfType<T>().FirstOrDefault();
 		}
 
 	}

@@ -6,20 +6,12 @@ using System.Threading.Tasks;
 
 namespace SIPParserLib
 {
-	public abstract class URI
+	public class ViaTTL : ViaParameter<byte>
 	{
-		public abstract string Scheme
-		{
-			get;
-		}
-
-		
-		public URI()
+		public override string Name => "ttl";
+		public ViaTTL(byte Value) : base(Value)
 		{
 		}
-
-		public abstract string? ToShortString();
-		
 
 	}
 }

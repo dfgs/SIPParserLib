@@ -46,6 +46,19 @@ namespace SIPParserLib.UnitTest
 			Assert.AreEqual("To", result.Name);
 			Assert.AreEqual("SDfefdf03-007302670000fdcf", result.Value.Tag);
 		}
+
+		[TestMethod]
+		public void ShouldParseViaHeader()
+		{
+			ViaHeader result;
+
+			result = (ViaHeader)SIPGrammar.ViaHeader.Parse("Via: SIP/2.0/UDP 80.10.231.51:5060;branch=z9hG4bKndcutq20e8jk52fcnie0.1;initialinvite=yes\r\n\r\n", ' ');
+			Assert.AreEqual("Via", result.Name);
+			Assert.AreEqual("SIP/2.0/UDP 80.10.231.51:5060", result.Value);
+			Assert.AreEqual("z9hG4bKndcutq20e8jk52fcnie0.1", result.GetParameter<ViaBranch>()?.Value);
+
+		}
+
 		[TestMethod]
 		public void ShouldParseHeaderLine1()
 		{

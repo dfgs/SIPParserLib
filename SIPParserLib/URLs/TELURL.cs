@@ -28,7 +28,11 @@ namespace SIPParserLib
 
 		public override string ToString()
 		{
+			return $"tel:{PhoneNumber}";
+		}
 
+		public override string? ToShortString()
+		{
 			return $"tel:{PhoneNumber}";
 		}
 

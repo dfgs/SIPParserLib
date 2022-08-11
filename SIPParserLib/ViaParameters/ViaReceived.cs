@@ -6,20 +6,12 @@ using System.Threading.Tasks;
 
 namespace SIPParserLib
 {
-	public abstract class URI
+	public class ViaReceived : ViaParameter<HostPort>
 	{
-		public abstract string Scheme
-		{
-			get;
-		}
-
-		
-		public URI()
+		public override string Name => "received";
+		public ViaReceived(HostPort Value) : base(Value)
 		{
 		}
-
-		public abstract string? ToShortString();
-		
 
 	}
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.PortableExecutable;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -35,6 +36,13 @@ namespace SIPParserLib
 			if ((DisplayName==null) || (DisplayName=="")) return URI.ToString(); 
 			else return $"\"{DisplayName}\" <{URI}>";
 		}
+
+		public string? ToShortString()
+		{
+			if ((DisplayName == null) || (DisplayName == "")) return URI.ToShortString();
+			else return $"\"{DisplayName}\" <{URI.ToShortString()}>";
+		}
+
 
 	}
 }

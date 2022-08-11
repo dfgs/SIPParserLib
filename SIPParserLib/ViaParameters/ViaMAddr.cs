@@ -6,20 +6,12 @@ using System.Threading.Tasks;
 
 namespace SIPParserLib
 {
-	public abstract class URI
+	public class ViaMAddr : ViaParameter<string>
 	{
-		public abstract string Scheme
-		{
-			get;
-		}
-
-		
-		public URI()
+		public override string Name => "maddr";
+		public ViaMAddr(string Value) : base(Value)
 		{
 		}
-
-		public abstract string? ToShortString();
-		
 
 	}
 }

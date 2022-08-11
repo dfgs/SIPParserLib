@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.PortableExecutable;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -52,6 +53,11 @@ namespace SIPParserLib
 			else headers = $"?{string.Join('&', Headers)}";
 
 			return $"sip:{UserInfo}@{HostPort}{parameters}{headers}";
+		}
+
+		public override string? ToShortString()
+		{
+			return $"sip:{UserInfo}@{HostPort}";
 		}
 
 	}

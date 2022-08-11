@@ -6,20 +6,12 @@ using System.Threading.Tasks;
 
 namespace SIPParserLib
 {
-	public abstract class URI
+	public class ViaHidden : ViaParameter<string>
 	{
-		public abstract string Scheme
-		{
-			get;
-		}
-
-		
-		public URI()
+		public override string Name => "hidden";
+		public ViaHidden() : base("")
 		{
 		}
-
-		public abstract string? ToShortString();
-		
 
 	}
 }
