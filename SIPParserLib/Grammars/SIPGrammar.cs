@@ -19,9 +19,12 @@ namespace SIPParserLib
         public static ISingleParser<StatusLine> StatusLine = from _ in SIPVersion from  code in Parse.Digit().Then(Parse.Digit()).Then(Parse.Digit()).ToStringParser()
                                                              from reason in Parse.Except('\r').OneOrMoreTimes().ToStringParser() from eol in EOL
                                                              select new StatusLine(code,reason);
-        public static ISingleParser<RequestLine> RequestLine = from method in Method from requestURI in URIGrammar.URI 
-                                                          from sipVersion in SIPVersion from eol in EOL select new RequestLine(method, requestURI, sipVersion); // Method SP Request-URI SP SIP-Version CRLF
-
+        public static ISingleParser<RequestLine> RequestLine = 
+                                                    from method in Method 
+                                                    from requestURI in URIGrammar.URI 
+                                                    from sipVersion in SIPVersion from eol in EOL 
+                                                    select new RequestLine(method, requestURI, sipVersion); // Method SP Request-URI SP SIP-Version CRLF
+ 
 		public static ISingleParser<string> ProtocolName = Parse.String("SIP").Or(CommonGrammar.Token);
 		public static ISingleParser<string> ProtocolVersion = CommonGrammar.Token;
 		public static ISingleParser<string> Transport = Parse.String("UDP").Or(Parse.String("TCP")).Or(CommonGrammar.Token);

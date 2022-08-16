@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Numerics;
 
 namespace SIPParserLib.UnitTest
 {
@@ -45,6 +46,12 @@ namespace SIPParserLib.UnitTest
 			result = (MessageHeader<Address>)SIPGrammar.ToHeader.Parse("To: <sip:+33663326291@185.221.88.177;user=phone>;tag=SDfefdf03-007302670000fdcf\r\n", ' ');
 			Assert.AreEqual("To", result.Name);
 			Assert.AreEqual("SDfefdf03-007302670000fdcf", result.Value.Tag);
+
+			result = (MessageHeader<Address>)SIPGrammar.FromHeader.Parse("From: <sip:+33420100881@100.123.12.10;user=phone>;tag=1c2117732372\r\n", ' ');
+			Assert.AreEqual("From", result.Name);
+			Assert.AreEqual("1c2117732372", result.Value.Tag);
+
+		
 		}
 
 		[TestMethod]
@@ -86,6 +93,17 @@ namespace SIPParserLib.UnitTest
 			MessageHeader[] result;
 
 			result = SIPGrammar.MessageHeaders.Parse(Consts.HeaderLine3, ' ').ToArray();
+			Assert.AreEqual(13, result.Length);
+			Assert.IsTrue(result[0] is ViaHeader);
+			Assert.IsTrue(result[1] is MaxForwardsHeader);
+			Assert.IsTrue(result[2] is FromHeader);
+		}
+		[TestMethod]
+		public void ShouldParseHeaderLine4()
+		{
+			MessageHeader[] result;
+
+			result = SIPGrammar.MessageHeaders.Parse(Consts.HeaderLine4, ' ').ToArray();
 			Assert.AreEqual(12, result.Length);
 			Assert.IsTrue(result[0] is ToHeader);
 			Assert.IsTrue(result[1] is FromHeader);
@@ -119,8 +137,20 @@ namespace SIPParserLib.UnitTest
 		public void ShouldParseRequestLine3()
 		{
 			RequestLine result;
+			
 
 			result = SIPGrammar.RequestLine.Parse(Consts.RequestLine3, ' ');
+			Assert.AreEqual("INVITE", result.Method);
+			Assert.AreEqual("SIP/2.0", result.SIPVersion);
+			Assert.AreEqual("100.127.2.1", ((SIPURL)result.RequestURI).HostPort.ToString());
+			Assert.AreEqual("sip:+33450050545@100.127.2.1;user=phone;BP=1086996", result.RequestURI.ToString());
+		}
+		[TestMethod]
+		public void ShouldParseRequestLine4()
+		{
+			RequestLine result;
+
+			result = SIPGrammar.RequestLine.Parse(Consts.RequestLine4, ' ');
 			Assert.AreEqual("ACK", result.Method);
 			Assert.AreEqual("SIP/2.0", result.SIPVersion);
 			Assert.AreEqual("185.221.88.177:5060", ((SIPURL)result.RequestURI).HostPort.ToString());
@@ -131,7 +161,7 @@ namespace SIPParserLib.UnitTest
 		{
 			StatusLine result;
 
-			result = SIPGrammar.StatusLine.Parse(Consts.StatusLine3, ' ');
+			result = SIPGrammar.StatusLine.Parse(Consts.StatusLine4, ' ');
 			Assert.AreEqual("180", result.StatusCode);
 			Assert.AreEqual("Ringing", result.Reason);
 		}
@@ -162,6 +192,19 @@ namespace SIPParserLib.UnitTest
 			Assert.AreEqual(15, message.Headers.Length);
 			Assert.AreEqual("INVITE", message.RequestLine.Method);
 			Assert.AreEqual("0243444265", ((SIPURL)message.RequestLine.RequestURI).UserInfo.User);
+			Assert.IsFalse(string.IsNullOrEmpty(message.Body));
+		}
+
+
+		[TestMethod]
+		public void ShouldParseInvite3()
+		{
+			Request message;
+
+			message = (Request)SIPGrammar.SIPMessage.Parse(Consts.Invite3, ' ');
+			Assert.AreEqual(13, message.Headers.Length);
+			Assert.AreEqual("INVITE", message.RequestLine.Method);
+			Assert.AreEqual("+33450050545", ((SIPURL)message.RequestLine.RequestURI).UserInfo.User);
 			Assert.IsFalse(string.IsNullOrEmpty(message.Body));
 		}
 

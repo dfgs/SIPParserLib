@@ -1,6 +1,7 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ParserLib;
 using System;
+using System.Numerics;
 
 namespace SIPParserLib.UnitTest
 {
@@ -36,6 +37,16 @@ namespace SIPParserLib.UnitTest
 			Assert.AreEqual("UDP", parameters[0].Value);
 			Assert.AreEqual("user", parameters[1].Name);
 			Assert.AreEqual("phone", parameters[1].Value);
+
+			parameters = URIGrammar.URLParameters.Parse(";user=phone;BP=1086996").ToArray();
+			Assert.AreEqual(2, parameters.Length);
+			Assert.AreEqual("user", parameters[0].Name);
+			Assert.AreEqual("phone", parameters[0].Value);
+			Assert.AreEqual("BP", parameters[1].Name);
+			Assert.AreEqual("1086996", parameters[1].Value);
+
+
+
 		}
 
 		[TestMethod]
@@ -331,6 +342,24 @@ namespace SIPParserLib.UnitTest
 			Assert.AreEqual("tel", uri.Scheme);
 
 		}
+
+		[TestMethod]
+		public void ShouldParseURI14()
+		{
+			SIPURL uri;
+
+		
+			uri = (SIPURL)URIGrammar.URI.Parse(Consts.URI14);
+			Assert.AreEqual("+33450050545", uri.UserInfo.User);
+			Assert.AreEqual("sip", uri.Scheme);
+			Assert.AreEqual(2, uri.Parameters.Length);
+			Assert.AreEqual("user", uri.Parameters[0].Name);
+			Assert.AreEqual("phone", uri.Parameters[0].Value);
+			Assert.AreEqual("BP", uri.Parameters[1].Name);
+			Assert.AreEqual("1086996", uri.Parameters[1].Value);
+
+		}
+
 		[TestMethod]
 		public void ShouldParseAddress1()
 		{
