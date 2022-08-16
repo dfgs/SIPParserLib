@@ -52,11 +52,13 @@ namespace SIPParserLib
 			if (Headers.Length == 0) headers = "";
 			else headers = $"?{string.Join('&', Headers)}";
 
+			if (UserInfo.User == null) return $"sip:{HostPort}{parameters}{headers}";
 			return $"sip:{UserInfo}@{HostPort}{parameters}{headers}";
 		}
 
 		public override string? ToShortString()
 		{
+			if (UserInfo.User==null) return $"sip:{HostPort}";
 			return $"sip:{UserInfo}@{HostPort}";
 		}
 

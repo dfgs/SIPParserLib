@@ -156,6 +156,21 @@ namespace SIPParserLib.UnitTest
 			Assert.AreEqual("185.221.88.177:5060", ((SIPURL)result.RequestURI).HostPort.ToString());
 			Assert.AreEqual("sip:+33663326291@185.221.88.177:5060;user=phone;sdp_iwf;transport=udp", result.RequestURI.ToString());
 		}
+
+		[TestMethod]
+		public void ShouldParseRequestLine5()
+		{
+			RequestLine result;
+
+			result = SIPGrammar.RequestLine.Parse(Consts.RequestLine5, ' ');
+			Assert.AreEqual("ACK", result.Method);
+			Assert.AreEqual("SIP/2.0", result.SIPVersion);
+			Assert.AreEqual("100.127.2.1", ((SIPURL)result.RequestURI).HostPort.ToString());
+			Assert.AreEqual("sip:100.127.2.1;transport=udp;sdp_iwf", result.RequestURI.ToString());
+
+		}
+
+
 		[TestMethod]
 		public void ShouldParseStatusLine3()
 		{
@@ -246,7 +261,17 @@ namespace SIPParserLib.UnitTest
 			Assert.IsFalse(string.IsNullOrEmpty(message.Body));
 		}
 
+		[TestMethod]
+		public void ShouldParseACK2()
+		{
+			Request message;
 
+			message = (Request)SIPGrammar.SIPMessage.Parse(Consts.ACK2, ' ');
+			Assert.AreEqual(10, message.Headers.Length);
+			Assert.AreEqual("ACK", message.RequestLine.Method);
+			Assert.IsNull( ((SIPURL)message.RequestLine.RequestURI).UserInfo.User);
+			Assert.IsTrue(string.IsNullOrEmpty(message.Body));
+		}
 
 	}
 }

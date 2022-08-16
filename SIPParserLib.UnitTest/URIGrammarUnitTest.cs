@@ -359,6 +359,23 @@ namespace SIPParserLib.UnitTest
 			Assert.AreEqual("1086996", uri.Parameters[1].Value);
 
 		}
+		[TestMethod]
+		public void ShouldParseURI15()
+		{
+			SIPURL uri;
+
+
+			uri = (SIPURL)URIGrammar.URI.Parse(Consts.URI15);
+			Assert.AreEqual(null, uri.UserInfo.User);
+			Assert.AreEqual("sip", uri.Scheme);
+			Assert.AreEqual(2, uri.Parameters.Length);
+			Assert.AreEqual("transport", uri.Parameters[0].Name);
+			Assert.AreEqual("udp", uri.Parameters[0].Value);
+			Assert.AreEqual("sdp_iwf", uri.Parameters[1].Name);
+			Assert.AreEqual("", uri.Parameters[1].Value);
+
+		}
+
 
 		[TestMethod]
 		public void ShouldParseAddress1()
