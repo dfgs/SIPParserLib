@@ -12,7 +12,7 @@ namespace SIPParserLib
     {
         public static ISingleParser<string> EOL = Parse.String("\r\n");
 
-        public static ISingleParser<string> Method = Parse.String("INVITE").Or(Parse.String("ACK")).Or(Parse.String("OPTIONS")).Or(Parse.String("BYE")).Or(Parse.String("CANCEL")).Or(Parse.String("REGISTER"));
+        public static ISingleParser<string> Method = Parse.String("INVITE").Or(Parse.String("ACK")).Or(Parse.String("PRACK")).Or(Parse.String("OPTIONS")).Or(Parse.String("BYE")).Or(Parse.String("CANCEL")).Or(Parse.String("REGISTER")).Or(Parse.String("UPDATE"));
  
         public static ISingleParser<string> SIPVersion = Parse.String("SIP/2.0");
 

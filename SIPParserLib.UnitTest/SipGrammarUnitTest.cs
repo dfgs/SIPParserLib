@@ -223,6 +223,54 @@ namespace SIPParserLib.UnitTest
 			Assert.IsFalse(string.IsNullOrEmpty(message.Body));
 		}
 
+		[TestMethod]
+		public void ShouldParseInvite4()
+		{
+			Request message;
+
+			message = (Request)SIPGrammar.SIPMessage.Parse(Consts.Invite4, ' ');
+			Assert.AreEqual(13, message.Headers.Length);
+			Assert.AreEqual("INVITE", message.RequestLine.Method);
+			Assert.AreEqual("0755643784", ((SIPURL)message.RequestLine.RequestURI).UserInfo.User);
+			Assert.IsFalse(string.IsNullOrEmpty(message.Body));
+		}
+
+		[TestMethod]
+		public void ShouldParsePrack1()
+		{
+			Request message;
+
+			message = (Request)SIPGrammar.SIPMessage.Parse(Consts.Prack1, ' ');
+			Assert.IsNotNull(message);
+			Assert.AreEqual("PRACK", message.RequestLine.Method);
+		}
+		[TestMethod]
+		public void ShouldParsePrack2()
+		{
+			Request message;
+
+			message = (Request)SIPGrammar.SIPMessage.Parse(Consts.Prack2, ' ');
+			Assert.IsNotNull(message);
+			Assert.AreEqual("PRACK", message.RequestLine.Method);
+		}
+		[TestMethod]
+		public void ShouldParseUpdate1()
+		{
+			Request message;
+
+			message = (Request)SIPGrammar.SIPMessage.Parse(Consts.Update1, ' ');
+			Assert.IsNotNull(message);
+			Assert.AreEqual("UPDATE", message.RequestLine.Method);
+		}
+		[TestMethod]
+		public void ShouldParseUpdate2()
+		{
+			Request message;
+
+			message = (Request)SIPGrammar.SIPMessage.Parse(Consts.Update2, ' ');
+			Assert.IsNotNull(message);
+			Assert.AreEqual("UPDATE", message.RequestLine.Method);
+		}
 
 		[TestMethod]
 		public void ShouldParseResponse1()
