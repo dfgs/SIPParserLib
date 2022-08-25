@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Newtonsoft.Json;
 using System;
 using System.Numerics;
 
@@ -65,6 +66,38 @@ namespace SIPParserLib.UnitTest
 			Assert.AreEqual("z9hG4bKndcutq20e8jk52fcnie0.1", result.GetParameter<ViaBranch>()?.Value);
 
 		}
+		[TestMethod]
+		public void ShouldParseSessionExpiresHeader()
+		{
+			MessageHeader result;
+
+			result = (MessageHeader)SIPGrammar.CustomHeader.Parse("Session-Expires: 1800;refresher=uac\r\n\r\n", ' ');
+			Assert.AreEqual("Session-Expires", result.Name);
+			//Assert.AreEqual("1800", result.Value);
+			//Assert.AreEqual("z9hG4bKndcutq20e8jk52fcnie0.1", result.GetParameter<ViaBranch>()?.Value);
+
+		}
+		[TestMethod]
+		public void ShouldParseRequireHeader()
+		{
+			RequireHeader result;
+
+			result = (RequireHeader)SIPGrammar.RequireHeader.Parse("Require: timer\r\n", ' ');
+			Assert.AreEqual("Require", result.Name);
+			Assert.AreEqual("timer", result.Value);
+
+		}
+
+		[TestMethod]
+		public void ShouldParseSupportedHeader()
+		{
+			MessageHeader result;
+
+			result = (MessageHeader)SIPGrammar.CustomHeaderWithoutValue.Parse("Supported:\r\n", ' ');
+			Assert.AreEqual("Supported", result.Name);
+
+		}
+
 
 		[TestMethod]
 		public void ShouldParseHeaderLine1()
@@ -104,6 +137,17 @@ namespace SIPParserLib.UnitTest
 			MessageHeader[] result;
 
 			result = SIPGrammar.MessageHeaders.Parse(Consts.HeaderLine4, ' ').ToArray();
+			Assert.AreEqual(15, result.Length);
+			Assert.IsTrue(result[0] is ViaHeader);
+			Assert.IsTrue(result[1] is ToHeader);
+			Assert.IsTrue(result[2] is FromHeader);
+		}
+		[TestMethod]
+		public void ShouldParseHeaderLine5()
+		{
+			MessageHeader[] result;
+
+			result = SIPGrammar.MessageHeaders.Parse(Consts.HeaderLine5, ' ').ToArray();
 			Assert.AreEqual(12, result.Length);
 			Assert.IsTrue(result[0] is ToHeader);
 			Assert.IsTrue(result[1] is FromHeader);
@@ -233,6 +277,15 @@ namespace SIPParserLib.UnitTest
 			Assert.AreEqual("INVITE", message.RequestLine.Method);
 			Assert.AreEqual("0755643784", ((SIPURL)message.RequestLine.RequestURI).UserInfo.User);
 			Assert.IsFalse(string.IsNullOrEmpty(message.Body));
+		}
+
+		[TestMethod]
+		public void ShouldParseInvite5()
+		{
+			Response message;
+
+			message = (Response)SIPGrammar.SIPMessage.Parse(Consts.Invite5, ' ');
+			Assert.AreEqual(15, message.Headers.Length);
 		}
 
 		[TestMethod]
