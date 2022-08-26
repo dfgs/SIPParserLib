@@ -27,7 +27,8 @@ namespace SIPParserLib
 			private set;
 		}
 
-		
+		public override string DisplayValue => $"{NetworkType} {AddressType} {Address}";
+
 
 		public ConnectionField(string NetworkType,string AddressType,string Address)
 		{

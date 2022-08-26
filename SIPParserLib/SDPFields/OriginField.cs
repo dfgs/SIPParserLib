@@ -41,12 +41,15 @@ namespace SIPParserLib
 			private set;
 		}
 
-		
+		public override string DisplayValue => $"{UserName} {SessionID} {SessionVersion} {NetworkType} {AddressType} {Address}";
+
 
 		public OriginField(string UserName,string SessionID,string SessionVersion,string NetworkType,string AddressType,string Address)
 		{
 			this.UserName = UserName;this.SessionID = SessionID;this.SessionVersion = SessionVersion;this.NetworkType = NetworkType;this.AddressType = AddressType;this.Address = Address;
 		}
+
+		
 
 
 	}

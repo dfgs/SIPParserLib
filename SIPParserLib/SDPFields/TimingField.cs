@@ -20,6 +20,7 @@ namespace SIPParserLib
 			get;
 			private set;
 		}
+		public override string DisplayValue => $"{StartTime} {StopTime}";
 
 		public TimingField(uint StartTime,uint StopTime)
 		{

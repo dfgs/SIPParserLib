@@ -25,5 +25,11 @@ namespace SIPParserLib
 			this.Name = Name;this.Value = Value; 
 		}
 
+		public override string ToString()
+		{
+			if (Value == null) return Name;
+			return $"{Name}:{Value}";
+		}
+
 	}
 }

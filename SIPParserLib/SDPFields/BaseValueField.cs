@@ -15,6 +15,8 @@ namespace SIPParserLib
 			private set;
 		}
 
+		public override string DisplayValue => Value?.ToString()??"";
+
 		public BaseValueField(T Value)
 		{
 			this.Value = Value;

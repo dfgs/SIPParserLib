@@ -287,6 +287,14 @@ namespace SIPParserLib.UnitTest
 			message = (Response)SIPGrammar.SIPMessage.Parse(Consts.Invite5, ' ');
 			Assert.AreEqual(15, message.Headers.Length);
 		}
+		[TestMethod]
+		public void ShouldParseInvite6()
+		{
+			Request message;
+
+			message = (Request)SIPGrammar.SIPMessage.Parse(Consts.Invite6, ' ');
+			Assert.AreEqual(15, message.Headers.Length);
+		}
 
 		[TestMethod]
 		public void ShouldParsePrack1()

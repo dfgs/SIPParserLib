@@ -19,6 +19,7 @@ namespace SIPParserLib
 			get;
 			private set;
 		}
+		public override string DisplayValue =>Value?.ToString()??"";
 
 		public CustomSDPField(char Name,string Value)
 		{

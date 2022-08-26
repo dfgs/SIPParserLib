@@ -9,7 +9,10 @@ namespace SIPParserLib
 	public class SDP
 	{
 		private SDPField[] fields;
-
+		public IEnumerable<SDPField> Fields
+		{
+			get => fields;
+		}
 		public int Count
 		{
 			get { return fields.Length; }

@@ -31,7 +31,8 @@ namespace SIPParserLib
 			private set;
 		}
 
-		
+		public override string DisplayValue => $"{Media} {Port} {Protocol} {Format}";
+
 
 		public MediaField(string Media,ushort Port,string Protocol,string Format)
 		{

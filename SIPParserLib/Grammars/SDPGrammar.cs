@@ -98,7 +98,7 @@ namespace SIPParserLib
 		public static ISingleParser<SDPField> CustomSDPField =
 			from name in Parse.Any()
 			from _ in Parse.Char('=')
-			from value in Parse.Except('\r').OneOrMoreTimes().ToStringParser()
+			from value in Parse.Except('\r').ReaderIncludes(' ').OneOrMoreTimes().ToStringParser()
 			from __ in EOL
 			select new CustomSDPField(name, value);
 
