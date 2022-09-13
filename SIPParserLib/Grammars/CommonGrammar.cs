@@ -31,7 +31,7 @@ namespace SIPParserLib
 
 		public static ISingleParser<string> Token = Parse.Except('(', ')', '<', '>', '@', ',', ';', ':', '\\', '<', '>', '/', '[', ']', '?', '=', '{', '}', '\r', '\n',' ').ReaderIncludes(' ').OneOrMoreTimes().ToStringParser();
 		public static ISingleParser<string> QuotedString = from _ in Parse.Char('"')
-														   from value in QuotedPair.Or(Parse.Except('"')).OneOrMoreTimes().ReaderIncludes(' ').ToStringParser()
+														   from value in QuotedPair.Or(Parse.Except('"')).ZeroOrMoreTimes().ReaderIncludes(' ').ToStringParser()
 														   from __ in Parse.Char('"')
 														   select value;
 

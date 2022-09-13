@@ -23,6 +23,8 @@ namespace SIPParserLib.UnitTest
 			Assert.AreEqual("A. G. Bell", value);
 			value = CommonGrammar.QuotedString.Parse("\"TkUserFN0000197441 TkUserLN0000197441\"", ' ');
 			Assert.AreEqual("TkUserFN0000197441 TkUserLN0000197441", value);
+			value = CommonGrammar.QuotedString.Parse("\"\"", ' ');
+			Assert.AreEqual("", value);
 		}
 		[TestMethod]
 		public void ShouldParseToken()
