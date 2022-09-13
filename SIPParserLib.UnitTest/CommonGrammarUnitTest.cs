@@ -21,6 +21,8 @@ namespace SIPParserLib.UnitTest
 			Assert.AreEqual("Test Test", value);
 			value = CommonGrammar.QuotedString.Parse("\"A. G. Bell\"", ' ');
 			Assert.AreEqual("A. G. Bell", value);
+			value = CommonGrammar.QuotedString.Parse("\"TkUserFN0000197441 TkUserLN0000197441\"", ' ');
+			Assert.AreEqual("TkUserFN0000197441 TkUserLN0000197441", value);
 		}
 		[TestMethod]
 		public void ShouldParseToken()

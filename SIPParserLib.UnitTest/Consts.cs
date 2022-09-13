@@ -75,13 +75,15 @@ namespace SIPParserLib.UnitTest
 		public static string URI13 = "tel:+334556677";
 		public static string URI14 = "sip:+33450050545@100.127.2.1;user=phone;BP=1086996";
 		public static string URI15 = "sip:100.127.2.1;transport=udp;sdp_iwf";
+		public static string URI16 = "sip:+33549400033@ent.bouyguestelecom.fr;user=phone;eribindingid=1638919091564375;eribind-generated-at=10.79.21.198";
 
 		public static string Address1 = "\"A. G. Bell\" <sip:agb@bell-telephone.com>";
         public static string Address2 = "sip:+12125551212@server.phone2net.com";
         public static string Address3 = "Anonymous <sip:c8oqz84zk7z@privacy.org>";
-        public static string Address4 = "<sip:+33663326291@185.221.88.177;user=phone>;tag=SDfefdf03-007302670000fdcf";
+		public static string Address4 = "<sip:+33663326291@185.221.88.177;user=phone>;tag=SDfefdf03-007302670000fdcf";
+		public static string Address5 = "\"TkUserFN0000197441 TkUserLN0000197441\" <sip:+33549400033@ent.bouyguestelecom.fr;user=phone;eribindingid=1638919091564375;eribind-generated-at=10.79.21.198>";
 
-        public static string SDP1 = "v=0\r\no=- 616920219 1669365097 IN IP4 185.221.89.20\r\ns=session\r\nc=IN IP4 185.221.89.20\r\nt=0 0\r\nm=audio 21606 RTP/AVP 8 101\r\na=rtpmap:8 PCMA/8000\r\na=rtpmap:101 telephone-event/8000\r\na=fmtp:101 0-15\r\na=ptime:20\r\n\r\n";
+		public static string SDP1 = "v=0\r\no=- 616920219 1669365097 IN IP4 185.221.89.20\r\ns=session\r\nc=IN IP4 185.221.89.20\r\nt=0 0\r\nm=audio 21606 RTP/AVP 8 101\r\na=rtpmap:8 PCMA/8000\r\na=rtpmap:101 telephone-event/8000\r\na=fmtp:101 0-15\r\na=ptime:20\r\n\r\n";
 
 	}
 

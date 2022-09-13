@@ -38,33 +38,45 @@ namespace SIPParserLib
 		{
 			return fields.OfType<T>();
 		}
-		public IEnumerable<int> GetMediaIndices()
+		public IEnumerable<string> GetRTPCodecs()
 		{
 			MatchCollection matches;
 			MediaField? mediaField;
+			Match codecMatch;
+
+			string index;
 
 			mediaField = GetField<MediaField>();
 			if (mediaField == null) yield break;
 			matches= mediaListRegex.Matches(mediaField.Format);
 			
-			foreach(Match match in matches)
+			foreach(Match indexMatch in matches)
 			{
-				yield return int.Parse(match.Groups["Index"].Value);
+				index= indexMatch.Groups["Index"].Value;
+
+				foreach (AttributeField attributeField in GetFields<AttributeField>().Where(item => item.Value.Name == "rtpmap"))
+				{
+					codecMatch = codecRegex.Match(attributeField?.Value.Value ?? "");
+					if (!codecMatch.Success) continue;
+					if (codecMatch.Groups["Index"].Value == index) yield return codecMatch.Groups["Name"].Value;
+				}
 			}
 		}
-		public string? GetCodec(int MediaIndex)
+		public string? GetCodec()
 		{
-			Match match;
-			string index;
+			MediaField? mediaField;
 
-			index = MediaIndex.ToString();
-			foreach(AttributeField attributeField in GetFields<AttributeField>().Where(item=>item.Value.Name=="rtpmap"))
+
+			mediaField = GetField<MediaField>();
+			if (mediaField == null) return null;
+
+			switch (mediaField.Protocol)
 			{
-				match = codecRegex.Match(attributeField?.Value.Value??"");
-				if (!match.Success) continue;
-				if (match.Groups["Index"].Value == index) return match.Groups["Name"].Value;
+				case "udptl":return mediaField.Format;
+				case "RTP/AVP": return GetRTPCodecs().FirstOrDefault();
+				default:return mediaField.Format;
 			}
-			return null;
+			
 		}
 
 

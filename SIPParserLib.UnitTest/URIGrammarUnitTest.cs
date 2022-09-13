@@ -375,19 +375,42 @@ namespace SIPParserLib.UnitTest
 			Assert.AreEqual("", uri.Parameters[1].Value);
 
 		}
+		[TestMethod]
+		public void ShouldParseURI16()
+		{
+			SIPURL uri;
 
+
+			uri = (SIPURL)URIGrammar.URI.Parse(Consts.URI16);
+			Assert.AreEqual("+33549400033", uri.UserInfo.User);
+			Assert.AreEqual("sip", uri.Scheme);
+			Assert.AreEqual(3, uri.Parameters.Length);
+			Assert.AreEqual("user", uri.Parameters[0].Name);
+			Assert.AreEqual("phone", uri.Parameters[0].Value);
+			Assert.AreEqual("eribindingid", uri.Parameters[1].Name);
+			Assert.AreEqual("1638919091564375", uri.Parameters[1].Value);
+			Assert.AreEqual("eribind-generated-at", uri.Parameters[2].Name);
+			Assert.AreEqual("10.79.21.198", uri.Parameters[2].Value);
+
+		}
 
 		[TestMethod]
 		public void ShouldParseAddress1()
 		{
 			Address address;
 
-			address = URIGrammar.Address.Parse(Consts.Address1,' ');
+			address = URIGrammar.Address.Parse(Consts.Address1, ' ');
 			Assert.AreEqual("A. G. Bell", address.DisplayName);
 			Assert.AreEqual("agb", ((SIPURL)address.URI).UserInfo.User);
 			Assert.AreEqual("bell-telephone.com", ((SIPURL)address.URI).HostPort.Host);
 			Assert.AreEqual("", address.Tag);
 			Assert.AreEqual(Consts.Address1, address.ToString());
+		}
+
+		[TestMethod]
+		public void ShouldParseAddress2()
+		{
+			Address address;
 
 			address = URIGrammar.Address.Parse(Consts.Address2, ' ');
 			Assert.AreEqual("", address.DisplayName);
@@ -395,6 +418,12 @@ namespace SIPParserLib.UnitTest
 			Assert.AreEqual("server.phone2net.com", ((SIPURL)address.URI).HostPort.Host);
 			Assert.AreEqual("", address.Tag);
 			Assert.AreEqual(Consts.Address2, address.ToString());
+		}
+
+		[TestMethod]
+		public void ShouldParseAddress3()
+		{
+			Address address;
 
 			address = URIGrammar.Address.Parse(Consts.Address3, ' ');
 			Assert.AreEqual("Anonymous", address.DisplayName);
@@ -402,7 +431,14 @@ namespace SIPParserLib.UnitTest
 			Assert.AreEqual("privacy.org", ((SIPURL)address.URI).HostPort.Host);
 			Assert.AreEqual("", address.Tag);
 			Assert.AreEqual("\"Anonymous\" <sip:c8oqz84zk7z@privacy.org>", address.ToString());
+		}
 
+		[TestMethod]
+		public void ShouldParseAddress4()
+		{
+			Address address;
+
+			
 			address = URIGrammar.Address.Parse(Consts.Address4, ' ');
 			Assert.AreEqual("", address.DisplayName);
 			Assert.AreEqual("+33663326291", ((SIPURL)address.URI).UserInfo.User);
@@ -410,6 +446,22 @@ namespace SIPParserLib.UnitTest
 			Assert.AreEqual("user=phone", ((SIPURL)address.URI).Parameters[0].ToString());
 			Assert.AreEqual("SDfefdf03-007302670000fdcf", address.Tag);
 		}
+
+		[TestMethod]
+		public void ShouldParseAddress5()
+		{
+			Address address;
+
+			address = URIGrammar.NamedAddress.Parse(Consts.Address5, ' ');
+			Assert.AreEqual("TkUserFN0000197441 TkUserLN0000197441", address.DisplayName);
+			Assert.AreEqual("+33549400033", ((SIPURL)address.URI).UserInfo.User);
+			Assert.AreEqual("ent.bouyguestelecom.fr", ((SIPURL)address.URI).HostPort.Host);
+			Assert.AreEqual("user=phone", ((SIPURL)address.URI).Parameters[0].ToString());
+			Assert.AreEqual("eribindingid=1638919091564375", ((SIPURL)address.URI).Parameters[1].ToString());
+			Assert.AreEqual("eribind-generated-at=10.79.21.198", ((SIPURL)address.URI).Parameters[2].ToString());
+		}
+
+		
 
 
 

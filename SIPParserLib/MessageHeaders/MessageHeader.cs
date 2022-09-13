@@ -12,6 +12,8 @@ namespace SIPParserLib
 		{
 			get;
 		}
+
+		public abstract string GetStringValue();
 	}
 	public abstract class MessageHeader<T>:MessageHeader
 	{
@@ -33,6 +35,10 @@ namespace SIPParserLib
 			return $"{Name}: {Value}";
 		}
 
+		public override string GetStringValue()
+		{
+			return Value?.ToString()??"";
+		}
 
 	}
 
