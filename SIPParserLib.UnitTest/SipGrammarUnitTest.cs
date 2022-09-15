@@ -213,7 +213,17 @@ namespace SIPParserLib.UnitTest
 			Assert.AreEqual("sip:100.127.2.1;transport=udp;sdp_iwf", result.RequestURI.ToString());
 
 		}
+		[TestMethod]
+		public void ShouldParseRequestLine6()
+		{
+			RequestLine result;
 
+			result = SIPGrammar.RequestLine.Parse(Consts.RequestLine6, ' ');
+			Assert.AreEqual("OPTIONS", result.Method);
+			Assert.AreEqual("SIP/2.0", result.SIPVersion);
+			Assert.AreEqual("sip:sip.pstnhub.microsoft.com", result.RequestURI.ToString());
+
+		}
 
 		[TestMethod]
 		public void ShouldParseStatusLine3()
@@ -381,6 +391,17 @@ namespace SIPParserLib.UnitTest
 			Assert.IsNull( ((SIPURL)message.RequestLine.RequestURI).UserInfo.User);
 			Assert.IsTrue(string.IsNullOrEmpty(message.Body));
 		}
+
+
+		[TestMethod]
+		public void ShouldParseOption1()
+		{
+			Request message;
+
+			message = (Request)SIPGrammar.SIPMessage.Parse(Consts.Option1, ' ');
+			Assert.AreEqual(12, message.Headers.Length);
+		}
+
 
 	}
 }

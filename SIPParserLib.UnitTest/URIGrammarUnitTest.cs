@@ -395,6 +395,20 @@ namespace SIPParserLib.UnitTest
 		}
 
 		[TestMethod]
+		public void ShouldParseURI17()
+		{
+			SIPURL uri;
+
+			uri = (SIPURL)URIGrammar.URI.Parse(Consts.URI17);
+			Assert.IsNull(uri.UserInfo.User);
+			Assert.IsNull(uri.UserInfo.Password);
+			Assert.AreEqual("sip.pstnhub.microsoft.com", uri.HostPort.Host);
+			Assert.AreEqual("sip", uri.Scheme);
+
+		}
+
+
+		[TestMethod]
 		public void ShouldParseAddress1()
 		{
 			Address address;

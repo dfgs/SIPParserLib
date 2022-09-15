@@ -26,7 +26,7 @@ namespace SIPParserLib
 		
 		public static ISingleParser<string> DomainLabel = CommonGrammar.Alphanum.OneOrMoreTimes().Then(Parse.Char('-').Then(CommonGrammar.Alphanum.OneOrMoreTimes()).ZeroOrMoreTimes()).ToStringParser();
 		public static ISingleParser<string> TopLabel = CommonGrammar.Alpha.Then(CommonGrammar.Alphanum.ZeroOrMoreTimes()).Then(Parse.Char('-').Then(CommonGrammar.Alphanum.OneOrMoreTimes()).ZeroOrMoreTimes()).ToStringParser();
-		public static ISingleParser<string> Hostname = URIGrammar.DomainLabel.Then(Parse.Char('.').ToStringParser().Then(TopLabel).ZeroOrMoreTimes()).ToStringParser();
+		public static ISingleParser<string> Hostname = URIGrammar.DomainLabel.Then(Parse.Char('.').ToStringParser().Then(TopLabel).ZeroOrMoreTimes()).ReaderIncludes(' ').ToStringParser();
 
 
 		public static ISingleParser<string> IPv4Address = CommonGrammar.Digit.OneOrMoreTimes().Then(Parse.Char('.')).Then(CommonGrammar.Digit.OneOrMoreTimes()).Then(Parse.Char('.')).Then(CommonGrammar.Digit.OneOrMoreTimes()).Then(Parse.Char('.')).Then(CommonGrammar.Digit.OneOrMoreTimes()).ToStringParser();
@@ -91,7 +91,8 @@ namespace SIPParserLib
 				from hostPort in HostPort
 				from urlParameters in URLParameters
 				from headers in Headers
-				select new SIPURL(userInfo.FirstOrDefault(), hostPort, urlParameters.ToArray(), headers.ToArray());
+				select 
+				new SIPURL(userInfo.FirstOrDefault(), hostPort, urlParameters.ToArray(), headers.ToArray());
 		public static ISingleParser<URI> TELURI =
 				from _ in Parse.String("tel:")
 				from phoneNumber in CommonGrammar.Token
