@@ -44,6 +44,11 @@ namespace SIPParserLib.UnitTest
 			Assert.AreEqual("From", result.Name);
 			Assert.AreEqual("SDfefdf03-007302670000fdcf", result.Value.Tag);
 
+			result = (MessageHeader<Address>)SIPGrammar.FromHeader.Parse("FROM: <sip:+33663326291@185.221.88.177;user=phone>;tag=SDfefdf03-007302670000fdcf\r\n", ' ');
+			Assert.AreEqual("From", result.Name);
+			Assert.AreEqual("SDfefdf03-007302670000fdcf", result.Value.Tag);
+
+
 			result = (MessageHeader<Address>)SIPGrammar.ToHeader.Parse("To: <sip:+33663326291@185.221.88.177;user=phone>;tag=SDfefdf03-007302670000fdcf\r\n", ' ');
 			Assert.AreEqual("To", result.Name);
 			Assert.AreEqual("SDfefdf03-007302670000fdcf", result.Value.Tag);
@@ -224,7 +229,28 @@ namespace SIPParserLib.UnitTest
 			Assert.AreEqual("sip:sip.pstnhub.microsoft.com", result.RequestURI.ToString());
 
 		}
+		[TestMethod]
+		public void ShouldParseRequestLine7()
+		{
+			RequestLine result;
 
+			result = SIPGrammar.RequestLine.Parse(Consts.RequestLine7, ' ');
+			Assert.AreEqual("NOTIFY", result.Method);
+			Assert.AreEqual("SIP/2.0", result.SIPVersion);
+			Assert.AreEqual("sip:10.1.240.40:5060", result.RequestURI.ToString());
+
+		}
+		[TestMethod]
+		public void ShouldParseRequestLine8()
+		{
+			RequestLine result;
+
+			result = SIPGrammar.RequestLine.Parse(Consts.RequestLine8, ' ');
+			Assert.AreEqual("REFER", result.Method);
+			Assert.AreEqual("SIP/2.0", result.SIPVersion);
+			Assert.AreEqual("sip:0426223338@10.7.240.40:5060;transport=UDP", result.RequestURI.ToString());
+
+		}
 		[TestMethod]
 		public void ShouldParseStatusLine3()
 		{
