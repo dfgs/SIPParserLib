@@ -8,7 +8,7 @@ namespace SIPParserLib
 {
 	public class StatusLine
 	{
-		public string StatusCode
+		public ushort StatusCode
 		{
 			get;
 			private set;
@@ -19,7 +19,7 @@ namespace SIPParserLib
 			private set;
 		}
 
-		public StatusLine(string StatusCode, string Reason)
+		public StatusLine(ushort StatusCode, string Reason)
 		{
 			this.StatusCode = StatusCode; this.Reason = Reason;
 		}

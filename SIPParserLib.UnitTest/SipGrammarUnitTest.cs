@@ -257,7 +257,7 @@ namespace SIPParserLib.UnitTest
 			StatusLine result;
 
 			result = SIPGrammar.StatusLine.Parse(Consts.StatusLine4, ' ');
-			Assert.AreEqual("180", result.StatusCode);
+			Assert.AreEqual((ushort)180, result.StatusCode);
 			Assert.AreEqual("Ringing", result.Reason);
 		}
 
@@ -375,7 +375,7 @@ namespace SIPParserLib.UnitTest
 			Response message;
 
 			message = (Response)SIPGrammar.SIPMessage.Parse(Consts.Ringing1, ' ');
-			Assert.AreEqual("180", message.StatusLine.StatusCode);
+			Assert.AreEqual((ushort)180, message.StatusLine.StatusCode);
 			Assert.AreEqual("Ringing", message.StatusLine.Reason);
 			Assert.AreEqual(12, message.Headers.Length);
 			Assert.IsTrue(string.IsNullOrEmpty(message.Body));
@@ -386,7 +386,7 @@ namespace SIPParserLib.UnitTest
 			Response message;
 
 			message = (Response)SIPGrammar.SIPMessage.Parse(Consts.OK1, ' ');
-			Assert.AreEqual("200", message.StatusLine.StatusCode);
+			Assert.AreEqual((ushort)200, message.StatusLine.StatusCode);
 			Assert.AreEqual("OK", message.StatusLine.Reason);
 			Assert.AreEqual(13, message.Headers.Length);
 			Assert.IsFalse(string.IsNullOrEmpty(message.Body));
