@@ -57,7 +57,12 @@ namespace SIPParserLib.UnitTest
 			Assert.AreEqual("From", result.Name);
 			Assert.AreEqual("1c2117732372", result.Value.Tag);
 
-		
+			result = (MessageHeader<Address>)SIPGrammar.FromHeader.Parse("From: sip:+33786953886@10.91.254.206;tag=1B98AEB8-E185-4A22-9B3C-1D52B095739A-377738\r\n", ' ');
+			Assert.AreEqual("From", result.Name);
+			Assert.AreEqual("1B98AEB8-E185-4A22-9B3C-1D52B095739A-377738", result.Value.Tag);
+
+
+
 		}
 
 		[TestMethod]

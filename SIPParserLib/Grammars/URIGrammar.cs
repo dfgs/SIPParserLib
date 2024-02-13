@@ -85,14 +85,30 @@ namespace SIPParserLib
 														Parse.ZeroOrMoreTimes(from __ in Parse.Char('&') from header in Header select header)
 														)
 													);
-		public static ISingleParser<URI> SIPURI =
-				from _ in Parse.String("sip:")
-				from userInfo in Parse.ZeroOrOneTime(from userInfo in UserInfo from __ in Parse.Char('@') select userInfo)
-				from hostPort in HostPort
-				from urlParameters in URLParameters
-				from headers in Headers
-				select 
-				new SIPURL(userInfo.FirstOrDefault(), hostPort, urlParameters.ToArray(), headers.ToArray());
+
+		public static ISingleParser<URI> SIPURI1 =
+			from _ in Parse.Char('<')
+			from __ in Parse.String("sip:")
+			from userInfo in Parse.ZeroOrOneTime(from userInfo in UserInfo from __ in Parse.Char('@') select userInfo)
+			from hostPort in HostPort
+			from urlParameters in URLParameters
+			from headers in Headers
+			from ___ in Parse.Char('>')
+			select
+			new SIPURL(userInfo.FirstOrDefault(), hostPort, urlParameters.ToArray(), headers.ToArray());
+
+		public static ISingleParser<URI> SIPURI2 =
+			from _ in Parse.String("sip:")
+			from userInfo in Parse.ZeroOrOneTime(from userInfo in UserInfo from __ in Parse.Char('@') select userInfo)
+			from hostPort in HostPort
+			//from urlParameters in URLParameters
+			//from headers in Headers
+			select
+			new SIPURL(userInfo.FirstOrDefault(), hostPort, new URLParameter[] { },new Header[] { });
+
+
+		public static ISingleParser<URI> SIPURI =SIPURI1.Or(SIPURI2);
+
 		public static ISingleParser<URI> TELURI =
 				from _ in Parse.String("tel:")
 				from phoneNumber in CommonGrammar.Token
@@ -103,7 +119,7 @@ namespace SIPParserLib
 		public static ISingleParser<string> TagParam = from _ in Parse.String(";tag=") from value in CommonGrammar.Token select value;
 		public static ISingleParser<Address> URIAddress = from uri in URI from tag in TagParam.ZeroOrOneTime() select new Address("", uri,tag.FirstOrDefault()??"");
 		public static ISingleParser<Address> NamedAddress = from displayName in CommonGrammar.QuotedString.Or(CommonGrammar.Token).ZeroOrOneTime() 
-															from _ in Parse.Char('<') from uri in URI from __ in Parse.Char('>')
+															from uri in URI 
 															from tag in TagParam.ZeroOrOneTime()
 															select new Address(displayName.FirstOrDefault()??"", uri, tag.FirstOrDefault() ?? "");
 
