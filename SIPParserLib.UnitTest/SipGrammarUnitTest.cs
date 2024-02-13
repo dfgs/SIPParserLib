@@ -256,6 +256,19 @@ namespace SIPParserLib.UnitTest
 			Assert.AreEqual("sip:0426223338@10.7.240.40:5060;transport=UDP", result.RequestURI.ToString());
 
 		}
+
+		[TestMethod]
+		public void ShouldParseRequestLine9()
+		{
+			RequestLine result;
+
+			result = SIPGrammar.RequestLine.Parse(Consts.RequestLine9, ' ');
+			Assert.AreEqual("INVITE", result.Method);
+			Assert.AreEqual("SIP/2.0", result.SIPVersion);
+			Assert.AreEqual("sip:+33299725203@10.91.254.17:5060;user=phone", result.RequestURI.ToString());
+
+		}
+
 		[TestMethod]
 		public void ShouldParseStatusLine3()
 		{
@@ -336,6 +349,9 @@ namespace SIPParserLib.UnitTest
 			message = (Request)SIPGrammar.SIPMessage.Parse(Consts.Invite6, ' ');
 			Assert.AreEqual(15, message.Headers.Length);
 		}
+		
+
+
 
 		[TestMethod]
 		public void ShouldParsePrack1()

@@ -21,7 +21,7 @@ namespace SIPParserLib
                                                              select new StatusLine(ushort.Parse(code),reason);
         public static ISingleParser<RequestLine> RequestLine = 
                                                     from method in Method 
-                                                    from requestURI in URIGrammar.URI 
+                                                    from requestURI in URIGrammar.RequestURI 
                                                     from sipVersion in SIPVersion from eol in EOL 
                                                     select new RequestLine(method, requestURI, sipVersion); // Method SP Request-URI SP SIP-Version CRLF
  
