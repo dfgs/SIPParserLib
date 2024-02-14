@@ -62,5 +62,10 @@ namespace SIPParserLib
 			return $"sip:{UserInfo}@{HostPort}";
 		}
 
+		public override string? ToHumanString()
+		{
+			return UserInfo.User??HostPort.ToString();
+		}
+
 	}
 }

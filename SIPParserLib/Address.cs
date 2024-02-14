@@ -43,6 +43,10 @@ namespace SIPParserLib
 			else return $"\"{DisplayName}\" <{URI.ToShortString()}>";
 		}
 
+		public  string? ToHumanString()
+		{
+			return string.IsNullOrEmpty(DisplayName) ? URI.ToHumanString():DisplayName;
+		}
 
 	}
 }

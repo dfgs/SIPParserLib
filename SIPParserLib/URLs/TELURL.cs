@@ -35,6 +35,9 @@ namespace SIPParserLib
 		{
 			return $"tel:{PhoneNumber}";
 		}
-
+		public override string? ToHumanString()
+		{
+			return PhoneNumber;
+		}
 	}
 }

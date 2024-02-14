@@ -19,7 +19,8 @@ namespace SIPParserLib
 		}
 
 		public abstract string? ToShortString();
-		
+		public abstract string? ToHumanString();
+
 
 	}
 }
