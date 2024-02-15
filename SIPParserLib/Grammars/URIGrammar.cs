@@ -67,11 +67,13 @@ namespace SIPParserLib
 															 from value in CommonGrammar.Token
 															 select new URLParameter(name, value);
 		public static ISingleParser<URLParameter> OtherParam = from name in CommonGrammar.Token
-															   from value in Parse.ZeroOrOneTime(from _ in  Parse.Char('=')
-																from value in Parse.Except(';',' ','>').ReaderIncludes(' ').OneOrMoreTimes().ToStringParser() select value)
-														 select new URLParameter(name, value.FirstOrDefault()??"");
+															   from _ in Parse.Char('=')
+															   from value in CommonGrammar.Token
+															   select new URLParameter(name, value);
+		public static ISingleParser<URLParameter> EmptyParam = from name in CommonGrammar.Token
+															    select new URLParameter(name,  "");
 
-		public static ISingleParser<URLParameter> URLParameter = TransportParam.Or(UserParam).Or(MethodParam).Or(TTLParam).Or(MaddrParam).Or(TagParam).Or(OtherParam);
+		public static ISingleParser<URLParameter> URLParameter = TransportParam.Or(UserParam).Or(MethodParam).Or(TTLParam).Or(MaddrParam).Or(TagParam).Or(OtherParam).Or(EmptyParam);
 
 		public static IMultipleParser<URLParameter> URLParameters = Parse.ZeroOrMoreTimes(
 			from _ in Parse.Char(';')

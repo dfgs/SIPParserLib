@@ -91,7 +91,7 @@ namespace SIPParserLib.UnitTest
 		public static string Address5 = "\"TkUserFN0000197441 TkUserLN0000197441\" <sip:+33549400033@ent.bouyguestelecom.fr;user=phone;eribindingid=1638919091564375;eribind-generated-at=10.79.21.198>";
 		public static string Address6 = "<sip:10.91.254.190:5060;transport=udp?Replaces=607cc119-f498-4e97-84ae-27d2223a8dd3@localhost;to-tag=SDdfsad99-72394F48-7E22-41AF-B84F-14EB0A6130F8-1939908;from-tag=2929199961609947131>";
 		public static string Address7 = "<sip:+33251886806@10.105.32.141:5060>;user=phone;transport=udp";
-		//public static string Address8 = "<sip:+33663326291@185.221.88.177;user=phone>;tag=SDfefdf03-007302670000fdcf";
+		public static string Address8 = "<sip:10.91.254.190:5060;transport=udp?Replaces=607cc119-f498-4e97-84ae-27d2223a8dd3%40localhost%3Bto-tag%3DSDdfsad99-72394F48-7E22-41AF-B84F-14EB0A6130F8-1939908%3Bfrom-tag%3D2929199961609947131>";
 
 
 		public static string SDP1 = "v=0\r\no=- 616920219 1669365097 IN IP4 185.221.89.20\r\ns=session\r\nc=IN IP4 185.221.89.20\r\nt=0 0\r\nm=audio 21606 RTP/AVP 8 101\r\na=rtpmap:8 PCMA/8000\r\na=rtpmap:101 telephone-event/8000\r\na=fmtp:101 0-15\r\na=ptime:20\r\n\r\n";

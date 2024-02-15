@@ -502,8 +502,22 @@ namespace SIPParserLib.UnitTest
 			Assert.AreEqual("user=phone", ((SIPURL)address.URI).Parameters[0].ToString());
 			Assert.AreEqual("transport=udp", ((SIPURL)address.URI).Parameters[1].ToString());
 		}
-		
-		
+
+		[TestMethod]
+		public void ShouldParseAddress8()
+		{
+			Address address;
+
+			address = URIGrammar.NamedAddress.Parse(Consts.Address8, ' ');
+			Assert.AreEqual("", address.DisplayName);
+			Assert.AreEqual(null, ((SIPURL)address.URI).UserInfo.User);
+			Assert.AreEqual("10.91.254.190", ((SIPURL)address.URI).HostPort.Host);
+			Assert.AreEqual((ushort)5060, ((SIPURL)address.URI).HostPort.Port);
+			Assert.AreEqual("transport=udp", ((SIPURL)address.URI).Parameters[0].ToString());
+			Assert.AreEqual("Replaces=607cc119-f498-4e97-84ae-27d2223a8dd3@localhost;to-tag=SDdfsad99-72394F48-7E22-41AF-B84F-14EB0A6130F8-1939908;from-tag=2929199961609947131", ((SIPURL)address.URI).Headers[0].ToString());
+		}
+
+
 
 	}
 }
