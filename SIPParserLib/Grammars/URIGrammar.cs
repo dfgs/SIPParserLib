@@ -136,19 +136,17 @@ namespace SIPParserLib
 				from phoneNumber in CommonGrammar.Token
 			select new TELURL(phoneNumber);
 		
-		public static ISingleParser<URI> URI = SIPURI1.Or(TELURI);
+		public static ISingleParser<URI> URI = SIPURI1.Or(SIPURI2).Or(SIPURI3).Or(TELURI);
 
 
 
 		//public static ISingleParser<string> TagParam = from _ in Parse.String(";tag=") from value in CommonGrammar.Token select value;
 
-		public static ISingleParser<Address> URIAddress = from uri in SIPURI3.Or(SIPURI2)
-														  //from tag in TagParam.ZeroOrOneTime()
+		public static ISingleParser<Address> URIAddress = from uri in URI
 														  select new Address("", uri);
 
 		public static ISingleParser<Address> NamedAddress = from displayName in CommonGrammar.QuotedString.Or(CommonGrammar.Token).ZeroOrOneTime()
-															from uri in SIPURI3.Or(SIPURI2)
-															//from tag in TagParam.ZeroOrOneTime()
+															from uri in URI
 															select new Address(displayName.FirstOrDefault()??"", uri);
 
 		public static ISingleParser<Address> Address = URIAddress.Or(NamedAddress);
