@@ -66,7 +66,9 @@ namespace SIPParserLib
         public static ISingleParser<MessageHeader> ProxyAuthorizationHeader = from _ in Parse.String("Proxy-Authorization: ", true).ReaderIncludes(' ') from value in HeaderValue from eol in EOL select new ProxyAuthorizationHeader(value);
         public static ISingleParser<MessageHeader> ProxyRequireHeader = from _ in Parse.String("Proxy-Require: ", true).ReaderIncludes(' ') from value in HeaderValue from eol in EOL select new ProxyRequireHeader(value);
         public static ISingleParser<MessageHeader> RecordRouteHeader = from _ in Parse.String("Record-Route: ", true).ReaderIncludes(' ') from value in HeaderValue from eol in EOL select new RecordRouteHeader(value);
-        public static ISingleParser<MessageHeader> RequireHeader = from _ in Parse.String("Require: ", true).ReaderIncludes(' ') from value in HeaderValue from eol in EOL select new RequireHeader(value);
+		public static ISingleParser<MessageHeader> ReferToHeader = from _ in Parse.String("Refer-To: ", true).ReaderIncludes(' ') from value in URIGrammar.Address from eol in EOL select new ReferToHeader(value);
+		public static ISingleParser<MessageHeader> ReferredByHeader = from _ in Parse.String("Referred-By: ", true).ReaderIncludes(' ') from value in URIGrammar.Address from eol in EOL select new ReferredByHeader(value);
+		public static ISingleParser<MessageHeader> RequireHeader = from _ in Parse.String("Require: ", true).ReaderIncludes(' ') from value in HeaderValue from eol in EOL select new RequireHeader(value);
         public static ISingleParser<MessageHeader> ResponseKeyHeader = from _ in Parse.String("Response-Key: ", true).ReaderIncludes(' ') from value in HeaderValue from eol in EOL select new ResponseKeyHeader(value);
         public static ISingleParser<MessageHeader> RetryAfterHeader = from _ in Parse.String("Retry-After: ", true).ReaderIncludes(' ') from value in HeaderValue from eol in EOL select new RetryAfterHeader(value);
         public static ISingleParser<MessageHeader> RouteHeader = from _ in Parse.String("Route: ", true).ReaderIncludes(' ') from value in HeaderValue from eol in EOL select new RouteHeader(value);
@@ -83,7 +85,11 @@ namespace SIPParserLib
 		public static ISingleParser<MessageHeader> CustomHeader = from name in CommonGrammar.Token from __ in Parse.String(": ").ReaderIncludes(' ') from value in HeaderValue from eol in EOL select new CustomHeader(name, value);
 		public static ISingleParser<MessageHeader> CustomHeaderWithoutValue = from name in CommonGrammar.Token from __ in Parse.String(":") from eol in EOL select new CustomHeader(name, "");
 
-		public static IMultipleParser<MessageHeader> MessageHeaders = (AcceptHeader.Or(AcceptEncodingHeader).Or(AllowHeader).Or(AcceptLanguageHeader).Or(AuthorizationHeader).Or(CallIDHeader).Or(ContactHeader).Or(ContentEncodingHeader).Or(ContentLengthHeader).Or(ContentTypeHeader).Or(CSeqHeader).Or(DateHeader).Or(EncryptionHeader).Or(ExpiresHeader).Or(FromHeader).Or(HideHeader).Or(MaxForwardsHeader).Or(OrganizationHeader).Or(PriorityHeader).Or(ProxyAuthenticateHeader).Or(ProxyAuthorizationHeader).Or(ProxyRequireHeader).Or(RecordRouteHeader).Or(RequireHeader).Or(ResponseKeyHeader).Or(RetryAfterHeader).Or(RouteHeader).Or(ServerHeader).Or(SubjetHeader).Or(TimestampHeader).Or(ToHeader).Or(UnsupportedHeader).Or(UserAgentHeader).Or(ViaHeader).Or(WarningHeader).Or(WWWAuthenticateHeader).Or(CustomHeader).Or(CustomHeaderWithoutValue)).ZeroOrMoreTimes();
+		public static IMultipleParser<MessageHeader> MessageHeaders = (AcceptHeader.Or(AcceptEncodingHeader).Or(AllowHeader).Or(AcceptLanguageHeader).Or(AuthorizationHeader).Or(CallIDHeader).Or(ContactHeader).Or(ContentEncodingHeader)
+            .Or(ContentLengthHeader).Or(ContentTypeHeader).Or(CSeqHeader).Or(DateHeader).Or(EncryptionHeader).Or(ExpiresHeader).Or(FromHeader).Or(HideHeader).Or(MaxForwardsHeader)
+            .Or(OrganizationHeader).Or(PriorityHeader).Or(ProxyAuthenticateHeader).Or(ProxyAuthorizationHeader).Or(ProxyRequireHeader).Or(RecordRouteHeader).Or(ReferToHeader).Or(ReferredByHeader)
+            .Or(RequireHeader).Or(ResponseKeyHeader).Or(RetryAfterHeader).Or(RouteHeader).Or(ServerHeader).Or(SubjetHeader).Or(TimestampHeader).Or(ToHeader).Or(UnsupportedHeader).Or(UserAgentHeader)
+            .Or(ViaHeader).Or(WarningHeader).Or(WWWAuthenticateHeader).Or(CustomHeader).Or(CustomHeaderWithoutValue)).ZeroOrMoreTimes();
 
         public static ISingleParser<string> MessageBody = Parse.Any().ReaderIncludes(' ').ZeroOrMoreTimes().ToStringParser();
 

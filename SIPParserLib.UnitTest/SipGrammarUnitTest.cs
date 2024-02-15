@@ -36,35 +36,60 @@ namespace SIPParserLib.UnitTest
 			Assert.AreEqual("23711d2948484865b7f1c3008742bb56;remote=00000000000000000000000000000000", result.Value);
 		}
 		[TestMethod]
-		public void ShouldParseFromToHeader()
+		public void ShouldParseFromHeader()
 		{
-			MessageHeader<Address> result;
-
-			result = (MessageHeader<Address>)SIPGrammar.FromHeader.Parse("From: <sip:+33663326291@185.221.88.177;user=phone>;tag=SDfefdf03-007302670000fdcf\r\n", ' ');
+			FromHeader result;
+			
+			result = (FromHeader)SIPGrammar.FromHeader.Parse("From: <sip:+33663326291@185.221.88.177;user=phone>;tag=SDfefdf03-007302670000fdcf\r\n", ' ');
 			Assert.AreEqual("From", result.Name);
-			Assert.AreEqual("SDfefdf03-007302670000fdcf", result.Value.Tag);
+			Assert.AreEqual("SDfefdf03-007302670000fdcf", ((SIPURL)result.Value.URI).Parameters[1].Value );
 
-			result = (MessageHeader<Address>)SIPGrammar.FromHeader.Parse("FROM: <sip:+33663326291@185.221.88.177;user=phone>;tag=SDfefdf03-007302670000fdcf\r\n", ' ');
+			result = (FromHeader)SIPGrammar.FromHeader.Parse("FROM: <sip:+33663326291@185.221.88.177;user=phone>;tag=SDfefdf03-007302670000fdcf\r\n", ' ');
 			Assert.AreEqual("From", result.Name);
-			Assert.AreEqual("SDfefdf03-007302670000fdcf", result.Value.Tag);
+			Assert.AreEqual("SDfefdf03-007302670000fdcf", ((SIPURL)result.Value.URI).Parameters[1].Value);
 
-
-			result = (MessageHeader<Address>)SIPGrammar.ToHeader.Parse("To: <sip:+33663326291@185.221.88.177;user=phone>;tag=SDfefdf03-007302670000fdcf\r\n", ' ');
-			Assert.AreEqual("To", result.Name);
-			Assert.AreEqual("SDfefdf03-007302670000fdcf", result.Value.Tag);
-
-			result = (MessageHeader<Address>)SIPGrammar.FromHeader.Parse("From: <sip:+33420100881@100.123.12.10;user=phone>;tag=1c2117732372\r\n", ' ');
+			result = (FromHeader)SIPGrammar.FromHeader.Parse("From: <sip:+33420100881@100.123.12.10;user=phone>;tag=1c2117732372\r\n", ' ');
 			Assert.AreEqual("From", result.Name);
-			Assert.AreEqual("1c2117732372", result.Value.Tag);
+			Assert.AreEqual("1c2117732372", ((SIPURL)result.Value.URI).Parameters[1].Value);
 
-			result = (MessageHeader<Address>)SIPGrammar.FromHeader.Parse("From: sip:+33786953886@10.91.254.206;tag=1B98AEB8-E185-4A22-9B3C-1D52B095739A-377738\r\n", ' ');
+			result = (FromHeader)SIPGrammar.FromHeader.Parse("From: sip:+33786953886@10.91.254.206;tag=1B98AEB8-E185-4A22-9B3C-1D52B095739A-377738\r\n", ' ');
 			Assert.AreEqual("From", result.Name);
-			Assert.AreEqual("1B98AEB8-E185-4A22-9B3C-1D52B095739A-377738", result.Value.Tag);
+			Assert.AreEqual("1B98AEB8-E185-4A22-9B3C-1D52B095739A-377738", ((SIPURL)result.Value.URI).Parameters[1].Value);
 
 
 
 		}
+		[TestMethod]
+		public void ShouldParseToHeader()
+		{
+			ToHeader result;
 
+			result = (ToHeader)SIPGrammar.ToHeader.Parse("To: <sip:+33663326291@185.221.88.177;user=phone>;tag=SDfefdf03-007302670000fdcf\r\n", ' ');
+			Assert.AreEqual("To", result.Name);
+			Assert.AreEqual("SDfefdf03-007302670000fdcf", ((SIPURL)result.Value.URI).Parameters[1].Value);
+
+		
+
+		}
+
+		[TestMethod]
+		public void ShouldParseReferToHeader()
+		{
+			MessageHeader<Address> result;
+
+			result = (MessageHeader<Address>)SIPGrammar.ReferToHeader.Parse("Refer-To: <sip:10.91.254.190:5060;transport=udp?Replaces=607cc119-f498-4e97-84ae-27d2223a8dd3@localhost;to-tag=SDdfsad99-72394F48-7E22-41AF-B84F-14EB0A6130F8-1939908;from-tag=2929199961609947131>\r\n", ' ');
+			Assert.AreEqual("Refer-To", result.Name);
+			Assert.IsNotNull(result.Value);
+		}
+		[TestMethod]
+		public void ShouldParseReferredByHeader()
+		{
+			MessageHeader<Address> result;
+
+			result = (MessageHeader<Address>)SIPGrammar.ReferredByHeader.Parse("Referred-By: <sip:+33251886806@10.105.32.141:5060>;user=phone;transport=udp\r\n", ' ');
+			Assert.AreEqual("Referred-By", result.Name);
+			Assert.IsNotNull(result.Value);
+		}
 		[TestMethod]
 		public void ShouldParseViaHeader()
 		{

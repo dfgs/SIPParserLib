@@ -62,12 +62,16 @@ namespace SIPParserLib
 														 from _ in Parse.Char('=')
 													   from value in Host
 													   select new URLParameter(name, value);
+		public static ISingleParser<URLParameter> TagParam = from name in Parse.String("tag")
+															 from _ in Parse.Char('=')
+															 from value in CommonGrammar.Token
+															 select new URLParameter(name, value);
 		public static ISingleParser<URLParameter> OtherParam = from name in CommonGrammar.Token
 															   from value in Parse.ZeroOrOneTime(from _ in  Parse.Char('=')
 																from value in Parse.Except(';',' ','>').ReaderIncludes(' ').OneOrMoreTimes().ToStringParser() select value)
 														 select new URLParameter(name, value.FirstOrDefault()??"");
 
-		public static ISingleParser<URLParameter> URLParameter = TransportParam.Or(UserParam).Or(MethodParam).Or(TTLParam).Or(MaddrParam).Or(OtherParam);
+		public static ISingleParser<URLParameter> URLParameter = TransportParam.Or(UserParam).Or(MethodParam).Or(TTLParam).Or(MaddrParam).Or(TagParam).Or(OtherParam);
 
 		public static IMultipleParser<URLParameter> URLParameters = Parse.ZeroOrMoreTimes(
 			from _ in Parse.Char(';')
@@ -78,7 +82,7 @@ namespace SIPParserLib
 	
 		public static ISingleParser<Header> Header = from name in CommonGrammar.Token
 											   from _ in Parse.Char('=')
-														 from value in CommonGrammar.Alphanum.OneOrMoreTimes().ToStringParser()
+														 from value in CommonGrammar.Alphanum.Or(Parse.Char('-')).Or(Parse.Char('@')).Or(Parse.Char(';')).Or(Parse.Char('=')).OneOrMoreTimes().ToStringParser()
 											   select new Header(name, value);
 		public static IMultipleParser<Header> Headers = Parse.ZeroOrOneTime<Header>(
 														(from _ in Parse.Char('?') from header in Header select header).Then(
@@ -122,8 +126,9 @@ namespace SIPParserLib
 				from urlParameters in URLParameters
 				from headers in Headers
 				from ____ in Parse.String(">")
+				from otherParameters in URLParameters
 				select
-				new SIPURL(userInfo.FirstOrDefault(), hostPort, urlParameters.ToArray(), headers.ToArray());
+				new SIPURL(userInfo.FirstOrDefault(), hostPort, urlParameters.Concat(otherParameters).ToArray(), headers.ToArray());
 
 
 		public static ISingleParser<URI> TELURI =
@@ -135,12 +140,16 @@ namespace SIPParserLib
 
 
 
-		public static ISingleParser<string> TagParam = from _ in Parse.String(";tag=") from value in CommonGrammar.Token select value;
-		public static ISingleParser<Address> URIAddress = from uri in SIPURI3.Or(SIPURI2) from tag in TagParam.ZeroOrOneTime() select new Address("", uri,tag.FirstOrDefault()??"");
+		//public static ISingleParser<string> TagParam = from _ in Parse.String(";tag=") from value in CommonGrammar.Token select value;
+
+		public static ISingleParser<Address> URIAddress = from uri in SIPURI3.Or(SIPURI2)
+														  //from tag in TagParam.ZeroOrOneTime()
+														  select new Address("", uri);
+
 		public static ISingleParser<Address> NamedAddress = from displayName in CommonGrammar.QuotedString.Or(CommonGrammar.Token).ZeroOrOneTime()
 															from uri in SIPURI3.Or(SIPURI2)
-															from tag in TagParam.ZeroOrOneTime()
-															select new Address(displayName.FirstOrDefault()??"", uri, tag.FirstOrDefault() ?? "");
+															//from tag in TagParam.ZeroOrOneTime()
+															select new Address(displayName.FirstOrDefault()??"", uri);
 
 		public static ISingleParser<Address> Address = URIAddress.Or(NamedAddress);
 

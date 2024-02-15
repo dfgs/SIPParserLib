@@ -20,15 +20,16 @@ namespace SIPParserLib
 			private set;
 		}
 
-		public string? Tag
+		/*public string? Tag
 		{
 			get;
 			private set;
-		}
-		public Address(string DisplayName,URI URI,string Tag)
+		}*/
+		
+		public Address(string DisplayName,URI URI)
 		{
 			if (URI == null) throw new ArgumentNullException(nameof(URI));
-			this.DisplayName = DisplayName;this.URI = URI;this.Tag = Tag;
+			this.DisplayName = DisplayName;this.URI = URI;//this.Tag = Tag;
 		}
 
 		public override string? ToString()
