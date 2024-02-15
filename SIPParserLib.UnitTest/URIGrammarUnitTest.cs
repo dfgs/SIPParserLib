@@ -508,6 +508,7 @@ namespace SIPParserLib.UnitTest
 		{
 			Address address;
 
+
 			address = URIGrammar.NamedAddress.Parse(Consts.Address8, ' ');
 			Assert.AreEqual("", address.DisplayName);
 			Assert.AreEqual(null, ((SIPURL)address.URI).UserInfo.User);

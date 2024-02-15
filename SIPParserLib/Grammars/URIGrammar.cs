@@ -84,7 +84,7 @@ namespace SIPParserLib
 	
 		public static ISingleParser<Header> Header = from name in CommonGrammar.Token
 											   from _ in Parse.Char('=')
-														 from value in CommonGrammar.Alphanum.Or(Parse.Char('-')).Or(Parse.Char('@')).Or(Parse.Char(';')).Or(Parse.Char('=')).OneOrMoreTimes().ToStringParser()
+														 from value in CommonGrammar.Escaped.Or(CommonGrammar.Alphanum.Or(Parse.Char('-')).Or(Parse.Char('@')).Or(Parse.Char(';')).Or(Parse.Char('='))).OneOrMoreTimes().ToStringParser()
 											   select new Header(name, value);
 		public static IMultipleParser<Header> Headers = Parse.ZeroOrOneTime<Header>(
 														(from _ in Parse.Char('?') from header in Header select header).Then(
