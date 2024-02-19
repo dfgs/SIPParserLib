@@ -248,6 +248,18 @@ namespace SIPParserLib.UnitTest
 			Assert.AreEqual("sip:100.127.2.1;transport=udp;sdp_iwf", result.RequestURI.ToString());
 
 		}
+
+		[TestMethod]
+		public void ShouldParseRequestLine10()
+		{
+			RequestLine result;
+
+			result = SIPGrammar.RequestLine.Parse(Consts.RequestLine10, ' ');
+			Assert.AreEqual("ACK", result.Method);
+			Assert.AreEqual("SIP/2.0", result.SIPVersion);
+
+		}
+
 		[TestMethod]
 		public void ShouldParseRequestLine6()
 		{

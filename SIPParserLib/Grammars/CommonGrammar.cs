@@ -37,5 +37,7 @@ namespace SIPParserLib
 
 		public static ISingleParser<char> Separators = Parse.AnyOf('(', ')', '<', '>', '@', ',', ';', ':', '\\' , '<', '>' , '/', '[', ']', '?', '=','{', '}','\r','\n');
 
+		public static ISingleParser<string> HeaderValue = Parse.Except(';','>', '\r', '\n', ' ').ReaderIncludes(' ').OneOrMoreTimes().ToStringParser();
+
 	}
 }

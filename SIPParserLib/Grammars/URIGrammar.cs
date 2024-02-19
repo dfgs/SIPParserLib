@@ -68,7 +68,7 @@ namespace SIPParserLib
 															 select new URLParameter(name, value);
 		public static ISingleParser<URLParameter> OtherParam = from name in CommonGrammar.Token
 															   from _ in Parse.Char('=')
-															   from value in CommonGrammar.Token
+															   from value in CommonGrammar.HeaderValue
 															   select new URLParameter(name, value);
 		public static ISingleParser<URLParameter> EmptyParam = from name in CommonGrammar.Token
 															    select new URLParameter(name,  "");
