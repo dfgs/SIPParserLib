@@ -37,9 +37,10 @@ namespace SIPParserLib
 		public static ISingleParser<ViaParameter> ViaMAddr = from _ in Parse.String("maddr=") from value in CommonGrammar.Token select new ViaMAddr(value);
 		public static ISingleParser<ViaParameter> ViaTTL = from _ in Parse.String("ttl=") from value in Parse.Byte() select new ViaTTL(value);
 		public static ISingleParser<ViaParameter> ViaHidden = from _ in Parse.String("hidden") select new ViaHidden();
-		public static ISingleParser<ViaParameter> ViaCustomParameter = from name in CommonGrammar.Token from _ in Parse.Char('=') from value in CommonGrammar.Token select new ViaCustomParameter(name,value);
+		public static ISingleParser<ViaParameter> ViaCustomParameter = from name in CommonGrammar.Token from _ in Parse.Char('=') from value in CommonGrammar.Token select new ViaCustomParameter(name, value);
+		public static ISingleParser<ViaParameter> ViaEmptyParameter = from name in CommonGrammar.Token select new ViaCustomParameter(name, "");
 
-		public static IMultipleParser<ViaParameter> ViaParams = Parse.ZeroOrMoreTimes( from _ in Parse.Char(';') from value in ViaBranch.Or(ViaReceived).Or(ViaMAddr).Or(ViaTTL).Or(ViaHidden).Or(ViaCustomParameter) select value );
+		public static IMultipleParser<ViaParameter> ViaParams = Parse.ZeroOrMoreTimes( from _ in Parse.Char(';') from value in ViaBranch.Or(ViaReceived).Or(ViaMAddr).Or(ViaTTL).Or(ViaHidden).Or(ViaCustomParameter).Or(ViaEmptyParameter) select value );
 
 		public static ISingleParser<string> HeaderValue =  Parse.Except('\r').ReaderIncludes(' ').ZeroOrMoreTimes().ToStringParser();
 
