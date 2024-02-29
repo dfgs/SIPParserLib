@@ -65,9 +65,10 @@ namespace SIPParserLib.UnitTest
         public static string HostPort2 = "big.com:1234";
         public static string HostPort3 = "10.1.2.3";
         public static string HostPort4 = "10.1.2.3:1234";
+		public static string HostPort5 = "sv049vm.aeu.local:5040";
 
 
-        public static string URI1 = "sip:j.doe@big.com";
+		public static string URI1 = "sip:j.doe@big.com";
         public static string URI2 = "sip:j.doe:secret@big.com;transport=tcp";
         public static string URI3 = "sip:j.doe@big.com?subject=project";
         public static string URI4 = "sip:+1-212-555-1212:1234@gateway.com;user=phone";
@@ -84,6 +85,7 @@ namespace SIPParserLib.UnitTest
 		public static string URI15 = "sip:100.127.2.1;transport=udp;sdp_iwf";
 		public static string URI16 = "sip:+33549400033@ent.bouyguestelecom.fr;user=phone;eribindingid=1638919091564375;eribind-generated-at=10.79.21.198";
 		public static string URI17 = "sip:sip.pstnhub.microsoft.com SIP/2.0\r\n";
+		public static string URI18 = "sip:sip.pstnhub.microsoft.com";
 
 		public static string Address1 = "\"A. G. Bell\" <sip:agb@bell-telephone.com>";
         public static string Address2 = "sip:+12125551212@server.phone2net.com";

@@ -95,6 +95,11 @@ namespace SIPParserLib.UnitTest
 		{
 			ViaHeader result;
 
+			result = (ViaHeader)SIPGrammar.ViaHeader.Parse("Via: SIP/2.0/TCP sv049vm.aeu.local:5040;branch=z9hG4bK00046B2C-AA10-15C0-8085-071411ACAA77\r\n\r\n", ' ');
+			Assert.AreEqual("Via", result.Name);
+			Assert.AreEqual("SIP/2.0/TCP sv049vm.aeu.local:5040", result.Value);
+			Assert.AreEqual("z9hG4bK00046B2C-AA10-15C0-8085-071411ACAA77", result.GetParameter<ViaBranch>()?.Value);
+
 			result = (ViaHeader)SIPGrammar.ViaHeader.Parse("Via: SIP/2.0/UDP 80.10.231.51:5060;branch=z9hG4bKndcutq20e8jk52fcnie0.1;initialinvite=yes\r\n\r\n", ' ');
 			Assert.AreEqual("Via", result.Name);
 			Assert.AreEqual("SIP/2.0/UDP 80.10.231.51:5060", result.Value);
@@ -104,6 +109,7 @@ namespace SIPParserLib.UnitTest
 			Assert.AreEqual("Via", result.Name);
 			Assert.AreEqual("SIP/2.0/UDP 172.17.21.13:5060", result.Value);
 			Assert.AreEqual("z9hG4bKac226429781", result.GetParameter<ViaBranch>()?.Value);
+
 
 		}
 		[TestMethod]

@@ -162,6 +162,9 @@ namespace SIPParserLib.UnitTest
 			hostPort = URIGrammar.HostPort.Parse(Consts.HostPort4);
 			Assert.AreEqual("10.1.2.3", hostPort.Host);
 			Assert.AreEqual(1234, hostPort.Port);
+			hostPort = URIGrammar.HostPort.Parse(Consts.HostPort5);
+			Assert.AreEqual("sv049vm.aeu.local", hostPort.Host);
+			Assert.AreEqual(5040, hostPort.Port);
 		}
 
 		[TestMethod]
@@ -406,7 +409,19 @@ namespace SIPParserLib.UnitTest
 			Assert.AreEqual("sip", uri.Scheme);
 
 		}
-		
+		[TestMethod]
+		public void ShouldParseURI18()
+		{
+			SIPURL uri;
+
+			uri = (SIPURL)URIGrammar.URI.Parse(Consts.URI18);
+			Assert.IsNull(uri.UserInfo.User);
+			Assert.IsNull(uri.UserInfo.Password);
+			Assert.AreEqual("sip.pstnhub.microsoft.com", uri.HostPort.Host);
+			Assert.AreEqual("sip", uri.Scheme);
+
+		}
+
 
 		[TestMethod]
 		public void ShouldParseAddress1()

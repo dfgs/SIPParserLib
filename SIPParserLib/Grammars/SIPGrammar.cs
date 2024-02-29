@@ -27,10 +27,10 @@ namespace SIPParserLib
  
 		public static ISingleParser<string> ProtocolName = Parse.String("SIP").Or(CommonGrammar.Token);
 		public static ISingleParser<string> ProtocolVersion = CommonGrammar.Token;
-		public static ISingleParser<string> Transport = Parse.String("UDP").Or(Parse.String("TCP")).Or(CommonGrammar.Token);
+        public static ISingleParser<string> Transport = Parse.String("UDP").Or(Parse.String("TCP"));//.Or(CommonGrammar.Token);
 
 		public static ISingleParser<string> SentProtocol = ProtocolName.Then(Parse.Char('/').ToStringParser()).Then(ProtocolVersion).Then(Parse.Char('/').ToStringParser()).Then(Transport).ToStringParser();
-		public static ISingleParser<string> SentBy = URIGrammar.HostPort.ToStringParser().Or(CommonGrammar.Token);
+		//public static ISingleParser<string> SentBy = URIGrammar.HostPort.ToStringParser();
 
 		public static ISingleParser<ViaParameter> ViaBranch = from _ in Parse.String("branch=") from value in CommonGrammar.Token select new ViaBranch(value);
 		public static ISingleParser<ViaParameter> ViaReceived = from _ in Parse.String("received=") from value in URIGrammar.HostPort select new ViaReceived(value);
@@ -78,7 +78,7 @@ namespace SIPParserLib
         public static ISingleParser<MessageHeader> ToHeader = from _ in Parse.String("To: ", true).ReaderIncludes(' ') from value in URIGrammar.Address from eol in EOL select new ToHeader(value);
         public static ISingleParser<MessageHeader> UnsupportedHeader = from _ in Parse.String("Unsupported: ", true).ReaderIncludes(' ') from value in HeaderValue from eol in EOL select new UnsupportedHeader(value);
         public static ISingleParser<MessageHeader> UserAgentHeader = from _ in Parse.String("User-Agent: ", true).ReaderIncludes(' ') from value in Parse.Except('\r').ReaderIncludes(' ').OneOrMoreTimes().ToStringParser() from eol in EOL select new UserAgentHeader(value);
-        public static ISingleParser<MessageHeader> ViaHeader = from _ in Parse.String("Via: ", true).ReaderIncludes(' ') from protocol in SentProtocol from sentby in SentBy from parameters in ViaParams from eol in EOL select new ViaHeader(protocol + " "+ sentby, parameters.ToArray());
+        public static ISingleParser<MessageHeader> ViaHeader = from _ in Parse.String("Via: ", true).ReaderIncludes(' ') from protocol in SentProtocol from sentby in URIGrammar.HostPort.ToStringParser() from parameters in ViaParams from eol in EOL select new ViaHeader(protocol + " "+ sentby, parameters.ToArray());
         public static ISingleParser<MessageHeader> WarningHeader = from _ in Parse.String("Warning: ", true).ReaderIncludes(' ') from value in HeaderValue from eol in EOL select new WarningHeader(value);
         public static ISingleParser<MessageHeader> WWWAuthenticateHeader = from _ in Parse.String("WWW-Authenticate: ", true).ReaderIncludes(' ') from value in HeaderValue from eol in EOL select new WWWAuthenticateHeader(value);
 
