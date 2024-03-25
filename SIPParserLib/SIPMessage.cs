@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SIPParserLib
 {
-	public abstract class SIPMessage
+	public abstract class SIPMessage:ISIPMessage
 	{
 		public MessageHeader[] Headers
 		{

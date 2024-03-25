@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace SIPParserLib
 {
-	public class SDP
+	public class SDP:IBody
 	{
 		private Regex mediaListRegex = new Regex(@"(?<Index>\d+) *");
 		private Regex codecRegex = new Regex(@"(?<Index>\d+) (?<Name>.*)");
