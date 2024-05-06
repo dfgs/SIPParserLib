@@ -34,6 +34,14 @@ namespace SIPParserLib.UnitTest
 			result = (MessageHeader<string>)SIPGrammar.CustomHeader.Parse("Session-ID: 23711d2948484865b7f1c3008742bb56;remote=00000000000000000000000000000000\r\n", ' ');
 			Assert.AreEqual("Session-ID", result.Name);
 			Assert.AreEqual("23711d2948484865b7f1c3008742bb56;remote=00000000000000000000000000000000", result.Value);
+
+			result = (MessageHeader<string>)SIPGrammar.CustomHeader.Parse("X-Genesys-GVP-Session-Data: callsession=504102A6-9210-479E-B87F-45E404F849C6;1;2;sip:10.35.109.209:5060;;;Resources;ivr_voicemail2;;0;ivr_voicemail2\r\n", ' ');
+			Assert.AreEqual("X-Genesys-GVP-Session-Data", result.Name);
+			Assert.AreEqual("callsession=504102A6-9210-479E-B87F-45E404F849C6;1;2;sip:10.35.109.209:5060;;;Resources;ivr_voicemail2;;0;ivr_voicemail2", result.Value);
+
+			result = (MessageHeader<string>)SIPGrammar.CustomHeader.Parse("X-Genesys-GVP-Session-ID: 504102A6-9210-479E-B87F-45E404F849C6;gvp.r\r\n", ' ');
+			Assert.AreEqual("X-Genesys-GVP-Session-ID", result.Name);
+			Assert.AreEqual("504102A6-9210-479E-B87F-45E404F849C6;gvp.r", result.Value);
 		}
 		[TestMethod]
 		public void ShouldParseFromHeader()
