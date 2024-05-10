@@ -81,7 +81,25 @@ namespace SIPParserLib.UnitTest
 			Assert.AreEqual("Pass1234", value.Password);
 		}
 
+		[TestMethod]
+		public void ParseShouldParseEscapedUserInfoWithPassword()
+		{
+			UserInfo? value;
+			bool result;
 
+			UserInfoParser parser;
+			DebugLogger logger;
+
+			logger = new DebugLogger();
+			parser = new UserInfoParser(logger);
+
+			result = parser.Parse("alice%40example.com:Pass1234", out value, true);
+			Assert.IsNotNull(value);
+			Assert.IsTrue(result);
+			Assert.AreEqual(0, logger.ErrorCount + logger.WarningCount + logger.FatalCount);
+			Assert.AreEqual("alice@example.com", value.User);
+			Assert.AreEqual("Pass1234", value.Password);
+		}
 
 
 	}

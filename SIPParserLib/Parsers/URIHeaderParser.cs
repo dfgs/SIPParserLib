@@ -11,7 +11,7 @@ namespace SIPParserLib.Parsers
 {
 	public class URIHeaderParser : StructStringParser<URIHeader>
 	{
-		private static Regex regex = new Regex(@"^(?<Name>[^=]+)=(?<Value>.+)?$");
+		private static Regex regex = new Regex(@"^(?<Name>[^=]+)=(?<Value>.+)$");
 		
 		public URIHeaderParser(ILogger Logger) : base(Logger)
 		{

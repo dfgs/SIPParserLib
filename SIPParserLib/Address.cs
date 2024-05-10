@@ -30,7 +30,7 @@ namespace SIPParserLib
 			private set;
 		}*/
 
-		public Address(string DisplayName,URI URI, AddressParameter[]? Parameters)
+		public Address(string? DisplayName,URI URI, AddressParameter[]? Parameters)
 		{
 			if (URI == null) throw new ArgumentNullException(nameof(URI));
 			this.DisplayName = DisplayName;this.URI = URI;this.Parameters = Parameters;

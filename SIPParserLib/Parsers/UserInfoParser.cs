@@ -25,7 +25,8 @@ namespace SIPParserLib.Parsers
 
 			LogEnter();
 
-			user = Match.Groups["User"].Value;
+			user = SIPString.Unescape(Match.Groups["User"].Value);
+
 			password = Match.Groups["Password"].MatchedValue();
 
 			Result=new UserInfo(user, password);

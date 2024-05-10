@@ -13,7 +13,7 @@ namespace SIPParserLib.Parsers
 	{
 
 		// If URI contains ? or , Address Parameters are present
-		private static Regex regex = new Regex(@"^<(?<URI>.*)>(;(?<AddressParameters>.+))?$");
+		private static Regex regex = new Regex(@"^((?<DisplayName>([^< ""]+)|(""[^""]+"")) *)?<(?<URI>[^>?]+)(\?(?<AddressParameters1>[^>]+))?>(;(?<AddressParameters2>.+))?$");
 		private IClassStringParser<URI> uriParser;
 		private IStructStringParser<AddressParameter> addressParameterParser;
 
@@ -32,7 +32,10 @@ namespace SIPParserLib.Parsers
 		protected override bool OnParse(Match Match, out Address? Value)
 		{
 			URI? uri;
-			AddressParameter[]? parameters;
+			AddressParameter[]? parameters1;
+			AddressParameter[]? parameters2;
+			AddressParameter[]? joinedParameters;
+			string? displayName;
 
 			LogEnter();
 
@@ -41,9 +44,29 @@ namespace SIPParserLib.Parsers
 			if (!uriParser.Parse(Match.Groups["URI"], out uri, true)) return false;
 			if (uri == null) return false;
 
-			if (!addressParameterParser.ParseAll(Match.Groups["AddressParameters"],';', out parameters, false)) return false;
-			
-			Value = new Address("",uri,parameters);
+			// parse parameters before > and after >
+			if (!addressParameterParser.ParseAll(SIPString.Unescape(Match.Groups["AddressParameters1"].MatchedValue()), ';', out parameters1, false)) return false;
+			if (!addressParameterParser.ParseAll( Match.Groups["AddressParameters2"], ';', out parameters2, false)) return false;
+
+			displayName = Match.Groups["DisplayName"].MatchedValue();
+			if (displayName != null) displayName = displayName.Trim('"');
+
+			// join parameters before > and after >
+			if (parameters1 != null)
+			{
+				if (parameters2 != null)
+				{
+					joinedParameters = parameters1.Concat(parameters2).ToArray();
+				}
+				else joinedParameters = parameters1;
+			}
+			else if (parameters2 != null)
+			{
+				joinedParameters = parameters2;
+			}
+			else joinedParameters = null;
+
+			Value = new Address(displayName,uri, joinedParameters);
 
 			return true;
 		}
