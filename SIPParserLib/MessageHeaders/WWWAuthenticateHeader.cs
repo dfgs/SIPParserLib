@@ -9,7 +9,7 @@ namespace SIPParserLib
 	public class WWWAuthenticateHeader : MessageHeader<string>
 	{
 		public override string Name => "WWW-Authenticate";
-		public WWWAuthenticateHeader(string Value):base(Value)
+		public WWWAuthenticateHeader(string? Value):base(Value)
 		{
 		}
 

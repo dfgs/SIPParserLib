@@ -9,7 +9,7 @@ namespace SIPParserLib
 	public class ResponseKeyHeader : MessageHeader<string>
 	{
 		public override string Name => "Response-Key";
-		public ResponseKeyHeader(string Value):base(Value)
+		public ResponseKeyHeader(string? Value):base(Value)
 		{
 		}
 

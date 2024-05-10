@@ -9,7 +9,7 @@ namespace SIPParserLib
 	public class ProxyAuthenticateHeader : MessageHeader<string>
 	{
 		public override string Name => "Proxy-Authenticate";
-		public ProxyAuthenticateHeader(string Value):base(Value)
+		public ProxyAuthenticateHeader(string? Value):base(Value)
 		{
 		}
 

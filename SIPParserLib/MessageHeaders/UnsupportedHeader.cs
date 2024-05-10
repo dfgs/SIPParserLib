@@ -9,7 +9,7 @@ namespace SIPParserLib
 	public class UnsupportedHeader : MessageHeader<string>
 	{
 		public override string Name => "Unsupported";
-		public UnsupportedHeader(string Value):base(Value)
+		public UnsupportedHeader(string? Value):base(Value)
 		{
 		}
 

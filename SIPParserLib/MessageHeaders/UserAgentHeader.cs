@@ -9,7 +9,7 @@ namespace SIPParserLib
 	public class UserAgentHeader:MessageHeader<string>
 	{
 		public override string Name => "User-Agent";
-		public UserAgentHeader(string Value):base(Value)
+		public UserAgentHeader(string? Value):base(Value)
 		{
 		}
 

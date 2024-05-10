@@ -9,7 +9,7 @@ namespace SIPParserLib
 	public class ViaBranch : ViaParameter<string>
 	{
 		public override string Name => "branch";
-		public ViaBranch(string Value) : base(Value)
+		public ViaBranch(string? Value) : base(Value)
 		{
 		}
 

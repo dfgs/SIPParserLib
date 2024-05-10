@@ -9,7 +9,7 @@ namespace SIPParserLib
 	public class RouteHeader:MessageHeader<string>
 	{
 		public override string Name => "Route";
-		public RouteHeader(string Value):base(Value)
+		public RouteHeader(string? Value):base(Value)
 		{
 		}
 

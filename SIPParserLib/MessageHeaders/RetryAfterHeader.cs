@@ -9,7 +9,7 @@ namespace SIPParserLib
 	public class RetryAfterHeader : MessageHeader<string>
 	{
 		public override string Name => "Retry-After";
-		public RetryAfterHeader(string Value):base(Value)
+		public RetryAfterHeader(string? Value):base(Value)
 		{
 		}
 

@@ -16,7 +16,7 @@ namespace SIPParserLib
 			private set;
 		}
 
-		public ViaHeader(string Value, ViaParameter[] Parameters) :base(Value)
+		public ViaHeader(string? Value, ViaParameter[] Parameters) :base(Value)
 		{
 			this.Parameters = Parameters;
 		}

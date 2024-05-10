@@ -9,7 +9,7 @@ namespace SIPParserLib
 	public class HideHeader:MessageHeader<string>
 	{
 		public override string Name => "Hide";
-		public HideHeader(string Value):base(Value)
+		public HideHeader(string? Value):base(Value)
 		{
 		}
 

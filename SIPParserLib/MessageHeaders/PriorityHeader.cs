@@ -9,7 +9,7 @@ namespace SIPParserLib
 	public class PriorityHeader : MessageHeader<string>
 	{
 		public override string Name => "Priority";
-		public PriorityHeader(string Value):base(Value)
+		public PriorityHeader(string? Value):base(Value)
 		{
 		}
 

@@ -9,7 +9,7 @@ namespace SIPParserLib
 	public class TimestampHeader : MessageHeader<string>
 	{
 		public override string Name => "Timestamp";
-		public TimestampHeader(string Value):base(Value)
+		public TimestampHeader(string? Value):base(Value)
 		{
 		}
 

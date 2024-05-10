@@ -12,10 +12,21 @@ namespace SIPParserLib.Parsers
 	public class MessageHeaderParser : ClassStringParser<MessageHeader>
 	{
 		private static Regex regex = new Regex(@"^(?<Name>[^:]+): *(?<Value>.+)?$");
-		
-		public MessageHeaderParser(ILogger Logger) : base(Logger)
+		private static Regex viaRegex = new Regex(@"^(?<Value>[^;]+);(?<Parameters>.+)$");
+
+		private IStructStringParser<Address> addressParser;
+		private IClassStringParser<ViaParameter> viaParameterParser;
+
+		public MessageHeaderParser(ILogger Logger,IStructStringParser<Address> AddressParser,IClassStringParser<ViaParameter> ViaParameterParser) : base(Logger)
+		{
+			AssertParameterNotNull(AddressParser, nameof(AddressParser), out addressParser);
+			AssertParameterNotNull(ViaParameterParser, nameof(ViaParameterParser), out viaParameterParser);
+		}
+
+		public MessageHeaderParser(ILogger Logger) : this(Logger, new AddressParser(Logger), new ViaParameterParser(Logger) )
 		{
 		}
+
 		protected override Regex OnGetRegex() => regex;
 
 
@@ -23,6 +34,9 @@ namespace SIPParserLib.Parsers
 		{
 			string name;
 			string? value;
+			Address? address;
+			Match match;
+			ViaParameter[]? viaParameters;
 
 			LogEnter();
 
@@ -75,39 +89,99 @@ namespace SIPParserLib.Parsers
 				case "Expires":
 					Result = new ExpiresHeader(value);
 					return true;
-				/*case "From":
-					Result = new FromHeader(value);
-					return true;*/
+				case "From":
+					if (addressParser.Parse(value, out address, true)) return false;
+					if (address == null) return false;
+					Result = new FromHeader(address.Value);
+					return true;
+				case "Hide":
+					Result = new HideHeader(value);
+					return true;
+				case "Max-Forwards":
+					Result = new MaxForwardsHeader(value);
+					return true;
+				case "Organization":
+					Result = new OrganizationHeader(value);
+					return true;
+				case "Priority":
+					Result = new PriorityHeader(value);
+					return true;
+				case "Proxy-Authenticate":
+					Result = new ProxyAuthenticateHeader(value);
+					return true;
+				case "Proxy-Authorization":
+					Result = new ProxyAuthorizationHeader(value);
+					return true;
+				case "Proxy-Require":
+					Result = new ProxyRequireHeader(value);
+					return true;
+				case "Record-Route":
+					Result = new RecordRouteHeader(value);
+					return true;
+				case "Refer-To":
+					if (addressParser.Parse(value, out address, true)) return false;
+					if (address == null) return false;
+					Result = new ReferToHeader(address.Value);
+					return true;
+				case "Referred-By":
+					if (addressParser.Parse(value, out address, true)) return false;
+					if (address == null) return false;
+					Result = new ReferredByHeader(address.Value);
+					return true;
+				case "Require":
+					Result = new RequireHeader(value);
+					return true;
+				case "Response-Key":
+					Result = new ResponseKeyHeader(value);
+					return true;
+				case "Retry-After":
+					Result = new RetryAfterHeader(value);
+					return true;
+				case "Route":
+					Result = new RouteHeader(value);
+					return true;
+				case "Server":
+					Result = new ServerHeader(value);
+					return true;
+				case "Subject":
+					Result = new SubjectHeader(value);
+					return true;
+				case "Timestamp":
+					Result = new TimestampHeader(value);
+					return true;
+				case "To":
+					if (addressParser.Parse(value, out address, true)) return false;
+					if (address == null) return false;
+					Result = new ToHeader(address.Value);
+					return true;
+				case "Unsupported":
+					Result = new UnsupportedHeader(value);
+					return true;
+				case "User-Agent":
+					Result = new UserAgentHeader(value);
+					return true;
+				case "Via":
+					if (value == null) return false;
+					match = viaRegex.Match(value);
+					if (!match.Success) return false;
+					if (!viaParameterParser.ParseAll(match.Groups["Parameters"],';', out viaParameters, true)) return false;
+					if (viaParameters == null) return false;
+					Result = new ViaHeader(match.Groups["Value"].Value,viaParameters);
+					return true;//*/
+				case "Warning":
+					Result = new WarningHeader(value);
+					return true;
+				case "WWW-Authenticate":
+					Result = new WWWAuthenticateHeader(value);
+					return true;
+
+
 
 				default:
 					Result=new CustomHeader(name, value);
 					return true;
 			}
-			/*
-public static ISingleParser<MessageHeader> HideHeader = from _ in Parse.String("Hide: ", true).ReaderIncludes(' ') from value in HeaderValue from eol in EOL select new HideHeader(value);
-public static ISingleParser<MessageHeader> MaxForwardsHeader = from _ in Parse.String("Max-Forwards: ", true).ReaderIncludes(' ') from value in HeaderValue from eol in EOL select new MaxForwardsHeader(value);
-public static ISingleParser<MessageHeader> OrganizationHeader = from _ in Parse.String("Organization: ", true).ReaderIncludes(' ') from value in HeaderValue from eol in EOL select new OrganizationHeader(value);
-public static ISingleParser<MessageHeader> PriorityHeader = from _ in Parse.String("Priority: ", true).ReaderIncludes(' ') from value in HeaderValue from eol in EOL select new PriorityHeader(value);
-public static ISingleParser<MessageHeader> ProxyAuthenticateHeader = from _ in Parse.String("Proxy-Authenticate: ", true).ReaderIncludes(' ') from value in HeaderValue from eol in EOL select new ProxyAuthenticateHeader(value);
-public static ISingleParser<MessageHeader> ProxyAuthorizationHeader = from _ in Parse.String("Proxy-Authorization: ", true).ReaderIncludes(' ') from value in HeaderValue from eol in EOL select new ProxyAuthorizationHeader(value);
-public static ISingleParser<MessageHeader> ProxyRequireHeader = from _ in Parse.String("Proxy-Require: ", true).ReaderIncludes(' ') from value in HeaderValue from eol in EOL select new ProxyRequireHeader(value);
-public static ISingleParser<MessageHeader> RecordRouteHeader = from _ in Parse.String("Record-Route: ", true).ReaderIncludes(' ') from value in HeaderValue from eol in EOL select new RecordRouteHeader(value);
-public static ISingleParser<MessageHeader> ReferToHeader = from _ in Parse.String("Refer-To: ", true).ReaderIncludes(' ') from value in URIGrammar.Address from eol in EOL select new ReferToHeader(value);
-public static ISingleParser<MessageHeader> ReferredByHeader = from _ in Parse.String("Referred-By: ", true).ReaderIncludes(' ') from value in URIGrammar.Address from eol in EOL select new ReferredByHeader(value);
-public static ISingleParser<MessageHeader> RequireHeader = from _ in Parse.String("Require: ", true).ReaderIncludes(' ') from value in HeaderValue from eol in EOL select new RequireHeader(value);
-public static ISingleParser<MessageHeader> ResponseKeyHeader = from _ in Parse.String("Response-Key: ", true).ReaderIncludes(' ') from value in HeaderValue from eol in EOL select new ResponseKeyHeader(value);
-public static ISingleParser<MessageHeader> RetryAfterHeader = from _ in Parse.String("Retry-After: ", true).ReaderIncludes(' ') from value in HeaderValue from eol in EOL select new RetryAfterHeader(value);
-public static ISingleParser<MessageHeader> RouteHeader = from _ in Parse.String("Route: ", true).ReaderIncludes(' ') from value in HeaderValue from eol in EOL select new RouteHeader(value);
-public static ISingleParser<MessageHeader> ServerHeader = from _ in Parse.String("Server: ", true).ReaderIncludes(' ') from value in HeaderValue from eol in EOL select new ServerHeader(value);
-public static ISingleParser<MessageHeader> SubjetHeader = from _ in Parse.String("Subject: ", true).ReaderIncludes(' ') from value in HeaderValue from eol in EOL select new SubjetHeader(value);
-public static ISingleParser<MessageHeader> TimestampHeader = from _ in Parse.String("Timestamp: ", true).ReaderIncludes(' ') from value in HeaderValue from eol in EOL select new TimestampHeader(value);
-public static ISingleParser<MessageHeader> ToHeader = from _ in Parse.String("To: ", true).ReaderIncludes(' ') from value in URIGrammar.Address from eol in EOL select new ToHeader(value);
-public static ISingleParser<MessageHeader> UnsupportedHeader = from _ in Parse.String("Unsupported: ", true).ReaderIncludes(' ') from value in HeaderValue from eol in EOL select new UnsupportedHeader(value);
-public static ISingleParser<MessageHeader> UserAgentHeader = from _ in Parse.String("User-Agent: ", true).ReaderIncludes(' ') from value in Parse.Except('\r').ReaderIncludes(' ').OneOrMoreTimes().ToStringParser() from eol in EOL select new UserAgentHeader(value);
-public static ISingleParser<MessageHeader> ViaHeader = from _ in Parse.String("Via: ", true).ReaderIncludes(' ') from protocol in SentProtocol from sentby in URIGrammar.HostPort.ToStringParser() from parameters in ViaParams from eol in EOL select new ViaHeader(protocol + " "+ sentby, parameters.ToArray());
-public static ISingleParser<MessageHeader> WarningHeader = from _ in Parse.String("Warning: ", true).ReaderIncludes(' ') from value in HeaderValue from eol in EOL select new WarningHeader(value);
-public static ISingleParser<MessageHeader> WWWAuthenticateHeader = from _ in Parse.String("WWW-Authenticate: ", true).ReaderIncludes(' ') from value in HeaderValue from eol in EOL select new WWWAuthenticateHeader(value);
- * */
+			
 
 		}
 

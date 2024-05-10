@@ -9,7 +9,7 @@ namespace SIPParserLib
 	public class MaxForwardsHeader : MessageHeader<string>
 	{
 		public override string Name => "Max-Forwards";
-		public MaxForwardsHeader(string Value):base(Value)
+		public MaxForwardsHeader(string? Value):base(Value)
 		{
 		}
 

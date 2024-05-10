@@ -9,7 +9,7 @@ namespace SIPParserLib
 	public class WarningHeader : MessageHeader<string>
 	{
 		public override string Name => "Warning";
-		public WarningHeader(string Value):base(Value)
+		public WarningHeader(string? Value):base(Value)
 		{
 		}
 

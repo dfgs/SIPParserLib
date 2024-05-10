@@ -9,7 +9,7 @@ namespace SIPParserLib
 	public class ServerHeader:MessageHeader<string>
 	{
 		public override string Name => "Server";
-		public ServerHeader(string Value):base(Value)
+		public ServerHeader(string? Value):base(Value)
 		{
 		}
 

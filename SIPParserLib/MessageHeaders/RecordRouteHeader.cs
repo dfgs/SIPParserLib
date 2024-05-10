@@ -9,7 +9,7 @@ namespace SIPParserLib
 	public class RecordRouteHeader:MessageHeader<string>
 	{
 		public override string Name => "Record-Route";
-		public RecordRouteHeader(string Value):base(Value)
+		public RecordRouteHeader(string? Value):base(Value)
 		{
 		}
 

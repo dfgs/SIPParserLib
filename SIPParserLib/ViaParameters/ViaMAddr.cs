@@ -9,7 +9,7 @@ namespace SIPParserLib
 	public class ViaMAddr : ViaParameter<string>
 	{
 		public override string Name => "maddr";
-		public ViaMAddr(string Value) : base(Value)
+		public ViaMAddr(string? Value) : base(Value)
 		{
 		}
 

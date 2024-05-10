@@ -9,7 +9,7 @@ namespace SIPParserLib
 	public class OrganizationHeader:MessageHeader<string>
 	{
 		public override string Name => "Organization";
-		public OrganizationHeader(string Value):base(Value)
+		public OrganizationHeader(string? Value):base(Value)
 		{
 		}
 

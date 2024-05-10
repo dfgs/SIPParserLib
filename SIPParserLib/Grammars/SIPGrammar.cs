@@ -74,7 +74,7 @@ namespace SIPParserLib
         public static ISingleParser<MessageHeader> RetryAfterHeader = from _ in Parse.String("Retry-After: ", true).ReaderIncludes(' ') from value in HeaderValue from eol in EOL select new RetryAfterHeader(value);
         public static ISingleParser<MessageHeader> RouteHeader = from _ in Parse.String("Route: ", true).ReaderIncludes(' ') from value in HeaderValue from eol in EOL select new RouteHeader(value);
         public static ISingleParser<MessageHeader> ServerHeader = from _ in Parse.String("Server: ", true).ReaderIncludes(' ') from value in HeaderValue from eol in EOL select new ServerHeader(value);
-        public static ISingleParser<MessageHeader> SubjetHeader = from _ in Parse.String("Subject: ", true).ReaderIncludes(' ') from value in HeaderValue from eol in EOL select new SubjetHeader(value);
+        public static ISingleParser<MessageHeader> SubjetHeader = from _ in Parse.String("Subject: ", true).ReaderIncludes(' ') from value in HeaderValue from eol in EOL select new SubjectHeader(value);
         public static ISingleParser<MessageHeader> TimestampHeader = from _ in Parse.String("Timestamp: ", true).ReaderIncludes(' ') from value in HeaderValue from eol in EOL select new TimestampHeader(value);
         public static ISingleParser<MessageHeader> ToHeader = from _ in Parse.String("To: ", true).ReaderIncludes(' ') from value in URIGrammar.Address from eol in EOL select new ToHeader(value);
         public static ISingleParser<MessageHeader> UnsupportedHeader = from _ in Parse.String("Unsupported: ", true).ReaderIncludes(' ') from value in HeaderValue from eol in EOL select new UnsupportedHeader(value);
