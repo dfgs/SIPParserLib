@@ -13,13 +13,13 @@ namespace SIPParserLib
 			get;
 			private set;
 		}
-		public string Value
+		public string? Value
 		{
 			get;
 			private set;
 		}
 
-		public URLParameter(string Name,string Value)
+		public URLParameter(string Name,string? Value)
 		{
 			this.Name = Name;this.Value = Value;
 		}

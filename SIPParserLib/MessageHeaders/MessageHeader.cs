@@ -18,12 +18,12 @@ namespace SIPParserLib
 	public abstract class MessageHeader<T>:MessageHeader
 	{
 		
-		public T Value
+		public T? Value
 		{
 			get;
 		}
 
-		public MessageHeader(T Value)
+		public MessageHeader(T? Value)
 		{
 			this.Value = Value;
 		}

@@ -97,7 +97,7 @@ namespace SIPParserLib.UnitTest
 			Assert.IsTrue(result);
 			Assert.AreEqual(0, logger.ErrorCount + logger.WarningCount + logger.FatalCount);
 			Assert.AreEqual("param", value.Value.Name);
-			Assert.AreEqual("",value.Value.Value);
+			Assert.IsNull(value.Value.Value);
 		}
 
 		[TestMethod]
@@ -120,27 +120,28 @@ namespace SIPParserLib.UnitTest
 		}
 
 
-		/*[TestMethod]
+		[TestMethod]
 		public void ParseShouldParseAllParameters()
 		{
-			URLParameter[]? result;
-
+			URLParameter[]? value;
+			bool result;
 			URLParameterParser parser;
 			DebugLogger logger;
 
 			logger = new DebugLogger();
 			parser = new URLParameterParser(logger);
 
-			result = parser.ParseAll("param=ttl;param2;param3=test",';');
-			Assert.IsNotNull(result);
+			result = parser.ParseAll("param=ttl;param2;param3=test",';',out value,true);
+			Assert.IsNotNull(value);
+			Assert.IsTrue(result);
 			Assert.AreEqual(0, logger.ErrorCount + logger.WarningCount + logger.FatalCount);
-			Assert.AreEqual(3, result.Length);
-			Assert.AreEqual("param", result[0].Name);
-			Assert.AreEqual("ttl", result[0].Value);
-			Assert.AreEqual("param2", result[1].Name);
-			Assert.AreEqual("", result[1].Value);
-			Assert.AreEqual("param3", result[2].Name);
-			Assert.AreEqual("test", result[2].Value);
+			Assert.AreEqual(3, value.Length);
+			Assert.AreEqual("param", value[0].Name);
+			Assert.AreEqual("ttl", value[0].Value);
+			Assert.AreEqual("param2", value[1].Name);
+			Assert.IsNull(value[1].Value);
+			Assert.AreEqual("param3", value[2].Name);
+			Assert.AreEqual("test", value[2].Value);
 		}//*/
 
 

@@ -10,7 +10,7 @@ namespace SIPParserLib
 	{
 		private string name;
 		public override string Name => name;
-		public CustomHeader(string Name,string Value):base(Value)
+		public CustomHeader(string Name,string? Value):base(Value)
 		{
 			this.name = Name;
 		}

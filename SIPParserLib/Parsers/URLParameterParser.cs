@@ -29,8 +29,7 @@ namespace SIPParserLib.Parsers
 
 			name = Match.Groups["Name"].Value;
 			value = Match.Groups["Value"].MatchedValue();
-			if (value == null) Result= new URLParameter(name, "");
-			else Result=new URLParameter(name, value);
+			Result=new URLParameter(name, value);
 
 			return true;
 		}
