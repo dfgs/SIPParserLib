@@ -15,6 +15,7 @@ namespace SIPParserLib.UnitTest
 		{
 #pragma warning disable CS8625 // Impossible de convertir un littéral ayant une valeur null en type référence non-nullable.
 			Assert.ThrowsException<ArgumentNullException>(() => new SIPMessageParser(null));
+			Assert.ThrowsException<ArgumentNullException>(() => new SIPMessageParser(NullLogger.Instance, null));
 #pragma warning restore CS8625 // Impossible de convertir un littéral ayant une valeur null en type référence non-nullable.
 		}
 
@@ -32,8 +33,42 @@ namespace SIPParserLib.UnitTest
 #pragma warning restore CS8625 // Impossible de convertir un littéral ayant une valeur null en type référence non-nullable.
 
 			Assert.AreEqual(1, logger.FatalCount);
-			Assert.IsTrue(logger.LogsContainKeyWords(LogLevels.Fatal,"Stream","defined"));
+			Assert.IsTrue(logger.LogsContainKeyWords(LogLevels.Fatal, "Stream", "defined"));
 		}
+
+		[TestMethod]
+		public void ParseShouldParseINVITE()
+		{
+			SIPMessage? message;
+
+			SIPMessageParser parser;
+			DebugLogger logger;
+
+			logger = new DebugLogger();
+			parser = new SIPMessageParser(logger);
+			message = parser.Parse(new MemoryStream());
+
+			Assert.IsNotNull(message);
+			Assert.Fail("TODO");
+		}
+
+		[TestMethod]
+		public void ParseShouldParseACK()
+		{
+			SIPMessage? message;
+
+			SIPMessageParser parser;
+			DebugLogger logger;
+
+			logger = new DebugLogger();
+			parser = new SIPMessageParser(logger);
+			message = parser.Parse(new MemoryStream());
+
+			Assert.IsNotNull(message);
+			Assert.Fail("TODO");
+		}
+
+
 
 	}
 }

@@ -13,20 +13,20 @@ namespace SIPParserLib
 			get;
 			private set;
 		}
-		public ushort Port
+		public ushort? Port
 		{
 			get;
 			private set;
 		}
 
-		public HostPort(string Host,ushort Port)
+		public HostPort(string Host,ushort? Port)
 		{
 			this.Host = Host;this.Port = Port;
 		}
 
 		public override string ToString()
 		{
-			if (Port == 0) return $"{Host}";
+			if (Port == null) return $"{Host}";
 			else return $"{Host}:{Port}";
 		}
 
