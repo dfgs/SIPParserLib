@@ -27,7 +27,7 @@ namespace SIPParserLib.Parsers
 		}
 		protected override Regex OnGetRegex() => regex;
 
-		protected override bool OnParse(Match Match, out SIPURL? Result)
+		protected override bool OnParse(Match Match, out SIPURL? Value)
 		{
 			UserInfo? userInfo;
 			HostPort? hostPort;
@@ -35,16 +35,16 @@ namespace SIPParserLib.Parsers
 
 			LogEnter();
 
-			Result = null;
+			Value = null;
 
 			userInfoParser.Parse(Match.Groups["UserInfo"],out userInfo,false);
 			
 			if (!hostPortParser.Parse(Match.Groups["HostPort"], out hostPort, true)) return false;
 			if (hostPort == null) return false;
 
-			parameters = null;// urlParameterParser.ParseAll(Match.Groups["URLParameters"], ';');
+			if (!urlParameterParser.ParseAll(Match.Groups["URLParameters"], ';',out parameters,false)) return false;
 
-			Result = new SIPURL(userInfo, hostPort.Value, parameters, new Header[] { });
+			Value = new SIPURL(userInfo, hostPort.Value, parameters, new Header[] { });
 			
 			return true;
 		}
