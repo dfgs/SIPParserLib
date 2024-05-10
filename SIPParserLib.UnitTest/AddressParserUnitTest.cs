@@ -60,7 +60,7 @@ namespace SIPParserLib.UnitTest
 			Assert.AreEqual(0, logger.ErrorCount + logger.WarningCount + logger.FatalCount);
 			Assert.AreEqual("A. G. Bell", value.Value.DisplayName);
 			Assert.AreEqual("sip:agb@bell-telephone.com", value.Value.URI.ToString());
-			Assert.IsNull(value.Value.Parameters?.Length); ;
+			Assert.IsNull(value.Value.Parameters); ;
 
 			result = parser.Parse("<sip:+33663326291@185.221.88.177;user=phone>;tag=SDfefdf03-007302670000fdcf", out value, true);
 			Assert.IsNotNull(value);
@@ -74,7 +74,7 @@ namespace SIPParserLib.UnitTest
 			Assert.IsTrue(result);
 			Assert.AreEqual("TkUserFN0000197441 TkUserLN0000197441", value.Value.DisplayName);
 			Assert.AreEqual("sip:+33549400033@ent.bouyguestelecom.fr;user=phone;eribindingid=1638919091564375;eribind-generated-at=10.79.21.198", value.Value.URI.ToString());
-			Assert.IsNull(value.Value.Parameters?.Length); ;
+			Assert.IsNull(value.Value.Parameters); ;
 
 			// parameters are binding to address (not URI), because ? is present
 			result = parser.Parse("<sip:10.91.254.190:5060;transport=udp?Replaces=607cc119-f498-4e97-84ae-27d2223a8dd3@localhost;to-tag=SDdfsad99-72394F48-7E22-41AF-B84F-14EB0A6130F8-1939908;from-tag=2929199961609947131>", out value, true);
@@ -105,11 +105,18 @@ namespace SIPParserLib.UnitTest
 			result = parser.Parse("Anonymous <sip:c8oqz84zk7z@privacy.org>", out value, true);
 			Assert.IsNotNull(value);
 			Assert.IsTrue(result);
-			Assert.AreEqual("Anonymous",value.Value.DisplayName);
 			Assert.AreEqual(0, logger.ErrorCount + logger.WarningCount + logger.FatalCount);
 			Assert.AreEqual("Anonymous", value.Value.DisplayName);
 			Assert.AreEqual("sip:c8oqz84zk7z@privacy.org", value.Value.URI.ToString());
-			Assert.IsNull(value.Value.Parameters?.Length); ;
+			Assert.IsNull(value.Value.Parameters); ;
+
+			result = parser.Parse("<sip:+262262595179@172.20.54.2;user=phone>;tag=SD58d3901-U2xemg", out value, true);
+			Assert.IsNotNull(value);
+			Assert.IsTrue(result);
+			Assert.AreEqual(0, logger.ErrorCount + logger.WarningCount + logger.FatalCount);
+			Assert.IsNull(value.Value.DisplayName);
+			Assert.AreEqual("sip:+262262595179@172.20.54.2;user=phone", value.Value.URI.ToString());
+			Assert.AreEqual(1,value.Value.Parameters?.Length); ;
 
 
 

@@ -90,7 +90,7 @@ namespace SIPParserLib.Parsers
 					Result = new ExpiresHeader(value);
 					return true;
 				case "From":
-					if (addressParser.Parse(value, out address, true)) return false;
+					if (!addressParser.Parse(value, out address, true)) return false;
 					if (address == null) return false;
 					Result = new FromHeader(address.Value);
 					return true;
@@ -119,12 +119,12 @@ namespace SIPParserLib.Parsers
 					Result = new RecordRouteHeader(value);
 					return true;
 				case "Refer-To":
-					if (addressParser.Parse(value, out address, true)) return false;
+					if (!addressParser.Parse(value, out address, true)) return false;
 					if (address == null) return false;
 					Result = new ReferToHeader(address.Value);
 					return true;
 				case "Referred-By":
-					if (addressParser.Parse(value, out address, true)) return false;
+					if (!addressParser.Parse(value, out address, true)) return false;
 					if (address == null) return false;
 					Result = new ReferredByHeader(address.Value);
 					return true;
@@ -150,7 +150,7 @@ namespace SIPParserLib.Parsers
 					Result = new TimestampHeader(value);
 					return true;
 				case "To":
-					if (addressParser.Parse(value, out address, true)) return false;
+					if (!addressParser.Parse(value, out address, true)) return false;
 					if (address == null) return false;
 					Result = new ToHeader(address.Value);
 					return true;
