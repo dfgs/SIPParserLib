@@ -11,7 +11,7 @@ namespace SIPParserLib.Parsers
 {
 	public class RequestLineParser : ClassStringParser<RequestLine>
 	{
-		private static Regex regex = new Regex(@"(?<Method>INVITE|ACK|PRACK|OPTIONS|BYE|CANCEL|REGISTER|UPDATE|NOTIFY|REFER|MESSAGE|SUBSCRIBE) +(?<RequestURI>.*) +(?<SIPVersion>SIP\/2\.0)");
+		private static Regex regex = new Regex(@"^(?<Method>INVITE|ACK|PRACK|OPTIONS|BYE|CANCEL|REGISTER|UPDATE|NOTIFY|REFER|MESSAGE|SUBSCRIBE) +(?<RequestURI>.*) +(?<SIPVersion>SIP\/2\.0)$");
 
 		private IClassStringParser<SIPURL> requestURIParser;
 

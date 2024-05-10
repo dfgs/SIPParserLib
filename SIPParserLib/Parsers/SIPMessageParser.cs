@@ -13,15 +13,17 @@ namespace SIPParserLib.Parsers
 	public class SIPMessageParser : StreamParser<SIPMessage>, IParser<SIPMessage>
 	{
 		private IClassStringParser<RequestLine> requestLineParser;
+		private IClassStringParser<StatusLine> statusLineParser;
 		private IClassStringParser<MessageHeader> messageHeaderParser;
 
-		public SIPMessageParser(ILogger Logger,IClassStringParser<RequestLine> RequestLineParser, IClassStringParser<MessageHeader> MessageHeaderParser) : base(Logger)
+		public SIPMessageParser(ILogger Logger,IClassStringParser<RequestLine> RequestLineParser, IClassStringParser<StatusLine> StatusLineParser, IClassStringParser<MessageHeader> MessageHeaderParser) : base(Logger)
 		{
 			AssertParameterNotNull(RequestLineParser, nameof(RequestLineParser), out requestLineParser);
+			AssertParameterNotNull(StatusLineParser, nameof(StatusLineParser), out statusLineParser);
 			AssertParameterNotNull(MessageHeaderParser, nameof(MessageHeaderParser), out messageHeaderParser);
 
 		}
-		public SIPMessageParser(ILogger Logger) : this(Logger,new RequestLineParser(Logger), new MessageHeaderParser(Logger) )
+		public SIPMessageParser(ILogger Logger) : this(Logger,new RequestLineParser(Logger),new StatusLineParser(Logger),  new MessageHeaderParser(Logger) )
 		{
 		}
 
@@ -56,44 +58,111 @@ namespace SIPParserLib.Parsers
 			}
 
 			Log(LogLevels.Information, "Parsing SIP headers");
-			while (!reader.EndOfStream)
+			do
 			{
 				line = ReadLine(reader);
-				if (line == null) return null;
+				if (line == null)
+				{
+					Log(LogLevels.Error, $"End of stream reached");
+					return null;
+				}
 
 				// end of headers
 				if (line == "") break;
 
 				Log(LogLevels.Debug, $"Parsing header: {line}");
-				if (!messageHeaderParser.Parse(line, out header, true) || (header== null))
+				if (!messageHeaderParser.Parse(line, out header, true) || (header == null))
 				{
 					Log(LogLevels.Error, $"Invalid header: {line}");
 					return null;
 				}
 				headers.Add(header);
-			}
+			} while (true);
 
 			body = "";
 			Log(LogLevels.Information, "Parsing body");
-			while (!reader.EndOfStream)
+			do
 			{
 				line = ReadLine(reader);
-				if (line == null) return null;
+				if (line == null)
+				{
+					Log(LogLevels.Error, $"End of stream reached");
+					return null;
+				}
 
 				// end of body
 				if (line == "") break;
 
 				body += line + "\r\n";
-			}
+			} while (true);
 
 			return new Request(requestLine, headers.ToArray(), body);
 		}
+		private Response? ParseResponse(StreamReader reader, string? line)
+		{
+			StatusLine? statusLine;
+			List<MessageHeader> headers;
+			MessageHeader? header;
+			string body;
 
+			LogEnter();
+
+			headers = new List<MessageHeader>();
+
+			Log(LogLevels.Information, $"Parsing SIP response: {line}");
+			if (!statusLineParser.Parse(line, out statusLine, true) || (statusLine == null))
+			{
+				Log(LogLevels.Error, $"Invalid status line: {line}");
+				return null;
+			}
+
+			Log(LogLevels.Information, "Parsing SIP headers");
+			do
+			{
+				line = ReadLine(reader);
+				if (line == null)
+				{
+					Log(LogLevels.Error, $"End of stream reached");
+					return null;
+				}
+
+
+				// end of headers
+				if (line == "") break;
+
+				Log(LogLevels.Debug, $"Parsing header: {line}");
+				if (!messageHeaderParser.Parse(line, out header, true) || (header == null))
+				{
+					Log(LogLevels.Error, $"Invalid header: {line}");
+					return null;
+				}
+				headers.Add(header);
+			} while (true);
+
+			body = "";
+			Log(LogLevels.Information, "Parsing body");
+			do
+			{
+				line = ReadLine(reader);
+				if (line == null)
+				{
+					Log(LogLevels.Error, $"End of stream reached");
+					return null;
+				}
+
+
+				// end of body
+				if (line == "") break;
+
+				body += line + "\r\n";
+			} while (true);
+
+			return new Response(statusLine, headers.ToArray(), body);
+		}
 		public override SIPMessage? Parse(Stream Stream)
 		{
 			string? line;
 			StreamReader reader;
-			StatusLine? statusLine;
 
 			LogEnter();
 
@@ -110,7 +179,7 @@ namespace SIPParserLib.Parsers
 
 				if (line.StartsWith("SIP/2.0"))
 				{
-					Log(LogLevels.Debug, "Parsing SIP response");
+					return ParseResponse(reader, line);
 				}
 				else
 				{

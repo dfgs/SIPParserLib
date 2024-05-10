@@ -9,6 +9,20 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="SIPMessages\RequestIncompleteInvite1.txt" />
+    <None Remove="SIPMessages\RequestInvite1.txt" />
+    <None Remove="SIPMessages\ResponseIncompleteTrying1.txt" />
+    <None Remove="SIPMessages\ResponseTrying1.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="SIPMessages\RequestIncompleteInvite1.txt" />
+    <EmbeddedResource Include="SIPMessages\ResponseIncompleteTrying1.txt" />
+    <EmbeddedResource Include="SIPMessages\ResponseTrying1.txt" />
+    <EmbeddedResource Include="SIPMessages\RequestInvite1.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.1.0" />
     <PackageReference Include="Moq" Version="4.20.70" />
     <PackageReference Include="MSTest.TestAdapter" Version="2.2.8" />

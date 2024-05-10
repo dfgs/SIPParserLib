@@ -1,5 +1,6 @@
 ﻿using LogLib;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 using ParserLib;
 using SIPParserLib.Parsers;
 using System;
@@ -14,10 +15,11 @@ namespace SIPParserLib.UnitTest
 		public void ConstructorShouldThrowExceptionIfParameterIsNull()
 		{
 #pragma warning disable CS8625 // Impossible de convertir un littéral ayant une valeur null en type référence non-nullable.
-			Assert.ThrowsException<ArgumentNullException>(() => new RequestLineParser(null));
+			Assert.ThrowsException<ArgumentNullException>(() => new RequestLineParser(null, Mock.Of<IClassStringParser<SIPURL>>()));
+			Assert.ThrowsException<ArgumentNullException>(() => new RequestLineParser(NullLogger.Instance, null));
 #pragma warning restore CS8625 // Impossible de convertir un littéral ayant une valeur null en type référence non-nullable.
 		}
-	
+
 
 
 		[TestMethod]

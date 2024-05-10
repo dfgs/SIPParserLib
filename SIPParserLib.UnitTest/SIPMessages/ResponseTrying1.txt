@@ -1,0 +1,8 @@
+SIP/2.0 100 Trying
+Via: SIP/2.0/UDP 172.20.52.20:5060;branch=z9hG4bKibravd002g1769b84dv0sb0000010.1
+From: <sip:+33156727444@172.20.52.20;user=phone>;tag=0086183E-0CA7-14B4-8A11-3E69230AAA77-6011529
+To: <sip:+971522585849@172.20.54.2;user=phone;isup-oli=24>;tag=SDdlid001-RLUnIg
+Call-ID: SDdlid001-f84bd0032caa349c111c1620070de7ea-v300g00090
+CSeq: 2 INVITE
+Content-Length: 0
+
