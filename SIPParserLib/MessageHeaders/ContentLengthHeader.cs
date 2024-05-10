@@ -9,7 +9,7 @@ namespace SIPParserLib
 	public class ContentLengthHeader : MessageHeader<string>
 	{
 		public override string Name => "Content-Length";
-		public ContentLengthHeader(string Value):base(Value)
+		public ContentLengthHeader(string? Value):base(Value)
 		{
 		}
 

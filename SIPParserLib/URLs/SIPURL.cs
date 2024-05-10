@@ -30,12 +30,12 @@ namespace SIPParserLib
 			set;
 		}
 
-		public Header[]? Headers
+		public URIHeader[]? Headers
 		{
 			get;
 			set;
 		}
-		public SIPURL(UserInfo? UserInfo, HostPort HostPort, URLParameter[]? Parameters, Header[]? Headers)
+		public SIPURL(UserInfo? UserInfo, HostPort HostPort, URLParameter[]? Parameters, URIHeader[]? Headers)
 		{
 			this.UserInfo = UserInfo;this.HostPort = HostPort;this.Parameters = Parameters;this.Headers = Headers;
 		}

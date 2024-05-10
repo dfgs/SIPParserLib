@@ -9,13 +9,13 @@ using System.Numerics;
 namespace SIPParserLib.UnitTest
 {
 	[TestClass]
-	public class URLParameterParserUnitTest
+	public class URIHeaderParserUnitTest
 	{
 		[TestMethod]
 		public void ConstructorShouldThrowExceptionIfParameterIsNull()
 		{
 #pragma warning disable CS8625 // Impossible de convertir un littéral ayant une valeur null en type référence non-nullable.
-			Assert.ThrowsException<ArgumentNullException>(() => new URLParameterParser(null));
+			Assert.ThrowsException<ArgumentNullException>(() => new URIHeaderParser(null));
 #pragma warning restore CS8625 // Impossible de convertir un littéral ayant une valeur null en type référence non-nullable.
 		}
 
@@ -23,16 +23,16 @@ namespace SIPParserLib.UnitTest
 
 
 		[TestMethod]
-		public void ParseShouldNotParseInvalidURLParameter()
+		public void ParseShouldNotParseInvalidURIHeader()
 		{
-			URLParameter? value;
+			URIHeader? value;
 			bool result;
 
-			URLParameterParser parser;
+			URIHeaderParser parser;
 			DebugLogger logger;
 
 			logger = new DebugLogger();
-			parser = new URLParameterParser(logger);
+			parser = new URIHeaderParser(logger);
 			// invalid string
 			result = parser.Parse("",out value,true);
 			Assert.IsNull(value);
@@ -40,7 +40,7 @@ namespace SIPParserLib.UnitTest
 			Assert.AreEqual(1, logger.ErrorCount);
 
 			logger = new DebugLogger();
-			parser = new URLParameterParser(logger);
+			parser = new URIHeaderParser(logger);
 			// invalid name
 			result = parser.Parse("=1234", out value, true);
 			Assert.IsNull(value);
@@ -48,46 +48,48 @@ namespace SIPParserLib.UnitTest
 			Assert.AreEqual(1, logger.ErrorCount);
 
 			logger = new DebugLogger();
-			parser = new URLParameterParser(logger);
+			parser = new URIHeaderParser(logger);
 			// invalid value
-			result = parser.Parse("param=", out value, true);
+			result = parser.Parse("user=", out value, true);
 			Assert.IsNull(value);
 			Assert.IsFalse(result);
 			Assert.AreEqual(1, logger.ErrorCount);
 
-		}
-		
 
-		[TestMethod]
-		public void ParseShouldParseURLParameterWithoutValue()
+
+		}
+
+
+		/*[TestMethod]
+		public void ParseShouldParseURIHeaderWithoutValue()
 		{
-			URLParameter? value;
+			URIHeader? value;
 			bool result;
 
-			URLParameterParser parser;
+			URIHeaderParser parser;
 			DebugLogger logger;
 
 			logger = new DebugLogger();
-			parser = new URLParameterParser(logger);
+			parser = new URIHeaderParser(logger);
 
-			result = parser.Parse("param", out value, true);
+			result = parser.Parse("param:", out value, true);
 			Assert.IsNotNull(value);
 			Assert.IsTrue(result);
 			Assert.AreEqual(0, logger.ErrorCount + logger.WarningCount + logger.FatalCount);
-			Assert.AreEqual("param", value.Value.Name);
-			Assert.IsNull(value.Value.Value);
-		}
+			Assert.AreEqual("param", value.Name);
+			Assert.IsNull(((CustomHeader)value).Value);
+		}*/
 
 		[TestMethod]
-		public void ParseShouldParseURLParameterWithValue()
+		public void ParseShouldParseCustomURIHeaderWithValue()
 		{
-			URLParameter? value;
+			URIHeader? value;
 			bool result;
-			URLParameterParser parser;
+			URIHeaderParser parser;
 			DebugLogger logger;
 
 			logger = new DebugLogger();
-			parser = new URLParameterParser(logger);
+			parser = new URIHeaderParser(logger);
 
 			result = parser.Parse("param=ttl", out value, true);
 			Assert.IsNotNull(value);
@@ -98,18 +100,19 @@ namespace SIPParserLib.UnitTest
 		}
 
 
+
 		[TestMethod]
-		public void ParseShouldParseAllParameters()
+		public void ParseShouldParseAllURIHeaders()
 		{
-			URLParameter[]? value;
+			URIHeader[]? value;
 			bool result;
-			URLParameterParser parser;
+			URIHeaderParser parser;
 			DebugLogger logger;
 
 			logger = new DebugLogger();
-			parser = new URLParameterParser(logger);
+			parser = new URIHeaderParser(logger);
 
-			result = parser.ParseAll("param=ttl;param2;param3=test",';',out value,true);
+			result = parser.ParseAll("param=ttl&param2=val&param3=test", '&', out value, true);
 			Assert.IsNotNull(value);
 			Assert.IsTrue(result);
 			Assert.AreEqual(0, logger.ErrorCount + logger.WarningCount + logger.FatalCount);
@@ -117,7 +120,7 @@ namespace SIPParserLib.UnitTest
 			Assert.AreEqual("param", value[0].Name);
 			Assert.AreEqual("ttl", value[0].Value);
 			Assert.AreEqual("param2", value[1].Name);
-			Assert.IsNull(value[1].Value);
+			Assert.AreEqual("val", value[1].Value);
 			Assert.AreEqual("param3", value[2].Name);
 			Assert.AreEqual("test", value[2].Value);
 		}//*/

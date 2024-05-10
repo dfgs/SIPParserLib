@@ -9,7 +9,7 @@ namespace SIPParserLib
 	public class DateHeader:MessageHeader<string>
 	{
 		public override string Name => "Date";
-		public DateHeader(string Value):base(Value)
+		public DateHeader(string? Value):base(Value)
 		{
 		}
 

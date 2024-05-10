@@ -19,7 +19,7 @@ namespace SIPParserLib.Parsers
 		{
 			AssertParameterNotNull(RequestURIParser, nameof(RequestURIParser), out requestURIParser);
 		}
-		public RequestLineParser(ILogger Logger) : this(Logger,new RequestURIParser(Logger))
+		public RequestLineParser(ILogger Logger) : this(Logger,new SIPURIParser(Logger))
 		{
 		}
 

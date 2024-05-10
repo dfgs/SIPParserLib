@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SIPParserLib
 {
-	public struct Header
+	public struct URIHeader
 	{
 		public string Name
 		{
@@ -19,7 +19,7 @@ namespace SIPParserLib
 			private set;
 		}
 
-		public Header(string Name, string Value)
+		public URIHeader(string Name, string Value)
 		{
 			this.Name = Name; this.Value = Value;
 		}

@@ -9,17 +9,16 @@ using System.Threading.Tasks;
 
 namespace SIPParserLib.Parsers
 {
-	public class URLParameterParser : StructStringParser<URLParameter>
+	public class AddressParameterParser : StructStringParser<AddressParameter>
 	{
-		// must not capture ? in order to detect URI headers
-		private static Regex regex = new Regex(@"^(?<Name>[^=]+)(=(?<Value>[^?]+))?$");
+		private static Regex regex = new Regex(@"^(?<Name>[^=]+)(=(?<Value>.+))?$");
 		
-		public URLParameterParser(ILogger Logger) : base(Logger)
+		public AddressParameterParser(ILogger Logger) : base(Logger)
 		{
 		}
 		protected override Regex OnGetRegex() => regex;
 
-		protected override bool OnParse(Match Match, out URLParameter? Result)
+		protected override bool OnParse(Match Match, out AddressParameter? Result)
 		{
 			string name;
 			string? value;
@@ -30,7 +29,7 @@ namespace SIPParserLib.Parsers
 
 			name = Match.Groups["Name"].Value;
 			value = Match.Groups["Value"].MatchedValue();
-			Result=new URLParameter(name, value);
+			Result=new AddressParameter(name, value);
 
 			return true;
 		}

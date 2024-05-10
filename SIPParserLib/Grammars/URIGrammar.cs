@@ -82,11 +82,11 @@ namespace SIPParserLib
 			);
 
 	
-		public static ISingleParser<Header> Header = from name in CommonGrammar.Token
+		public static ISingleParser<URIHeader> Header = from name in CommonGrammar.Token
 											   from _ in Parse.Char('=')
 														 from value in CommonGrammar.Escaped.Or(CommonGrammar.Alphanum.Or(Parse.Char('-')).Or(Parse.Char('@')).Or(Parse.Char(';')).Or(Parse.Char('='))).OneOrMoreTimes().ToStringParser()
-											   select new Header(name, value);
-		public static IMultipleParser<Header> Headers = Parse.ZeroOrOneTime<Header>(
+											   select new URIHeader(name, value);
+		public static IMultipleParser<URIHeader> Headers = Parse.ZeroOrOneTime<URIHeader>(
 														(from _ in Parse.Char('?') from header in Header select header).Then(
 														Parse.ZeroOrMoreTimes(from __ in Parse.Char('&') from header in Header select header)
 														)
@@ -99,7 +99,7 @@ namespace SIPParserLib
 			from hostPort in HostPort
 			from urlParameters in URLParameters
 			select
-			new SIPURL(userInfo.FirstOrDefault(), hostPort, urlParameters.ToArray(), new Header[] { });
+			new SIPURL(userInfo.FirstOrDefault(), hostPort, urlParameters.ToArray(), new URIHeader[] { });
 
 
 		public static ISingleParser<URI> SIPURI1 =
@@ -118,7 +118,7 @@ namespace SIPParserLib
 			//from urlParameters in URLParameters
 			//from headers in Headers
 			select
-			new SIPURL(userInfo.FirstOrDefault(), hostPort, new URLParameter[] { }, new Header[] { });
+			new SIPURL(userInfo.FirstOrDefault(), hostPort, new URLParameter[] { }, new URIHeader[] { });
 
 		public static ISingleParser<URI> SIPURI3 =
 				from _ in Parse.String("<")
@@ -145,11 +145,11 @@ namespace SIPParserLib
 		//public static ISingleParser<string> TagParam = from _ in Parse.String(";tag=") from value in CommonGrammar.Token select value;
 
 		public static ISingleParser<Address> URIAddress = from uri in URI
-														  select new Address("", uri);
+														  select new Address("", uri,null);
 
 		public static ISingleParser<Address> NamedAddress = from displayName in CommonGrammar.QuotedString.Or(CommonGrammar.Token).ZeroOrOneTime()
 															from uri in URI
-															select new Address(displayName.FirstOrDefault()??"", uri);
+															select new Address(displayName.FirstOrDefault()??"", uri, null);
 
 		public static ISingleParser<Address> Address = URIAddress.Or(NamedAddress);
 

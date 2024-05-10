@@ -9,7 +9,7 @@ namespace SIPParserLib
 	public class ContactHeader:MessageHeader<string>
 	{
 		public override string Name => "Contact";
-		public ContactHeader(string Value):base(Value)
+		public ContactHeader(string? Value):base(Value)
 		{
 		}
 

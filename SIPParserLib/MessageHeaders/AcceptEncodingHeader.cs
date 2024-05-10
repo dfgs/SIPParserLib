@@ -9,7 +9,7 @@ namespace SIPParserLib
 	public class AcceptEncodingHeader:MessageHeader<string>
 	{
 		public override string Name => "Accept-Encoding";
-		public AcceptEncodingHeader(string Value):base(Value)
+		public AcceptEncodingHeader(string? Value):base(Value)
 		{
 		}
 

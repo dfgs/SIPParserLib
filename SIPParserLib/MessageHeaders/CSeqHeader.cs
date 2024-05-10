@@ -9,7 +9,7 @@ namespace SIPParserLib
 	public class CSeqHeader:MessageHeader<string>
 	{
 		public override string Name => "CSeq";
-		public CSeqHeader(string Value):base(Value)
+		public CSeqHeader(string? Value):base(Value)
 		{
 		}
 

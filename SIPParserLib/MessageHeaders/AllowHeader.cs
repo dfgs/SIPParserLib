@@ -9,7 +9,7 @@ namespace SIPParserLib
 	public class AllowHeader:MessageHeader<string>
 	{
 		public override string Name => "Allow";
-		public AllowHeader(string Value):base(Value)
+		public AllowHeader(string? Value):base(Value)
 		{
 		}
 

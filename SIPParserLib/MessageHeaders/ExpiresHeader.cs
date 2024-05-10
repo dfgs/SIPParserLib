@@ -9,7 +9,7 @@ namespace SIPParserLib
 	public class ExpiresHeader:MessageHeader<string>
 	{
 		public override string Name => "Expires";
-		public ExpiresHeader(string Value):base(Value)
+		public ExpiresHeader(string? Value):base(Value)
 		{
 		}
 

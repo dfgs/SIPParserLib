@@ -10,31 +10,32 @@ using System.Numerics;
 namespace SIPParserLib.UnitTest
 {
 	[TestClass]
-	public class RequestURIParserUnitTest
+	public class SIPURIParserUnitTest
 	{
 		[TestMethod]
 		public void ConstructorShouldThrowExceptionIfParameterIsNull()
 		{
 #pragma warning disable CS8625 // Impossible de convertir un littéral ayant une valeur null en type référence non-nullable.
-			Assert.ThrowsException<ArgumentNullException>(() => new RequestURIParser(null, Mock.Of<IClassStringParser<UserInfo>>() , Mock.Of<IStructStringParser<HostPort>>(), Mock.Of<IStructStringParser<URLParameter>>()));
-			Assert.ThrowsException<ArgumentNullException>(() => new RequestURIParser(NullLogger.Instance, null, Mock.Of<IStructStringParser<HostPort>>(), Mock.Of<IStructStringParser<URLParameter>>()));
-			Assert.ThrowsException<ArgumentNullException>(() => new RequestURIParser(NullLogger.Instance, Mock.Of<IClassStringParser<UserInfo>>(), null, Mock.Of<IStructStringParser<URLParameter>>()));
-			Assert.ThrowsException<ArgumentNullException>(() => new RequestURIParser(NullLogger.Instance, Mock.Of<IClassStringParser<UserInfo>>(), Mock.Of<IStructStringParser<HostPort>>(),null));
+			Assert.ThrowsException<ArgumentNullException>(() => new SIPURIParser(null, Mock.Of<IClassStringParser<UserInfo>>() , Mock.Of<IStructStringParser<HostPort>>(), Mock.Of<IStructStringParser<URLParameter>>(), Mock.Of<IStructStringParser<URIHeader>>() ));
+			Assert.ThrowsException<ArgumentNullException>(() => new SIPURIParser(NullLogger.Instance, null, Mock.Of<IStructStringParser<HostPort>>(), Mock.Of<IStructStringParser<URLParameter>>(), Mock.Of<IStructStringParser<URIHeader>>()));
+			Assert.ThrowsException<ArgumentNullException>(() => new SIPURIParser(NullLogger.Instance, Mock.Of<IClassStringParser<UserInfo>>(), null, Mock.Of<IStructStringParser<URLParameter>>(), Mock.Of<IStructStringParser<URIHeader>>()));
+			Assert.ThrowsException<ArgumentNullException>(() => new SIPURIParser(NullLogger.Instance, Mock.Of<IClassStringParser<UserInfo>>(), Mock.Of<IStructStringParser<HostPort>>(), null, Mock.Of<IStructStringParser<URIHeader>>()));
+			Assert.ThrowsException<ArgumentNullException>(() => new SIPURIParser(NullLogger.Instance, Mock.Of<IClassStringParser<UserInfo>>(), Mock.Of<IStructStringParser<HostPort>>(),  Mock.Of<IStructStringParser<URLParameter>>(),null));
 #pragma warning restore CS8625 // Impossible de convertir un littéral ayant une valeur null en type référence non-nullable.
 		}
 
 
 
 		[TestMethod]
-		public void ParseShouldNotParseInvalidRequestURI()
+		public void ParseShouldNotParseInvalidSIPURI()
 		{
 			SIPURL? value;
 			bool result;
-			RequestURIParser parser;
+			SIPURIParser parser;
 			DebugLogger logger;
 
 			logger = new DebugLogger();
-			parser = new RequestURIParser(logger);
+			parser = new SIPURIParser(logger);
 
 			// invalid method
 			result= parser.Parse("tel:+33140143960@ecb.core.nord:5060;user=phone",out value,true);
@@ -48,15 +49,15 @@ namespace SIPParserLib.UnitTest
 		}
 
 		[TestMethod]
-		public void ParseShouldParseValidRequestURI()
+		public void ParseShouldParseValidSIPURI()
 		{
 			SIPURL? value;
 			bool result;
-			RequestURIParser parser;
+			SIPURIParser parser;
 			DebugLogger logger;
 
 			logger = new DebugLogger();
-			parser = new RequestURIParser(logger);
+			parser = new SIPURIParser(logger);
 
 			result = parser.Parse("sip:+33140143960@ecb.core.nord:5061;user=phone", out value, true);
 			Assert.IsNotNull(value);
@@ -138,6 +139,60 @@ namespace SIPParserLib.UnitTest
 			Assert.IsNull(value.UserInfo);
 			Assert.AreEqual("10.223.161.1:5060", value.HostPort.ToString());
 			Assert.AreEqual(3, value.Parameters?.Length);
+
+
+			result = parser.Parse("sip:j.doe@big.com?subject=project", out value, true);
+			Assert.IsNotNull(value);
+			Assert.IsTrue(result);
+			Assert.AreEqual(0, logger.ErrorCount + logger.WarningCount + logger.FatalCount);
+			Assert.AreEqual("j.doe", value.UserInfo?.ToString());
+			Assert.AreEqual("big.com", value.HostPort.ToString());
+			Assert.AreEqual(1, value.Headers?.Length);
+
+			result = parser.Parse("sip:big.com", out value, true);
+			Assert.IsNotNull(value);
+			Assert.IsTrue(result);
+			Assert.AreEqual(0, logger.ErrorCount + logger.WarningCount + logger.FatalCount);
+			Assert.IsNull(value.UserInfo);
+			Assert.AreEqual("big.com", value.HostPort.ToString());
+			Assert.IsNull(value.Parameters);
+
+			result = parser.Parse("sip:j.doe@big.com?subject=project&name=test", out value, true);
+			Assert.IsNotNull(value);
+			Assert.IsTrue(result);
+			Assert.AreEqual(0, logger.ErrorCount + logger.WarningCount + logger.FatalCount);
+			Assert.AreEqual("j.doe", value.UserInfo?.ToString());
+			Assert.AreEqual("big.com", value.HostPort.ToString());
+			Assert.AreEqual(2, value.Headers?.Length);
+			Assert.AreEqual("subject", value.Headers![0].Name);
+			Assert.AreEqual("project", value.Headers![0].Value);
+			Assert.AreEqual("name", value.Headers![1].Name);
+			Assert.AreEqual("test", value.Headers![1].Value);
+
+			result = parser.Parse("sip:j.doe@big.com;user=phone?subject=project&name=test", out value, true);
+			Assert.IsNotNull(value);
+			Assert.IsTrue(result);
+			Assert.AreEqual(0, logger.ErrorCount + logger.WarningCount + logger.FatalCount);
+			Assert.AreEqual("j.doe", value.UserInfo?.ToString());
+			Assert.AreEqual("big.com", value.HostPort.ToString());
+			Assert.AreEqual(1, value.Parameters?.Length);
+			Assert.AreEqual("user", value.Parameters![0].Name);
+			Assert.AreEqual("phone", value.Parameters![0].Value);
+			Assert.AreEqual(2, value.Headers?.Length);
+			Assert.AreEqual("subject", value.Headers![0].Name);
+			Assert.AreEqual("project", value.Headers![0].Value);
+			Assert.AreEqual("name", value.Headers![1].Name);
+			Assert.AreEqual("test", value.Headers![1].Value);
+
+
+			result = parser.Parse("sip:alice%40example.com@gateway.com", out value, true);
+			Assert.IsNotNull(value);
+			Assert.IsTrue(result);
+			Assert.AreEqual(0, logger.ErrorCount + logger.WarningCount + logger.FatalCount);
+			Assert.AreEqual("alice@example.com", value.UserInfo?.ToString());
+			Assert.AreEqual("gateway.com", value.HostPort.ToString());
+			Assert.AreEqual(0, value.Headers?.Length);
+
 
 
 		}

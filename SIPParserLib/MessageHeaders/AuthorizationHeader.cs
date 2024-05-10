@@ -9,7 +9,7 @@ namespace SIPParserLib
 	public class AuthorizationHeader : MessageHeader<string>
 	{
 		public override string Name => "Authorization";
-		public AuthorizationHeader(string Value):base(Value)
+		public AuthorizationHeader(string? Value):base(Value)
 		{
 		}
 

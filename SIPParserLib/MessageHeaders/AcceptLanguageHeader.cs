@@ -9,7 +9,7 @@ namespace SIPParserLib
 	public class AcceptLanguageHeader:MessageHeader<string>
 	{
 		public override string Name => "Accept-Language";
-		public AcceptLanguageHeader(string Value):base(Value)
+		public AcceptLanguageHeader(string? Value):base(Value)
 		{
 		}
 

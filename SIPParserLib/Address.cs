@@ -19,17 +19,21 @@ namespace SIPParserLib
 			get;
 			private set;
 		}
-
+		public AddressParameter[]? Parameters
+		{
+			get;
+			set;
+		}
 		/*public string? Tag
 		{
 			get;
 			private set;
 		}*/
-		
-		public Address(string DisplayName,URI URI)
+
+		public Address(string DisplayName,URI URI, AddressParameter[]? Parameters)
 		{
 			if (URI == null) throw new ArgumentNullException(nameof(URI));
-			this.DisplayName = DisplayName;this.URI = URI;//this.Tag = Tag;
+			this.DisplayName = DisplayName;this.URI = URI;this.Parameters = Parameters;
 		}
 
 		public override string? ToString()

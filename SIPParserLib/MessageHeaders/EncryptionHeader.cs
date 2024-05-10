@@ -9,7 +9,7 @@ namespace SIPParserLib
 	public class EncryptionHeader : MessageHeader<string>
 	{
 		public override string Name => "Encryption";
-		public EncryptionHeader(string Value):base(Value)
+		public EncryptionHeader(string? Value):base(Value)
 		{
 		}
 

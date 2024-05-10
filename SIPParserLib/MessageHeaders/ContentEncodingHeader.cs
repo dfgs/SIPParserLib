@@ -9,7 +9,7 @@ namespace SIPParserLib
 	public class ContentEncodingHeader: MessageHeader<string>
 	{
 		public override string Name => "Content-Encoding";
-		public ContentEncodingHeader(string Value):base(Value)
+		public ContentEncodingHeader(string? Value):base(Value)
 		{
 		}
 

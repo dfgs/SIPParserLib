@@ -9,13 +9,13 @@ using System.Numerics;
 namespace SIPParserLib.UnitTest
 {
 	[TestClass]
-	public class URLParameterParserUnitTest
+	public class AddressParameterParserUnitTest
 	{
 		[TestMethod]
 		public void ConstructorShouldThrowExceptionIfParameterIsNull()
 		{
 #pragma warning disable CS8625 // Impossible de convertir un littéral ayant une valeur null en type référence non-nullable.
-			Assert.ThrowsException<ArgumentNullException>(() => new URLParameterParser(null));
+			Assert.ThrowsException<ArgumentNullException>(() => new AddressParameterParser(null));
 #pragma warning restore CS8625 // Impossible de convertir un littéral ayant une valeur null en type référence non-nullable.
 		}
 
@@ -23,16 +23,16 @@ namespace SIPParserLib.UnitTest
 
 
 		[TestMethod]
-		public void ParseShouldNotParseInvalidURLParameter()
+		public void ParseShouldNotParseInvalidAddressParameter()
 		{
-			URLParameter? value;
+			AddressParameter? value;
 			bool result;
 
-			URLParameterParser parser;
+			AddressParameterParser parser;
 			DebugLogger logger;
 
 			logger = new DebugLogger();
-			parser = new URLParameterParser(logger);
+			parser = new AddressParameterParser(logger);
 			// invalid string
 			result = parser.Parse("",out value,true);
 			Assert.IsNull(value);
@@ -40,7 +40,7 @@ namespace SIPParserLib.UnitTest
 			Assert.AreEqual(1, logger.ErrorCount);
 
 			logger = new DebugLogger();
-			parser = new URLParameterParser(logger);
+			parser = new AddressParameterParser(logger);
 			// invalid name
 			result = parser.Parse("=1234", out value, true);
 			Assert.IsNull(value);
@@ -48,7 +48,7 @@ namespace SIPParserLib.UnitTest
 			Assert.AreEqual(1, logger.ErrorCount);
 
 			logger = new DebugLogger();
-			parser = new URLParameterParser(logger);
+			parser = new AddressParameterParser(logger);
 			// invalid value
 			result = parser.Parse("param=", out value, true);
 			Assert.IsNull(value);
@@ -59,16 +59,16 @@ namespace SIPParserLib.UnitTest
 		
 
 		[TestMethod]
-		public void ParseShouldParseURLParameterWithoutValue()
+		public void ParseShouldParseAddressParameterWithoutValue()
 		{
-			URLParameter? value;
+			AddressParameter? value;
 			bool result;
 
-			URLParameterParser parser;
+			AddressParameterParser parser;
 			DebugLogger logger;
 
 			logger = new DebugLogger();
-			parser = new URLParameterParser(logger);
+			parser = new AddressParameterParser(logger);
 
 			result = parser.Parse("param", out value, true);
 			Assert.IsNotNull(value);
@@ -79,15 +79,15 @@ namespace SIPParserLib.UnitTest
 		}
 
 		[TestMethod]
-		public void ParseShouldParseURLParameterWithValue()
+		public void ParseShouldParseAddressParameterWithValue()
 		{
-			URLParameter? value;
+			AddressParameter? value;
 			bool result;
-			URLParameterParser parser;
+			AddressParameterParser parser;
 			DebugLogger logger;
 
 			logger = new DebugLogger();
-			parser = new URLParameterParser(logger);
+			parser = new AddressParameterParser(logger);
 
 			result = parser.Parse("param=ttl", out value, true);
 			Assert.IsNotNull(value);
@@ -101,13 +101,13 @@ namespace SIPParserLib.UnitTest
 		[TestMethod]
 		public void ParseShouldParseAllParameters()
 		{
-			URLParameter[]? value;
+			AddressParameter[]? value;
 			bool result;
-			URLParameterParser parser;
+			AddressParameterParser parser;
 			DebugLogger logger;
 
 			logger = new DebugLogger();
-			parser = new URLParameterParser(logger);
+			parser = new AddressParameterParser(logger);
 
 			result = parser.ParseAll("param=ttl;param2;param3=test",';',out value,true);
 			Assert.IsNotNull(value);

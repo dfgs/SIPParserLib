@@ -9,7 +9,7 @@ namespace SIPParserLib
 	public class AcceptHeader:MessageHeader<string>
 	{
 		public override string Name => "Accept";
-		public AcceptHeader(string Value):base(Value)
+		public AcceptHeader(string? Value):base(Value)
 		{
 		}
 

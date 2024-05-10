@@ -9,7 +9,7 @@ namespace SIPParserLib
 	public class ContentTypeHeader : MessageHeader<string>
 	{
 		public override string Name => "Content-Type";
-		public ContentTypeHeader(string Value):base(Value)
+		public ContentTypeHeader(string? Value):base(Value)
 		{
 		}
 

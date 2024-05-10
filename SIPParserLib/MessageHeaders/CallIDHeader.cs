@@ -9,7 +9,7 @@ namespace SIPParserLib
 	public class CallIDHeader:MessageHeader<string>
 	{
 		public override string Name => "Call-ID";
-		public CallIDHeader(string Value):base(Value)
+		public CallIDHeader(string? Value):base(Value)
 		{
 		}
 
