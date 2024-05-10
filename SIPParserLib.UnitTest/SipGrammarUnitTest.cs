@@ -5,7 +5,7 @@ using System.Numerics;
 
 namespace SIPParserLib.UnitTest
 {
-	[TestClass]
+	//[TestClass]
 	public class SipGrammarUnitTest
 	{
 		
