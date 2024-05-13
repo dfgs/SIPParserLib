@@ -100,7 +100,7 @@ namespace SIPParserLib
 			from _ in Parse.Char('=')
 			from value in Parse.Except('\r').ReaderIncludes(' ').OneOrMoreTimes().ToStringParser()
 			from __ in EOL
-			select new CustomSDPField(name, value);
+			select new CustomSDPField(name.ToString(), value);
 
 
 

@@ -8,7 +8,7 @@ namespace SIPParserLib
 {
 	public abstract class SDPField
 	{
-		public abstract char Name { get; }
+		public abstract string Name { get; }
 		public  abstract string DisplayValue { get; }
 	}
 }

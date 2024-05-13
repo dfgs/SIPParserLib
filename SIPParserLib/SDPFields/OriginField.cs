@@ -8,7 +8,7 @@ namespace SIPParserLib
 {
 	public class OriginField : SDPField
 	{
-		public override char Name => 'o';
+		public override string Name => "o";
 
 		public string UserName
 		{

@@ -8,8 +8,8 @@ namespace SIPParserLib
 {
 	public class CustomSDPField : SDPField
 	{
-		private char name;
-		public override char Name
+		private string name;
+		public override string Name
 		{
 			get => name;
 		}
@@ -21,7 +21,7 @@ namespace SIPParserLib
 		}
 		public override string DisplayValue =>Value?.ToString()??"";
 
-		public CustomSDPField(char Name,string Value)
+		public CustomSDPField(string Name,string Value)
 		{
 			this.name = Name;this.Value = Value;
 		}

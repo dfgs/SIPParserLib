@@ -4,7 +4,6 @@ using System.Numerics;
 
 namespace SIPParserLib.UnitTest
 {
-	[TestClass]
 	public class SDPGrammarUnitTest
 	{
 		

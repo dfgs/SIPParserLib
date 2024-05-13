@@ -8,9 +8,9 @@ namespace SIPParserLib
 {
 	public class SessionInformationField : BaseValueField<string>
 	{
-		public override char Name => 'i';
+		public override string Name => "i";
 
-	
+
 		public SessionInformationField(string Value):base(Value)
 		{
 		}

@@ -8,7 +8,7 @@ namespace SIPParserLib
 {
 	public class MediaField : SDPField
 	{
-		public override char Name => 'm';
+		public override string Name => "m";
 
 		public string Media
 		{

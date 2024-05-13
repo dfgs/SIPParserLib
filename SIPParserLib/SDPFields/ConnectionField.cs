@@ -8,9 +8,9 @@ namespace SIPParserLib
 {
 	public class ConnectionField : SDPField
 	{
-		public override char Name => 'c';
+		public override string Name => "c";
 
-		
+
 		public string NetworkType
 		{
 			get;

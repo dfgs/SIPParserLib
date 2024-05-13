@@ -8,7 +8,7 @@ namespace SIPParserLib
 {
 	public class TimingField : SDPField
 	{
-		public override char Name => 't';
+		public override string Name => "t";
 
 		public uint StartTime
 		{

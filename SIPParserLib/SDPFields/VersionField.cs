@@ -8,7 +8,7 @@ namespace SIPParserLib
 {
 	public class VersionField : BaseValueField<byte>
 	{
-		public override char Name => 'v';
+		public override string Name => "v";
 
 
 		public VersionField(byte Value):base(Value)

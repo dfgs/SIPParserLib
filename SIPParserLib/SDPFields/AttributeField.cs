@@ -8,7 +8,7 @@ namespace SIPParserLib
 {
 	public class AttributeField : BaseValueField<SDPAttribute>
 	{
-		public override char Name => 'a';
+		public override string Name => "a";
 
 
 		public AttributeField(SDPAttribute Value):base(Value)
