@@ -20,15 +20,17 @@ namespace SIPParserLib.Parsers
 
 		protected override bool OnParse(Match Match, out UserInfo? Result)
 		{
-			string user;
+			string? user;
 			string? password;
 
 			LogEnter();
 
+			Result = null;
+
 			user = SIPString.Unescape(Match.Groups["User"].Value);
+			if (user == null) return false;
 
 			password = Match.Groups["Password"].MatchedValue();
-
 			Result=new UserInfo(user, password);
 
 			return true;

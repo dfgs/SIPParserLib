@@ -1,7 +1,7 @@
 ﻿using LogLib;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel.Client;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ParserLib;
+
 using SIPParserLib.Parsers;
 using System;
 using System.Numerics;
@@ -16,8 +16,10 @@ namespace SIPParserLib.UnitTest
 		public void ConstructorShouldThrowExceptionIfParameterIsNull()
 		{
 #pragma warning disable CS8625 // Impossible de convertir un littéral ayant une valeur null en type référence non-nullable.
+#pragma warning disable CS8603 // Existence possible d'un retour de référence null.
 			Assert.ThrowsException<ArgumentNullException>(() => new GenericClassParser<Request>(null, (value) => null));
 			Assert.ThrowsException<ArgumentNullException>(() => new GenericClassParser<Request>(NullLogger.Instance, null));
+#pragma warning restore CS8603 // Existence possible d'un retour de référence null.
 #pragma warning restore CS8625 // Impossible de convertir un littéral ayant une valeur null en type référence non-nullable.
 		}
 
@@ -30,11 +32,17 @@ namespace SIPParserLib.UnitTest
 			Request? value;
 
 			logger = new DebugLogger();
+#pragma warning disable CS8603 // Existence possible d'un retour de référence null.
 			parser = new GenericClassParser<Request>(logger,(value)=>null);
+#pragma warning restore CS8603 // Existence possible d'un retour de référence null.
 
 
 #pragma warning disable CS8625 // Impossible de convertir un littéral ayant une valeur null en type référence non-nullable.
+#pragma warning disable CS8603 // Existence possible d'un retour de référence null.
+#pragma warning disable CS8600 // Conversion de littéral ayant une valeur null ou d'une éventuelle valeur null en type non-nullable.
 			result = parser.Parse((string)null, out value, true);
+#pragma warning restore CS8600 // Conversion de littéral ayant une valeur null ou d'une éventuelle valeur null en type non-nullable.
+#pragma warning restore CS8603 // Existence possible d'un retour de référence null.
 #pragma warning restore CS8625 // Impossible de convertir un littéral ayant une valeur null en type référence non-nullable.
 			Assert.IsFalse(result);
 			Assert.AreEqual(1, logger.ErrorCount);
@@ -50,11 +58,15 @@ namespace SIPParserLib.UnitTest
 			Request? value;
 
 			logger = new DebugLogger();
+#pragma warning disable CS8603 // Existence possible d'un retour de référence null.
 			parser = new GenericClassParser<Request>(logger, (value) => null);
+#pragma warning restore CS8603 // Existence possible d'un retour de référence null.
 
 
 #pragma warning disable CS8625 // Impossible de convertir un littéral ayant une valeur null en type référence non-nullable.
+#pragma warning disable CS8600 // Conversion de littéral ayant une valeur null ou d'une éventuelle valeur null en type non-nullable.
 			result = parser.Parse((string)null, out value, false);
+#pragma warning restore CS8600 // Conversion de littéral ayant une valeur null ou d'une éventuelle valeur null en type non-nullable.
 #pragma warning restore CS8625 // Impossible de convertir un littéral ayant une valeur null en type référence non-nullable.
 			Assert.IsTrue(result);
 			Assert.AreEqual(0, logger.ErrorCount+logger.WarningCount+logger.FatalCount);
@@ -70,11 +82,15 @@ namespace SIPParserLib.UnitTest
 			Request? value;
 
 			logger = new DebugLogger();
+#pragma warning disable CS8603 // Existence possible d'un retour de référence null.
 			parser = new GenericClassParser<Request>(logger, (value) => null);
+#pragma warning restore CS8603 // Existence possible d'un retour de référence null.
 
 
 #pragma warning disable CS8625 // Impossible de convertir un littéral ayant une valeur null en type référence non-nullable.
+#pragma warning disable CS8600 // Conversion de littéral ayant une valeur null ou d'une éventuelle valeur null en type non-nullable.
 			result = parser.Parse((Group)null, out value, true);
+#pragma warning restore CS8600 // Conversion de littéral ayant une valeur null ou d'une éventuelle valeur null en type non-nullable.
 #pragma warning restore CS8625 // Impossible de convertir un littéral ayant une valeur null en type référence non-nullable.
 			Assert.IsFalse(result);
 			Assert.AreEqual(1, logger.ErrorCount);
@@ -90,11 +106,15 @@ namespace SIPParserLib.UnitTest
 			Request? value;
 
 			logger = new DebugLogger();
+#pragma warning disable CS8603 // Existence possible d'un retour de référence null.
 			parser = new GenericClassParser<Request>(logger, (value) => null);
+#pragma warning restore CS8603 // Existence possible d'un retour de référence null.
 
 
 #pragma warning disable CS8625 // Impossible de convertir un littéral ayant une valeur null en type référence non-nullable.
+#pragma warning disable CS8600 // Conversion de littéral ayant une valeur null ou d'une éventuelle valeur null en type non-nullable.
 			result = parser.Parse((Group)null, out value, false);
+#pragma warning restore CS8600 // Conversion de littéral ayant une valeur null ou d'une éventuelle valeur null en type non-nullable.
 #pragma warning restore CS8625 // Impossible de convertir un littéral ayant une valeur null en type référence non-nullable.
 			Assert.IsTrue(result);
 			Assert.AreEqual(0, logger.ErrorCount + logger.WarningCount + logger.FatalCount);
@@ -130,11 +150,15 @@ namespace SIPParserLib.UnitTest
 			Request[]? value;
 
 			logger = new DebugLogger();
+#pragma warning disable CS8603 // Existence possible d'un retour de référence null.
 			parser = new GenericClassParser<Request>(logger, (value) => null);
+#pragma warning restore CS8603 // Existence possible d'un retour de référence null.
 
 
 #pragma warning disable CS8625 // Impossible de convertir un littéral ayant une valeur null en type référence non-nullable.
+#pragma warning disable CS8600 // Conversion de littéral ayant une valeur null ou d'une éventuelle valeur null en type non-nullable.
 			result = parser.ParseAll((string)null,';', out value, true);
+#pragma warning restore CS8600 // Conversion de littéral ayant une valeur null ou d'une éventuelle valeur null en type non-nullable.
 #pragma warning restore CS8625 // Impossible de convertir un littéral ayant une valeur null en type référence non-nullable.
 			Assert.IsFalse(result);
 			Assert.AreEqual(1, logger.ErrorCount);
@@ -150,11 +174,15 @@ namespace SIPParserLib.UnitTest
 			Request[]? value;
 
 			logger = new DebugLogger();
+#pragma warning disable CS8603 // Existence possible d'un retour de référence null.
 			parser = new GenericClassParser<Request>(logger, (value) => null);
+#pragma warning restore CS8603 // Existence possible d'un retour de référence null.
 
 
 #pragma warning disable CS8625 // Impossible de convertir un littéral ayant une valeur null en type référence non-nullable.
+#pragma warning disable CS8600 // Conversion de littéral ayant une valeur null ou d'une éventuelle valeur null en type non-nullable.
 			result = parser.ParseAll((string)null, ';', out value, false);
+#pragma warning restore CS8600 // Conversion de littéral ayant une valeur null ou d'une éventuelle valeur null en type non-nullable.
 #pragma warning restore CS8625 // Impossible de convertir un littéral ayant une valeur null en type référence non-nullable.
 			Assert.IsTrue(result);
 			Assert.AreEqual(0, logger.ErrorCount + logger.WarningCount + logger.FatalCount);
@@ -170,11 +198,15 @@ namespace SIPParserLib.UnitTest
 			Request[]? value;
 
 			logger = new DebugLogger();
+#pragma warning disable CS8603 // Existence possible d'un retour de référence null.
 			parser = new GenericClassParser<Request>(logger, (value) => null);
+#pragma warning restore CS8603 // Existence possible d'un retour de référence null.
 
 
 #pragma warning disable CS8625 // Impossible de convertir un littéral ayant une valeur null en type référence non-nullable.
+#pragma warning disable CS8600 // Conversion de littéral ayant une valeur null ou d'une éventuelle valeur null en type non-nullable.
 			result = parser.ParseAll((Group)null, ';', out value, true);
+#pragma warning restore CS8600 // Conversion de littéral ayant une valeur null ou d'une éventuelle valeur null en type non-nullable.
 #pragma warning restore CS8625 // Impossible de convertir un littéral ayant une valeur null en type référence non-nullable.
 			Assert.IsFalse(result);
 			Assert.AreEqual(1, logger.ErrorCount);
@@ -190,11 +222,15 @@ namespace SIPParserLib.UnitTest
 			Request[]? value;
 
 			logger = new DebugLogger();
+#pragma warning disable CS8603 // Existence possible d'un retour de référence null.
 			parser = new GenericClassParser<Request>(logger, (value) => null);
+#pragma warning restore CS8603 // Existence possible d'un retour de référence null.
 
 
 #pragma warning disable CS8625 // Impossible de convertir un littéral ayant une valeur null en type référence non-nullable.
+#pragma warning disable CS8600 // Conversion de littéral ayant une valeur null ou d'une éventuelle valeur null en type non-nullable.
 			result = parser.ParseAll((Group)null, ';', out value, false);
+#pragma warning restore CS8600 // Conversion de littéral ayant une valeur null ou d'une éventuelle valeur null en type non-nullable.
 #pragma warning restore CS8625 // Impossible de convertir un littéral ayant une valeur null en type référence non-nullable.
 			Assert.IsTrue(result);
 			Assert.AreEqual(0, logger.ErrorCount + logger.WarningCount + logger.FatalCount);

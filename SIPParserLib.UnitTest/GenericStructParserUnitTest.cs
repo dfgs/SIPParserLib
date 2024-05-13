@@ -1,6 +1,6 @@
 ﻿using LogLib;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ParserLib;
+
 using SIPParserLib.Parsers;
 using System;
 using System.Numerics;
@@ -33,7 +33,9 @@ namespace SIPParserLib.UnitTest
 
 
 #pragma warning disable CS8625 // Impossible de convertir un littéral ayant une valeur null en type référence non-nullable.
+#pragma warning disable CS8600 // Conversion de littéral ayant une valeur null ou d'une éventuelle valeur null en type non-nullable.
 			result = parser.Parse((string)null, out value, true);
+#pragma warning restore CS8600 // Conversion de littéral ayant une valeur null ou d'une éventuelle valeur null en type non-nullable.
 #pragma warning restore CS8625 // Impossible de convertir un littéral ayant une valeur null en type référence non-nullable.
 			Assert.IsFalse(result);
 			Assert.AreEqual(1, logger.ErrorCount);
@@ -53,7 +55,9 @@ namespace SIPParserLib.UnitTest
 
 
 #pragma warning disable CS8625 // Impossible de convertir un littéral ayant une valeur null en type référence non-nullable.
+#pragma warning disable CS8600 // Conversion de littéral ayant une valeur null ou d'une éventuelle valeur null en type non-nullable.
 			result = parser.Parse((string)null, out value, false);
+#pragma warning restore CS8600 // Conversion de littéral ayant une valeur null ou d'une éventuelle valeur null en type non-nullable.
 #pragma warning restore CS8625 // Impossible de convertir un littéral ayant une valeur null en type référence non-nullable.
 			Assert.IsTrue(result);
 			Assert.AreEqual(0, logger.ErrorCount+logger.WarningCount+logger.FatalCount);
@@ -73,7 +77,9 @@ namespace SIPParserLib.UnitTest
 
 
 #pragma warning disable CS8625 // Impossible de convertir un littéral ayant une valeur null en type référence non-nullable.
+#pragma warning disable CS8600 // Conversion de littéral ayant une valeur null ou d'une éventuelle valeur null en type non-nullable.
 			result = parser.Parse((Group)null, out value, true);
+#pragma warning restore CS8600 // Conversion de littéral ayant une valeur null ou d'une éventuelle valeur null en type non-nullable.
 #pragma warning restore CS8625 // Impossible de convertir un littéral ayant une valeur null en type référence non-nullable.
 			Assert.IsFalse(result);
 			Assert.AreEqual(1, logger.ErrorCount);
@@ -93,7 +99,9 @@ namespace SIPParserLib.UnitTest
 
 
 #pragma warning disable CS8625 // Impossible de convertir un littéral ayant une valeur null en type référence non-nullable.
+#pragma warning disable CS8600 // Conversion de littéral ayant une valeur null ou d'une éventuelle valeur null en type non-nullable.
 			result = parser.Parse((Group)null, out value, false);
+#pragma warning restore CS8600 // Conversion de littéral ayant une valeur null ou d'une éventuelle valeur null en type non-nullable.
 #pragma warning restore CS8625 // Impossible de convertir un littéral ayant une valeur null en type référence non-nullable.
 			Assert.IsTrue(result);
 			Assert.AreEqual(0, logger.ErrorCount + logger.WarningCount + logger.FatalCount);
@@ -135,7 +143,9 @@ namespace SIPParserLib.UnitTest
 
 
 #pragma warning disable CS8625 // Impossible de convertir un littéral ayant une valeur null en type référence non-nullable.
+#pragma warning disable CS8600 // Conversion de littéral ayant une valeur null ou d'une éventuelle valeur null en type non-nullable.
 			result = parser.ParseAll((string)null,';', out value, true);
+#pragma warning restore CS8600 // Conversion de littéral ayant une valeur null ou d'une éventuelle valeur null en type non-nullable.
 #pragma warning restore CS8625 // Impossible de convertir un littéral ayant une valeur null en type référence non-nullable.
 			Assert.IsFalse(result);
 			Assert.AreEqual(1, logger.ErrorCount);
@@ -155,7 +165,9 @@ namespace SIPParserLib.UnitTest
 
 
 #pragma warning disable CS8625 // Impossible de convertir un littéral ayant une valeur null en type référence non-nullable.
+#pragma warning disable CS8600 // Conversion de littéral ayant une valeur null ou d'une éventuelle valeur null en type non-nullable.
 			result = parser.ParseAll((string)null, ';', out value, false);
+#pragma warning restore CS8600 // Conversion de littéral ayant une valeur null ou d'une éventuelle valeur null en type non-nullable.
 #pragma warning restore CS8625 // Impossible de convertir un littéral ayant une valeur null en type référence non-nullable.
 			Assert.IsTrue(result);
 			Assert.AreEqual(0, logger.ErrorCount + logger.WarningCount + logger.FatalCount);
@@ -175,7 +187,9 @@ namespace SIPParserLib.UnitTest
 
 
 #pragma warning disable CS8625 // Impossible de convertir un littéral ayant une valeur null en type référence non-nullable.
+#pragma warning disable CS8600 // Conversion de littéral ayant une valeur null ou d'une éventuelle valeur null en type non-nullable.
 			result = parser.ParseAll((Group)null, ';', out value, true);
+#pragma warning restore CS8600 // Conversion de littéral ayant une valeur null ou d'une éventuelle valeur null en type non-nullable.
 #pragma warning restore CS8625 // Impossible de convertir un littéral ayant une valeur null en type référence non-nullable.
 			Assert.IsFalse(result);
 			Assert.AreEqual(1, logger.ErrorCount);
@@ -195,7 +209,9 @@ namespace SIPParserLib.UnitTest
 
 
 #pragma warning disable CS8625 // Impossible de convertir un littéral ayant une valeur null en type référence non-nullable.
+#pragma warning disable CS8600 // Conversion de littéral ayant une valeur null ou d'une éventuelle valeur null en type non-nullable.
 			result = parser.ParseAll((Group)null, ';', out value, false);
+#pragma warning restore CS8600 // Conversion de littéral ayant une valeur null ou d'une éventuelle valeur null en type non-nullable.
 #pragma warning restore CS8625 // Impossible de convertir un littéral ayant une valeur null en type référence non-nullable.
 			Assert.IsTrue(result);
 			Assert.AreEqual(0, logger.ErrorCount + logger.WarningCount + logger.FatalCount);

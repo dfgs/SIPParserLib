@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace SIPParserLib
 {
-	public class ViaMAddr : ViaParameter<string>
+	public class ViaMAddr : ViaParameter<string?>
 	{
 		public override string Name => "maddr";
 		public ViaMAddr(string? Value) : base(Value)
