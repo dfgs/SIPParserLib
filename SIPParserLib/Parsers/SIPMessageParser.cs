@@ -126,7 +126,6 @@ namespace SIPParserLib.Parsers
 					return null;
 				}
 
-
 				// end of headers
 				if (line == "") break;
 
@@ -149,7 +148,6 @@ namespace SIPParserLib.Parsers
 					Log(LogLevels.Error, $"End of stream reached");
 					return null;
 				}
-
 
 				// end of body
 				if (line == "") break;
