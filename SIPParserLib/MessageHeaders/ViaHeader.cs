@@ -16,7 +16,7 @@ namespace SIPParserLib
 			private set;
 		}
 
-		public ViaHeader(string? Value, ViaParameter[] Parameters) :base(Value)
+		public ViaHeader(string Value, ViaParameter[] Parameters) :base(Value)
 		{
 			this.Parameters = Parameters;
 		}
@@ -25,6 +25,10 @@ namespace SIPParserLib
 			where T:ViaParameter
 		{
 			return Parameters.OfType<T>().FirstOrDefault();
+		}
+		public override string GetStringValue()
+		{
+			return $"{Value};{string.Join(';',(object[])Parameters)}";
 		}
 
 	}
