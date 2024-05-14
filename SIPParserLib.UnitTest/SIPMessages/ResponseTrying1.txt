@@ -6,4 +6,3 @@ Call-ID: SDdlid001-f84bd0032caa349c111c1620070de7ea-v300g00090
 CSeq: 2 INVITE
 Content-Length: 0
 
-
