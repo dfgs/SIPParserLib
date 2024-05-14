@@ -81,7 +81,7 @@ namespace SIPParserLib.Parsers
 
 			body = "";
 			Log(LogLevels.Information, "Parsing body");
-			do
+			while (!reader.EndOfStream)
 			{
 				line = ReadLine(reader);
 				if (line == null)
@@ -94,7 +94,7 @@ namespace SIPParserLib.Parsers
 				if (line == "") break;
 
 				body += line + "\r\n";
-			} while (true);
+			}
 
 			return new Request(requestLine, headers.ToArray(), body);
 		}
@@ -139,24 +139,21 @@ namespace SIPParserLib.Parsers
 			} while (true);
 
 			body = "";
-			if (!reader.EndOfStream)
+			Log(LogLevels.Information, "Parsing body");
+			while(!reader.EndOfStream)
 			{
-				Log(LogLevels.Information, "Parsing body");
-				do
+				line = ReadLine(reader);
+				if (line == null)
 				{
-					line = ReadLine(reader);
-					if (line == null)
-					{
-						Log(LogLevels.Error, $"End of stream reached");
-						return null;
-					}
+					Log(LogLevels.Error, $"End of stream reached");
+					return null;
+				}
 
-					// end of body
-					if (line == "") break;
+				// end of body
+				if (line == "") break;
 
-					body += line + "\r\n";
-				} while (true);
-			}
+				body += line + "\r\n";
+			} 
 			return new Response(statusLine, headers.ToArray(), body);
 		}
 		public override SIPMessage? Parse(Stream Stream)
