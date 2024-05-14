@@ -160,6 +160,14 @@ namespace SIPParserLib.UnitTest
 			Assert.IsInstanceOfType(value, typeof(FromHeader));
 			Assert.AreEqual("From", value.Name);
 			Assert.IsNotNull(((FromHeader)value).Value);
+
+			result = parser.Parse("From: sip:+33786953886@10.91.254.206;tag=1B98AEB8-E185-4A22-9B3C-1D52B095739A-377738", out value, true);
+			Assert.IsNotNull(value);
+			Assert.IsTrue(result);
+			Assert.AreEqual(0, logger.ErrorCount + logger.WarningCount + logger.FatalCount);
+			Assert.IsInstanceOfType(value, typeof(FromHeader));
+			Assert.AreEqual("From", value.Name);
+			Assert.IsNotNull(((FromHeader)value).Value);
 		}
 
 		[TestMethod]
@@ -174,6 +182,14 @@ namespace SIPParserLib.UnitTest
 			parser = new MessageHeaderParser(logger);
 
 			result = parser.Parse("To: <sip:+33156716199@172.20.52.20;user=phone>;tag=0086183E-0CA7-14B4-8A11-3E69230AAA77-6011503", out value, true);
+			Assert.IsNotNull(value);
+			Assert.IsTrue(result);
+			Assert.AreEqual(0, logger.ErrorCount + logger.WarningCount + logger.FatalCount);
+			Assert.IsInstanceOfType(value, typeof(ToHeader));
+			Assert.AreEqual("To", value.Name);
+			Assert.IsNotNull(((ToHeader)value).Value);
+
+			result = parser.Parse("To: sip:+33786953886@10.91.254.206;tag=1B98AEB8-E185-4A22-9B3C-1D52B095739A-377738", out value, true);
 			Assert.IsNotNull(value);
 			Assert.IsTrue(result);
 			Assert.AreEqual(0, logger.ErrorCount + logger.WarningCount + logger.FatalCount);

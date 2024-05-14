@@ -93,7 +93,11 @@ namespace SIPParserLib.Parsers
 					Result = new ExpiresHeader(value);
 					return true;
 				case "From":
-					if (!addressParser.Parse(value, out address, true)) return false;
+					if ((!addressParser.Parse(value, out address, false)) || (address == null))
+					{
+						if ((!uriParser.Parse(value, out uri, true)) || (uri == null)) return false;
+						address = new Address(null, uri, null);
+					}
 					if (address == null) return false;
 					Result = new FromHeader(address.Value);
 					return true;
@@ -161,7 +165,11 @@ namespace SIPParserLib.Parsers
 					Result = new TimestampHeader(value);
 					return true;
 				case "To":
-					if (!addressParser.Parse(value, out address, true)) return false;
+					if ((!addressParser.Parse(value, out address, false)) || (address == null))
+					{
+						if ((!uriParser.Parse(value, out uri, true)) || (uri == null)) return false;
+						address = new Address(null, uri, null);
+					}
 					if (address == null) return false;
 					Result = new ToHeader(address.Value);
 					return true;
