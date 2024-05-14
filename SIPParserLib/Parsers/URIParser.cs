@@ -24,9 +24,9 @@ namespace SIPParserLib.Parsers
 		public URIParser(ILogger Logger) : this(Logger, new SIPURIParser(Logger),new TELURIParser(Logger))
 		{
 		}
-		protected override Regex OnGetRegex() => regex;
+		protected override IEnumerable<Regex> OnGetRegexes() => new Regex[] { regex };
 
-		protected override bool OnParse(Match Match, out URI? Value)
+		protected override bool OnParse(Regex Regex, Match Match, out URI? Value)
 		{
 			string? protocol;
 			TELURL? telURL;

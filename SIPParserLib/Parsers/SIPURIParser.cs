@@ -27,9 +27,9 @@ namespace SIPParserLib.Parsers
 		public SIPURIParser(ILogger Logger) : this(Logger,new UserInfoParser(Logger),new HostPortParser(Logger),new URLParameterParser(Logger),new URIHeaderParser(Logger) )
 		{
 		}
-		protected override Regex OnGetRegex() => regex;
+		protected override IEnumerable<Regex> OnGetRegexes() => new Regex[] { regex };
 
-		protected override bool OnParse(Match Match, out SIPURL? Value)
+		protected override bool OnParse(Regex Regex, Match Match, out SIPURL? Value)
 		{
 			UserInfo? userInfo;
 			HostPort? hostPort;

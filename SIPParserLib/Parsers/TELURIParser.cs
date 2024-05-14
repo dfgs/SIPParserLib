@@ -17,10 +17,10 @@ namespace SIPParserLib.Parsers
 		public TELURIParser(ILogger Logger) : base(Logger)
 		{
 		}
-		
-		protected override Regex OnGetRegex() => regex;
 
-		protected override bool OnParse(Match Match, out TELURL? Value)
+		protected override IEnumerable<Regex> OnGetRegexes() => new Regex[] { regex };
+
+		protected override bool OnParse(Regex Regex, Match Match, out TELURL? Value)
 		{
 			string? number;
 			

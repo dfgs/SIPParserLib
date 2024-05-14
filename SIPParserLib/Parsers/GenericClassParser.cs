@@ -19,10 +19,10 @@ namespace SIPParserLib.Parsers
 		{
 			AssertParameterNotNull(Converter, nameof(Converter), out converter);
 		}
-		protected override Regex OnGetRegex() => regex;
+		protected override IEnumerable<Regex> OnGetRegexes() => new Regex[] { regex };
 
 
-		protected override bool OnParse(Match Match, out T? Value)
+		protected override bool OnParse(Regex Regex, Match Match, out T? Value)
 		{
 			string value;
 

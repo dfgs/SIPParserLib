@@ -16,9 +16,9 @@ namespace SIPParserLib.Parsers
 		public HostPortParser(ILogger Logger) : base(Logger)
 		{
 		}
-		protected override Regex OnGetRegex() => regex;
+		protected override IEnumerable<Regex> OnGetRegexes() => new Regex[] { regex };
 
-		protected override bool OnParse(Match Match, out HostPort? Result)
+		protected override bool OnParse(Regex Regex, Match Match, out HostPort? Result)
 		{
 			string host;
 			string? port;

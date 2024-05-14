@@ -16,9 +16,11 @@ namespace SIPParserLib.UnitTest
 		public void ConstructorShouldThrowExceptionIfParameterIsNull()
 		{
 #pragma warning disable CS8625 // Impossible de convertir un littéral ayant une valeur null en type référence non-nullable.
-			Assert.ThrowsException<ArgumentNullException>(() => new AddressParser(null, Mock.Of<IClassStringParser<URI>>(), Mock.Of<IStructStringParser<AddressParameter>>()));
-			Assert.ThrowsException<ArgumentNullException>(() => new AddressParser(NullLogger.Instance, null, Mock.Of<IStructStringParser<AddressParameter>>()));
-			Assert.ThrowsException<ArgumentNullException>(() => new AddressParser(NullLogger.Instance, Mock.Of<IClassStringParser<URI>>(), null));
+			Assert.ThrowsException<ArgumentNullException>(() => new AddressParser(null, Mock.Of<IClassStringParser<URI>>(), Mock.Of<IStructStringParser<AddressParameter>>() , Mock.Of<IClassStringParser< UserInfo>>(), Mock.Of<IStructStringParser<HostPort>>() ));
+			Assert.ThrowsException<ArgumentNullException>(() => new AddressParser(NullLogger.Instance, null, Mock.Of<IStructStringParser<AddressParameter>>(), Mock.Of<IClassStringParser<UserInfo>>(), Mock.Of<IStructStringParser<HostPort>>()));
+			Assert.ThrowsException<ArgumentNullException>(() => new AddressParser(NullLogger.Instance, Mock.Of<IClassStringParser<URI>>(), null, Mock.Of<IClassStringParser<UserInfo>>(), Mock.Of<IStructStringParser<HostPort>>()));
+			Assert.ThrowsException<ArgumentNullException>(() => new AddressParser(NullLogger.Instance, Mock.Of<IClassStringParser<URI>>(), Mock.Of<IStructStringParser<AddressParameter>>(), null, Mock.Of<IStructStringParser<HostPort>>()));
+			Assert.ThrowsException<ArgumentNullException>(() => new AddressParser(NullLogger.Instance, Mock.Of<IClassStringParser<URI>>(), Mock.Of<IStructStringParser<AddressParameter>>(), Mock.Of<IClassStringParser<UserInfo>>(), null ));
 #pragma warning restore CS8625 // Impossible de convertir un littéral ayant une valeur null en type référence non-nullable.
 		}
 
@@ -36,7 +38,7 @@ namespace SIPParserLib.UnitTest
 			parser = new AddressParser(logger);
 
 			// missing char
-			result= parser.Parse("sip:+33156727444@172.20.52.20;user=phone>;tag=0086183E-0CA7-14B4-8A11-3E69230AAA77-6011529", out value,true);
+			result= parser.Parse("sp:+33156727444@172.20.52.20;user=phone>;tag=0086183E-0CA7-14B4-8A11-3E69230AAA77-6011529", out value,true);
 			Assert.IsNull(value);
 			Assert.IsFalse(result);
 
@@ -118,7 +120,23 @@ namespace SIPParserLib.UnitTest
 			Assert.AreEqual("sip:+262262595179@172.20.54.2;user=phone", value.Value.URI.ToString());
 			Assert.AreEqual(1, value.Value.Parameters?.Length); ;
 
-			
+			result = parser.Parse("sip:+991002008355040@10.91.219.12:5060", out value, true);
+			Assert.IsNotNull(value);
+			Assert.IsTrue(result);
+			Assert.AreEqual(0, logger.ErrorCount + logger.WarningCount + logger.FatalCount);
+			Assert.IsNull(value.Value.DisplayName);
+			Assert.AreEqual("sip:+991002008355040@10.91.219.12:5060", value.Value.URI.ToString());
+			Assert.IsNull(value.Value.Parameters); ;
+
+			result = parser.Parse("sip:+991002008355040@10.91.219.12:5060;tag=SD58d3901-U2xemg", out value, true);
+			Assert.IsNotNull(value);
+			Assert.IsTrue(result);
+			Assert.AreEqual(0, logger.ErrorCount + logger.WarningCount + logger.FatalCount);
+			Assert.IsNull(value.Value.DisplayName);
+			Assert.AreEqual("sip:+991002008355040@10.91.219.12:5060", value.Value.URI.ToString());
+			Assert.AreEqual(1, value.Value.Parameters?.Length); ;
+
+
 
 
 

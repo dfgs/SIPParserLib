@@ -12,13 +12,13 @@ namespace SIPParserLib.Parsers
 	public class AddressParameterParser : StructStringParser<AddressParameter>
 	{
 		private static Regex regex = new Regex(@"^(?<Name>[^=]+)(=(?<Value>.+))?$");
-		
+
 		public AddressParameterParser(ILogger Logger) : base(Logger)
 		{
 		}
-		protected override Regex OnGetRegex() => regex;
+		protected override IEnumerable<Regex> OnGetRegexes() => new Regex[] {regex };
 
-		protected override bool OnParse(Match Match, out AddressParameter? Result)
+		protected override bool OnParse(Regex Regex, Match Match, out AddressParameter? Result)
 		{
 			string name;
 			string? value;

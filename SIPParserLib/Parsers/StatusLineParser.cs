@@ -17,12 +17,12 @@ namespace SIPParserLib.Parsers
 		public StatusLineParser(ILogger Logger) : base(Logger)
 		{
 		}
-		
-
-		protected override Regex OnGetRegex() => regex;
 
 
-		protected override bool OnParse(Match Match, out StatusLine? Result)
+		protected override IEnumerable<Regex> OnGetRegexes() => new Regex[] { regex };
+
+
+		protected override bool OnParse(Regex Regex, Match Match, out StatusLine? Result)
 		{
 			string code;
 			string reason;

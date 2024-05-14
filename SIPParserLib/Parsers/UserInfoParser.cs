@@ -16,9 +16,9 @@ namespace SIPParserLib.Parsers
 		public UserInfoParser(ILogger Logger) : base(Logger)
 		{
 		}
-		protected override Regex OnGetRegex() => regex;
+		protected override IEnumerable<Regex> OnGetRegexes() => new Regex[] { regex };
 
-		protected override bool OnParse(Match Match, out UserInfo? Result)
+		protected override bool OnParse(Regex Regex, Match Match, out UserInfo? Result)
 		{
 			string? user;
 			string? password;

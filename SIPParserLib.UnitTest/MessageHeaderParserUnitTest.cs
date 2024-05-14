@@ -16,10 +16,9 @@ namespace SIPParserLib.UnitTest
 		public void ConstructorShouldThrowExceptionIfParameterIsNull()
 		{
 #pragma warning disable CS8625 // Impossible de convertir un littéral ayant une valeur null en type référence non-nullable.
-			Assert.ThrowsException<ArgumentNullException>(() => new MessageHeaderParser(null, Mock.Of<IStructStringParser<Address>>(), Mock.Of<IClassStringParser<ViaParameter>>(), Mock.Of<IClassStringParser<URI>>()));
-			Assert.ThrowsException<ArgumentNullException>(() => new MessageHeaderParser(NullLogger.Instance, null, Mock.Of<IClassStringParser<ViaParameter>>(), Mock.Of<IClassStringParser<URI>>()));
-			Assert.ThrowsException<ArgumentNullException>(() => new MessageHeaderParser(NullLogger.Instance, Mock.Of<IStructStringParser<Address>>(), null, Mock.Of<IClassStringParser<URI>>()));
-			Assert.ThrowsException<ArgumentNullException>(() => new MessageHeaderParser(NullLogger.Instance, Mock.Of<IStructStringParser<Address>>(), Mock.Of<IClassStringParser<ViaParameter>>(), null));
+			Assert.ThrowsException<ArgumentNullException>(() => new MessageHeaderParser(null, Mock.Of<IStructStringParser<Address>>(), Mock.Of<IClassStringParser<ViaParameter>>()));
+			Assert.ThrowsException<ArgumentNullException>(() => new MessageHeaderParser(NullLogger.Instance, null, Mock.Of<IClassStringParser<ViaParameter>>()));
+			Assert.ThrowsException<ArgumentNullException>(() => new MessageHeaderParser(NullLogger.Instance, Mock.Of<IStructStringParser<Address>>(), null));
 #pragma warning restore CS8625 // Impossible de convertir un littéral ayant une valeur null en type référence non-nullable.
 		}
 

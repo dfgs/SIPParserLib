@@ -15,31 +15,28 @@ namespace SIPParserLib.Parsers
 		private static Regex viaRegex = new Regex(@"^(?<Value>[^;]+);(?<Parameters>.+)$");
 
 		private IStructStringParser<Address> addressParser;
-		private IClassStringParser<URI> uriParser;
 		private IClassStringParser<ViaParameter> viaParameterParser;
 
-		public MessageHeaderParser(ILogger Logger,IStructStringParser<Address> AddressParser,IClassStringParser<ViaParameter> ViaParameterParser, IClassStringParser<URI> URIParser) : base(Logger)
+		public MessageHeaderParser(ILogger Logger,IStructStringParser<Address> AddressParser,IClassStringParser<ViaParameter> ViaParameterParser) : base(Logger)
 		{
 			AssertParameterNotNull(AddressParser, nameof(AddressParser), out addressParser);
 			AssertParameterNotNull(ViaParameterParser, nameof(ViaParameterParser), out viaParameterParser);
-			AssertParameterNotNull(URIParser, nameof(URIParser), out uriParser);
 		}
 
-		public MessageHeaderParser(ILogger Logger) : this(Logger, new AddressParser(Logger), new ViaParameterParser(Logger),new URIParser(Logger) )
+		public MessageHeaderParser(ILogger Logger) : this(Logger, new AddressParser(Logger), new ViaParameterParser(Logger) )
 		{
 		}
 
-		protected override Regex OnGetRegex() => regex;
+		protected override IEnumerable<Regex> OnGetRegexes() => new Regex[] { regex };
 
 
-		protected override bool OnParse(Match Match, out MessageHeader? Result)
+		protected override bool OnParse(Regex Regex, Match Match, out MessageHeader? Result)
 		{
 			string name;
 			string? value;
 			Address? address;
 			Match match;
 			ViaParameter[]? viaParameters;
-			URI? uri;
 
 			LogEnter();
 
@@ -93,11 +90,7 @@ namespace SIPParserLib.Parsers
 					Result = new ExpiresHeader(value);
 					return true;
 				case "From":
-					if ((!addressParser.Parse(value, out address, false)) || (address == null))
-					{
-						if ((!uriParser.Parse(value, out uri, true)) || (uri == null)) return false;
-						address = new Address(null, uri, null);
-					}
+					if (!addressParser.Parse(value, out address, true)) return false;
 					if (address == null) return false;
 					Result = new FromHeader(address.Value);
 					return true;
@@ -126,20 +119,12 @@ namespace SIPParserLib.Parsers
 					Result = new RecordRouteHeader(value);
 					return true;
 				case "Refer-To":
-					if ((!addressParser.Parse(value, out address, false)) || (address == null))
-					{
-						if ((!uriParser.Parse(value, out uri,true)) || (uri==null)) return false;
-						address = new Address(null, uri, null);
-					}
+					if (!addressParser.Parse(value, out address, true)) return false;
 					if (address == null) return false;
 					Result = new ReferToHeader(address.Value);
 					return true;
 				case "Referred-By":
-					if ((!addressParser.Parse(value, out address, false))|| (address==null) )
-					{
-						if ((!uriParser.Parse(value, out uri, true)) || (uri == null)) return false;
-						address = new Address(null, uri, null);
-					}
+					if (!addressParser.Parse(value, out address, true)) return false;
 					if (address == null) return false;
 					Result = new ReferredByHeader(address.Value);
 					return true;
@@ -165,11 +150,7 @@ namespace SIPParserLib.Parsers
 					Result = new TimestampHeader(value);
 					return true;
 				case "To":
-					if ((!addressParser.Parse(value, out address, false)) || (address == null))
-					{
-						if ((!uriParser.Parse(value, out uri, true)) || (uri == null)) return false;
-						address = new Address(null, uri, null);
-					}
+					if (!addressParser.Parse(value, out address, true)) return false;
 					if (address == null) return false;
 					Result = new ToHeader(address.Value);
 					return true;

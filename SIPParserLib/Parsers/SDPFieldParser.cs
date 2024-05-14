@@ -28,10 +28,9 @@ namespace SIPParserLib.Parsers
 		{
 		}
 
-		protected override Regex OnGetRegex() => regex;
+		protected override IEnumerable<Regex> OnGetRegexes() => new Regex[] { regex };
 
-
-		protected override bool OnParse(Match Match, out SDPField? Result)
+		protected override bool OnParse(Regex Regex, Match Match, out SDPField? Result)
 		{
 			string name;
 			string? value;
