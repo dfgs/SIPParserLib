@@ -31,7 +31,7 @@ namespace SIPParserLib.Parsers
 			line = null;
 
 			if (!Try(() => Reader.ReadLine()).Then(result => line = result).OrWarn("Failed to read line from stream")) return null;
-			if (line == null) Log(LogLevels.Warning, "Failed to read line from stream");
+			if (line == null) return "";// Log(LogLevels.Warning, "Failed to read line from stream");
 
 			return line;
 		}
