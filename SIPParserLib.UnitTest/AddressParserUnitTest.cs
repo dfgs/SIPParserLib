@@ -116,7 +116,9 @@ namespace SIPParserLib.UnitTest
 			Assert.AreEqual(0, logger.ErrorCount + logger.WarningCount + logger.FatalCount);
 			Assert.IsNull(value.Value.DisplayName);
 			Assert.AreEqual("sip:+262262595179@172.20.54.2;user=phone", value.Value.URI.ToString());
-			Assert.AreEqual(1,value.Value.Parameters?.Length); ;
+			Assert.AreEqual(1, value.Value.Parameters?.Length); ;
+
+			
 
 
 

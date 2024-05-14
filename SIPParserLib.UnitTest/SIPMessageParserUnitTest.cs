@@ -26,6 +26,7 @@ namespace SIPParserLib.UnitTest
 
 
 		[DataTestMethod]
+		[DataRow("SIPParserLib.UnitTest.SIPMessages.RequestRefer1.txt")]
 		[DataRow("SIPParserLib.UnitTest.SIPMessages.RequestInvite1.txt")]
 		public void ParseShouldParseRequest(string ResourceName)
 		{

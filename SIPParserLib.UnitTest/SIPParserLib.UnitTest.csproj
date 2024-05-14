@@ -13,6 +13,7 @@
     <None Remove="SIPMessages\RequestIncompleteInvite1.txt" />
     <None Remove="SIPMessages\RequestInvite1.txt" />
     <None Remove="SIPMessages\RequestInvite2.txt" />
+    <None Remove="SIPMessages\RequestRefer1.txt" />
     <None Remove="SIPMessages\ResponseIncompleteTrying1.txt" />
     <None Remove="SIPMessages\ResponseOK1.txt" />
     <None Remove="SIPMessages\ResponseTrying1.txt" />
@@ -21,6 +22,7 @@
   <ItemGroup>
     <EmbeddedResource Include="SDPBodies\SDPBody1.txt" />
     <EmbeddedResource Include="SIPMessages\RequestIncompleteInvite1.txt" />
+    <EmbeddedResource Include="SIPMessages\RequestRefer1.txt" />
     <EmbeddedResource Include="SIPMessages\RequestInvite2.txt" />
     <EmbeddedResource Include="SIPMessages\ResponseIncompleteTrying1.txt" />
     <EmbeddedResource Include="SIPMessages\ResponseOK1.txt" />

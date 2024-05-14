@@ -16,9 +16,10 @@ namespace SIPParserLib.UnitTest
 		public void ConstructorShouldThrowExceptionIfParameterIsNull()
 		{
 #pragma warning disable CS8625 // Impossible de convertir un littéral ayant une valeur null en type référence non-nullable.
-			Assert.ThrowsException<ArgumentNullException>(() => new MessageHeaderParser(null, Mock.Of<IStructStringParser<Address>>(), Mock.Of<IClassStringParser<ViaParameter>>()  ));
-			Assert.ThrowsException<ArgumentNullException>(() => new MessageHeaderParser(NullLogger.Instance, null, Mock.Of<IClassStringParser<ViaParameter>>()));
-			Assert.ThrowsException<ArgumentNullException>(() => new MessageHeaderParser(NullLogger.Instance, Mock.Of<IStructStringParser<Address>>(), null)); 
+			Assert.ThrowsException<ArgumentNullException>(() => new MessageHeaderParser(null, Mock.Of<IStructStringParser<Address>>(), Mock.Of<IClassStringParser<ViaParameter>>(), Mock.Of<IClassStringParser<URI>>()));
+			Assert.ThrowsException<ArgumentNullException>(() => new MessageHeaderParser(NullLogger.Instance, null, Mock.Of<IClassStringParser<ViaParameter>>(), Mock.Of<IClassStringParser<URI>>()));
+			Assert.ThrowsException<ArgumentNullException>(() => new MessageHeaderParser(NullLogger.Instance, Mock.Of<IStructStringParser<Address>>(), null, Mock.Of<IClassStringParser<URI>>()));
+			Assert.ThrowsException<ArgumentNullException>(() => new MessageHeaderParser(NullLogger.Instance, Mock.Of<IStructStringParser<Address>>(), Mock.Of<IClassStringParser<ViaParameter>>(), null));
 #pragma warning restore CS8625 // Impossible de convertir un littéral ayant une valeur null en type référence non-nullable.
 		}
 
@@ -211,6 +212,14 @@ namespace SIPParserLib.UnitTest
 			parser = new MessageHeaderParser(logger);
 
 			result = parser.Parse("Referred-By: <sip:+33156716199@172.20.52.20;user=phone>;tag=0086183E-0CA7-14B4-8A11-3E69230AAA77-6011503", out value, true);
+			Assert.IsNotNull(value);
+			Assert.IsTrue(result);
+			Assert.AreEqual(0, logger.ErrorCount + logger.WarningCount + logger.FatalCount);
+			Assert.IsInstanceOfType(value, typeof(ReferredByHeader));
+			Assert.AreEqual("Referred-By", value.Name);
+			Assert.IsNotNull(((ReferredByHeader)value).Value);
+
+			result = parser.Parse("Referred-By: sip:+991002008355040@10.91.219.12:5060", out value, true);
 			Assert.IsNotNull(value);
 			Assert.IsTrue(result);
 			Assert.AreEqual(0, logger.ErrorCount + logger.WarningCount + logger.FatalCount);
