@@ -73,6 +73,7 @@ namespace SIPParserLib.UnitTest
 
 
 		[DataTestMethod]
+		[DataRow("SIPParserLib.UnitTest.SIPMessages.ResponseOK1.txt")]
 		[DataRow("SIPParserLib.UnitTest.SIPMessages.ResponseTrying1.txt")]
 		public void ParseShouldParseResponse(string ResourceName)
 		{
