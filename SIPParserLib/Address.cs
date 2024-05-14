@@ -38,8 +38,17 @@ namespace SIPParserLib
 
 		public override string? ToString()
 		{
-			if ((DisplayName==null) || (DisplayName=="")) return URI.ToString(); 
-			else return $"\"{DisplayName}\" <{URI}>";
+			if ((DisplayName == null) || (DisplayName == ""))
+			{
+				if ((Parameters == null) || (Parameters.Length == 0)) return $"{URI}";
+				else return $"<{URI}>;{string.Join(";", Parameters)}";
+			}
+			else
+			{
+				if ((Parameters == null) || (Parameters.Length == 0)) return $"\"{DisplayName}\" <{URI}>";
+				else return $"\"{DisplayName}\" <{URI}>;{string.Join(";", Parameters)}";
+				
+			}
 		}
 
 		public string? ToShortString()
