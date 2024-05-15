@@ -71,10 +71,10 @@ namespace SIPParserLib.Parsers
 				if (line == "") break;
 
 				Log(LogLevels.Debug, $"Parsing header: {line}");
-				if (!messageHeaderParser.Parse(line, out header, true) || (header == null))
+				if (!messageHeaderParser.Parse(line, out header, false) || (header == null))
 				{
-					Log(LogLevels.Error, $"Invalid header: {line}");
-					return null;
+					Log(LogLevels.Warning, $"Invalid header: {line}");
+					header = new InvalidHeader(line);
 				}
 				headers.Add(header);
 			} while (true);
@@ -130,10 +130,10 @@ namespace SIPParserLib.Parsers
 				if (line == "") break;
 
 				Log(LogLevels.Debug, $"Parsing header: {line}");
-				if (!messageHeaderParser.Parse(line, out header, true) || (header == null))
+				if (!messageHeaderParser.Parse(line, out header, false) || (header == null))
 				{
-					Log(LogLevels.Error, $"Invalid header: {line}");
-					return null;
+					Log(LogLevels.Warning, $"Invalid header: {line}");
+					header = new InvalidHeader(line);
 				}
 				headers.Add(header);
 			} while (true);

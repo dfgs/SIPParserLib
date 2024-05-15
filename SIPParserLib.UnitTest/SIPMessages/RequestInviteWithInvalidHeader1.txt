@@ -1,0 +1,30 @@
+INVITE sip:172.20.54.2:5060;transport=udp SIP/2.0
+Via: SIP/2.0/UDP 172.20.52.20:5060;branch=z9hG4bKibravd002g1769b84dv0sb0000010.1
+Max-Forwards: 67
+From: <sip:+33156727444@172.20.52.20;user=phone>;tag=0086183E-0CA7-14B4-8A11-3E69230AAA77-6011529
+To: <sip:+971522585849@172.20.54.2;user=phone;isup-oli=24>;tag=SDdlid001-RLUnIg
+Call-ID: SDdlid001-f84bd0032caa349c111c1620070de7ea-v300g00090
+CSeq: 2 INVITE
+Contact: <sip:172.20.52.20:5060;transport=udp>
+Supported: 100rel,timer,sdp-anat
+Allow: INVITE, ACK, PRACK, CANCEL, BYE, REFER, INFO, MESSAGE, NOTIFY, OPTIONS
+Session-Expires: 1800;refresher=uac
+Min-SE: 90
+User-Agent
+Content-Type: application/sdp
+Content-Length: 223
+X-Genesys-CallUUID: 022SSGGCKSAB92GH7PKI62LAES01SDH1
+X-Genesys-CallUUID: 022SSGGCKSAB92GH7PKI62LAES01SDH1
+
+v=0
+o=- 1188361355 1189881855 IN IP4 172.20.52.20
+s=phone-call
+c=IN IP4 172.20.52.20
+t=0 0
+m=audio 51992 RTP/AVP 8 101
+a=rtpmap:8 pcma/8000
+a=rtpmap:101 telephone-event/8000
+a=fmtp:101 0-15
+a=sendrecv
+a=ptime:20
+

@@ -48,6 +48,29 @@ namespace SIPParserLib.UnitTest
 			}
 
 		}
+		[DataTestMethod]
+		[DataRow("SIPParserLib.UnitTest.SIPMessages.RequestInviteWithInvalidHeader1.txt")]
+		public void ParseShouldParseRequestWithInvalidHeader(string ResourceName)
+		{
+			SIPMessage? message;
+
+			SIPMessageParser parser;
+			DebugLogger logger;
+
+			logger = new DebugLogger();
+			parser = new SIPMessageParser(logger);
+
+			using (Stream? stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(ResourceName))
+			{
+				if (stream == null) Assert.Fail("Resource not found");
+				message = parser.Parse(stream);
+				Assert.IsNotNull(message);
+				Assert.AreEqual(1, logger.WarningCount);
+				Assert.AreEqual(0, logger.ErrorCount + logger.FatalCount);
+				Assert.IsInstanceOfType(message, typeof(Request));
+				Assert.AreEqual(1, message.Headers.OfType<InvalidHeader>().Count());
+			}
+		}
 
 		[DataTestMethod]
 		[DataRow("SIPParserLib.UnitTest.SIPMessages.RequestIncompleteInvite1.txt")]
@@ -93,6 +116,29 @@ namespace SIPParserLib.UnitTest
 				Assert.IsNotNull(message);
 				Assert.AreEqual(0, logger.ErrorCount + logger.WarningCount + logger.FatalCount);
 				Assert.IsInstanceOfType(message, typeof(Response));
+			}
+		}
+		[DataTestMethod]
+		[DataRow("SIPParserLib.UnitTest.SIPMessages.ResponseOKWithInvalidHeader1.txt")]
+		public void ParseShouldParseResponseWithInvalidHeader(string ResourceName)
+		{
+			SIPMessage? message;
+
+			SIPMessageParser parser;
+			DebugLogger logger;
+
+			logger = new DebugLogger();
+			parser = new SIPMessageParser(logger);
+
+			using (Stream? stream = Assembly.GetExecutingAssembly().GetManifestResourceStream(ResourceName))
+			{
+				if (stream == null) Assert.Fail("Resource not found");
+				message = parser.Parse(stream);
+				Assert.IsNotNull(message);
+				Assert.AreEqual(1, logger.WarningCount);
+				Assert.AreEqual(0, logger.ErrorCount + logger.FatalCount);
+				Assert.IsInstanceOfType(message, typeof(Response));
+				Assert.AreEqual(1, message.Headers.OfType<InvalidHeader>().Count());
 			}
 		}
 
