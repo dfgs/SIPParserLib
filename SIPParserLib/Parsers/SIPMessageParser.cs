@@ -27,7 +27,7 @@ namespace SIPParserLib.Parsers
 		{
 		}
 
-		private string? ReadLine(LineReader Reader)
+		private string? ReadLine(StreamReader Reader)
 		{
 			string? line;
 
@@ -39,7 +39,7 @@ namespace SIPParserLib.Parsers
 			return line;
 		}
 
-		private Request? ParseRequest(LineReader reader,string? line)
+		private Request? ParseRequest(StreamReader reader,string? line)
 		{
 			RequestLine? requestLine;
 			List<MessageHeader> headers;
@@ -98,7 +98,7 @@ namespace SIPParserLib.Parsers
 
 			return new Request(requestLine, headers.ToArray(), body);
 		}
-		private Response? ParseResponse(LineReader reader, string? line)
+		private Response? ParseResponse(StreamReader reader, string? line)
 		{
 			StatusLine? statusLine;
 			List<MessageHeader> headers;
@@ -159,16 +159,14 @@ namespace SIPParserLib.Parsers
 		public override SIPMessage? Parse(Stream Stream)
 		{
 			string? line;
-			LineReader reader;
+			StreamReader reader;
 
 			LogEnter();
 
 			AssertParameterNotNull(Stream,nameof(Stream),LogLevels.Fatal,true);
 
-			line = null;
-
 			Log(LogLevels.Information, "Starting to parse stream");
-			reader = new LineReader(Stream);
+			reader = new StreamReader(Stream);
 			while (!reader.EndOfStream)
 			{
 				line = ReadLine(reader);

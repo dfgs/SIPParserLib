@@ -47,7 +47,6 @@ namespace SIPParserLib.Parsers
 
 			AssertParameterNotNull(Stream,nameof(Stream),LogLevels.Fatal,true);
 
-			line = null;
 
 			fields = new List<SDPField>();
 
