@@ -1,14 +1,14 @@
 SIP/2.0 200 OK
 Via: SIP/2.0/UDP 192.168.20.1:5060;rport;branch=z9hG4bKdb3ee1816230df7263d545fa4c3df8d3
-From: <sip:+33607400338@192.168.20.1;user=phone>;tag=093979806dfce4566c8452305ae75aa6
-To: <sip:+33478143646@192.168.20.1;user=phone>;tag=3C2B7C60-74C
+From: <sip:+3333333331@192.168.20.1;user=phone>;tag=093979806dfce4566c8452305ae75aa6
+To: <sip:+3333333332@192.168.20.1;user=phone>;tag=3C2B7C60-74C
 Date: Mon, 06 May 2024 12:04:40 GMT
 Call-ID: e672fbfedee213330a88aa35850cfaf1@192.168.20.1
 CSeq: 1877586585 INVITE
 Allow: INVITE, OPTIONS, BYE, CANCEL, ACK, PRACK, UPDATE, REFER, SUBSCRIBE, NOTIFY, INFO, REGISTER
 Allow-Events: telephone-event
-Remote-Party-ID: <sip:+4971186060105@84.14.252.186>;party=called;screen=no;privacy=off
-Contact: <sip:+4971186060105@84.14.252.186:5060>
+Remote-Party-ID: <sip:+3333333333@80.80.80.80>;party=called;screen=no;privacy=off
+Contact: <sip:+3333333333@80.80.80.80:5060>
 Supported: replaces
 Supported: sdp-anat
 Server: Cisco-SIPGateway/IOS-15.7.3.M8
@@ -21,12 +21,12 @@ Content-Disposition: session;handling=required
 Content-Length: 250
 
 v=0
-o=CiscoSystemsSIP-GW-UserAgent 9873 3424 IN IP4 84.14.252.186
+o=CiscoSystemsSIP-GW-UserAgent 9873 3424 IN IP4 80.80.80.80
 s=SIP Call
-c=IN IP4 84.14.252.186
+c=IN IP4 80.80.80.80
 t=0 0
 m=audio 16778 RTP/AVP 8 101
-c=IN IP4 84.14.252.186
+c=IN IP4 80.80.80.80
 a=rtpmap:8 PCMA/8000
 a=rtpmap:101 telephone-event/8000
 a=fmtp:101 0-15
