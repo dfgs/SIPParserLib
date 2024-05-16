@@ -53,11 +53,11 @@ namespace SIPParserLib.UnitTest
 			logger = new DebugLogger();
 			parser = new UserInfoParser(logger);
 
-			result = parser.Parse("+33140143960", out value, true);
+			result = parser.Parse("+3333333331", out value, true);
 			Assert.IsNotNull(value);
 			Assert.IsTrue(result);
 			Assert.AreEqual(0, logger.ErrorCount + logger.WarningCount + logger.FatalCount);
-			Assert.AreEqual("+33140143960", value.User);
+			Assert.AreEqual("+3333333331", value.User);
 			Assert.IsNull(value.Password);
 		}
 
@@ -73,11 +73,11 @@ namespace SIPParserLib.UnitTest
 			logger = new DebugLogger();
 			parser = new UserInfoParser(logger);
 
-			result = parser.Parse("+33140143960:Pass1234", out value, true);
+			result = parser.Parse("+3333333331:Pass1234", out value, true);
 			Assert.IsNotNull(value);
 			Assert.IsTrue(result);
 			Assert.AreEqual(0, logger.ErrorCount + logger.WarningCount + logger.FatalCount);
-			Assert.AreEqual("+33140143960", value.User);
+			Assert.AreEqual("+3333333331", value.User);
 			Assert.AreEqual("Pass1234", value.Password);
 		}
 

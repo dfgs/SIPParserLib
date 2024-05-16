@@ -131,7 +131,7 @@ namespace SIPParserLib.UnitTest
 			logger = new DebugLogger();
 			parser = new MessageHeaderParser(logger);
 
-			result = parser.Parse("Via: SIP/2.0/UDP 172.20.54.2:5060;branch=z9hG4bKe4iuv7202ocnobm5dhf0.1", out value, true);
+			result = parser.Parse("Via: SIP/2.0/UDP 10.10.10.50:5060;branch=z9hG4bKe4iuv7202ocnobm5dhf0.1", out value, true);
 			Assert.IsNotNull(value);
 			Assert.IsTrue(result);
 			Assert.AreEqual(0, logger.ErrorCount + logger.WarningCount + logger.FatalCount);
@@ -152,7 +152,7 @@ namespace SIPParserLib.UnitTest
 			logger = new DebugLogger();
 			parser = new MessageHeaderParser(logger);
 
-			result = parser.Parse("From: <sip:+262262595179@172.20.54.2;user=phone>;tag=SD58d3901-U2xemg", out value, true);
+			result = parser.Parse("From: <sip:+3333333331@10.10.10.50;user=phone>;tag=SD58d3901-U2xemg", out value, true);
 			Assert.IsNotNull(value);
 			Assert.IsTrue(result);
 			Assert.AreEqual(0, logger.ErrorCount + logger.WarningCount + logger.FatalCount);
@@ -160,7 +160,7 @@ namespace SIPParserLib.UnitTest
 			Assert.AreEqual("From", value.Name);
 			Assert.IsNotNull(((FromHeader)value).Value);
 
-			result = parser.Parse("From: sip:+33786953886@10.91.254.206;tag=1B98AEB8-E185-4A22-9B3C-1D52B095739A-377738", out value, true);
+			result = parser.Parse("From: sip:+3333333332@10.10.10.40;tag=1B98AEB8-E185-4A22-9B3C-1D52B095739A-377738", out value, true);
 			Assert.IsNotNull(value);
 			Assert.IsTrue(result);
 			Assert.AreEqual(0, logger.ErrorCount + logger.WarningCount + logger.FatalCount);
@@ -180,7 +180,7 @@ namespace SIPParserLib.UnitTest
 			logger = new DebugLogger();
 			parser = new MessageHeaderParser(logger);
 
-			result = parser.Parse("To: <sip:+33156716199@172.20.52.20;user=phone>;tag=0086183E-0CA7-14B4-8A11-3E69230AAA77-6011503", out value, true);
+			result = parser.Parse("To: <sip:+3333333331@10.10.10.20;user=phone>;tag=0086183E-0CA7-14B4-8A11-3E69230AAA77-6011503", out value, true);
 			Assert.IsNotNull(value);
 			Assert.IsTrue(result);
 			Assert.AreEqual(0, logger.ErrorCount + logger.WarningCount + logger.FatalCount);
@@ -188,7 +188,7 @@ namespace SIPParserLib.UnitTest
 			Assert.AreEqual("To", value.Name);
 			Assert.IsNotNull(((ToHeader)value).Value);
 
-			result = parser.Parse("To: sip:+33786953886@10.91.254.206;tag=1B98AEB8-E185-4A22-9B3C-1D52B095739A-377738", out value, true);
+			result = parser.Parse("To: sip:+3333333332@10.10.10.40;tag=1B98AEB8-E185-4A22-9B3C-1D52B095739A-377738", out value, true);
 			Assert.IsNotNull(value);
 			Assert.IsTrue(result);
 			Assert.AreEqual(0, logger.ErrorCount + logger.WarningCount + logger.FatalCount);
@@ -207,7 +207,7 @@ namespace SIPParserLib.UnitTest
 			logger = new DebugLogger();
 			parser = new MessageHeaderParser(logger);
 
-			result = parser.Parse("Refer-To: <sip:+33156716199@172.20.52.20;user=phone>;tag=0086183E-0CA7-14B4-8A11-3E69230AAA77-6011503", out value, true);
+			result = parser.Parse("Refer-To: <sip:+3333333331@10.10.10.20;user=phone>;tag=0086183E-0CA7-14B4-8A11-3E69230AAA77-6011503", out value, true);
 			Assert.IsNotNull(value);
 			Assert.IsTrue(result);
 			Assert.AreEqual(0, logger.ErrorCount + logger.WarningCount + logger.FatalCount);
@@ -226,7 +226,7 @@ namespace SIPParserLib.UnitTest
 			logger = new DebugLogger();
 			parser = new MessageHeaderParser(logger);
 
-			result = parser.Parse("Referred-By: <sip:+33156716199@172.20.52.20;user=phone>;tag=0086183E-0CA7-14B4-8A11-3E69230AAA77-6011503", out value, true);
+			result = parser.Parse("Referred-By: <sip:+3333333331@10.10.10.20;user=phone>;tag=0086183E-0CA7-14B4-8A11-3E69230AAA77-6011503", out value, true);
 			Assert.IsNotNull(value);
 			Assert.IsTrue(result);
 			Assert.AreEqual(0, logger.ErrorCount + logger.WarningCount + logger.FatalCount);
@@ -234,7 +234,7 @@ namespace SIPParserLib.UnitTest
 			Assert.AreEqual("Referred-By", value.Name);
 			Assert.IsNotNull(((ReferredByHeader)value).Value);
 
-			result = parser.Parse("Referred-By: sip:+991002008355040@10.91.219.12:5060", out value, true);
+			result = parser.Parse("Referred-By: sip:+3333333331@10.10.10.20:5060", out value, true);
 			Assert.IsNotNull(value);
 			Assert.IsTrue(result);
 			Assert.AreEqual(0, logger.ErrorCount + logger.WarningCount + logger.FatalCount);

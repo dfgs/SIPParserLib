@@ -34,7 +34,7 @@ namespace SIPParserLib.UnitTest
 			parser = new TELURIParser(logger);
 
 			// invalid method
-			result= parser.Parse("sip:+33140143960",out value,true);
+			result= parser.Parse("sip:+3333333331",out value,true);
 			Assert.IsNull(value);
 			Assert.IsFalse(result);
 
@@ -55,11 +55,11 @@ namespace SIPParserLib.UnitTest
 			logger = new DebugLogger();
 			parser = new TELURIParser(logger);
 
-			result = parser.Parse("tel:+33140143960", out value, true);
+			result = parser.Parse("tel:+3333333331", out value, true);
 			Assert.IsNotNull(value);
 			Assert.IsTrue(result);
 			Assert.AreEqual(0, logger.ErrorCount + logger.WarningCount + logger.FatalCount);
-			Assert.AreEqual("+33140143960", value.PhoneNumber );
+			Assert.AreEqual("+3333333331", value.PhoneNumber );
 
 		}
 

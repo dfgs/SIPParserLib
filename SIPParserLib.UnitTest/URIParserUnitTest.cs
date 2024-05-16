@@ -36,7 +36,7 @@ namespace SIPParserLib.UnitTest
 			parser = new URIParser(logger);
 
 			// invalid method
-			result= parser.Parse("toto:+33140143960",out value,true);
+			result= parser.Parse("toto:+3333333331",out value,true);
 			Assert.IsNull(value);
 			Assert.IsFalse(result);
 
@@ -53,13 +53,13 @@ namespace SIPParserLib.UnitTest
 			logger = new DebugLogger();
 			parser = new URIParser(logger);
 
-			result = parser.Parse("sip:+33140143960@ecb.core.nord:5061;user=phone", out value, true);
+			result = parser.Parse("sip:+3333333331@sbc.example.com:5061;user=phone", out value, true);
 			Assert.IsNotNull(value);
 			Assert.IsTrue(result);
 			Assert.AreEqual(0, logger.ErrorCount + logger.WarningCount + logger.FatalCount);
 			Assert.IsInstanceOfType(value, typeof(SIPURL));
 
-			result = parser.Parse("tel:+33140143960", out value, true);
+			result = parser.Parse("tel:+3333333331", out value, true);
 			Assert.IsNotNull(value);
 			Assert.IsTrue(result);
 			Assert.AreEqual(0, logger.ErrorCount + logger.WarningCount + logger.FatalCount);
